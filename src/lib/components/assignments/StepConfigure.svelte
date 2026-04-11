@@ -13,6 +13,7 @@
 		ConfigurationPolicy
 	} from '$lib/types/graph';
 	import type { DeviceCompliancePolicy } from '$lib/types/compliance';
+	import type { ReplaceConfig } from '$lib/types/wizard';
 	import { Info } from 'lucide-svelte';
 
 	interface FilterConfig {
@@ -37,6 +38,10 @@
 		selectedGroups: GroupTarget[];
 		onUpdateIntent: (intent: AssignmentIntent) => void;
 		onUpdateFilter: (config: FilterConfig | null) => void;
+		replaceMode: boolean;
+		replaceConfig: ReplaceConfig;
+		onUpdateReplaceMode: (enabled: boolean) => void;
+		onUpdateReplaceConfig: (config: ReplaceConfig) => void;
 	}
 
 	const {
@@ -48,7 +53,11 @@
 		selectedSecurityPolicies,
 		selectedGroups,
 		onUpdateIntent,
-		onUpdateFilter
+		onUpdateFilter,
+		replaceMode,
+		replaceConfig,
+		onUpdateReplaceMode,
+		onUpdateReplaceConfig
 	}: Props = $props();
 
 	// ─── Intent options ────────────────────────────────────────────────
@@ -140,6 +149,63 @@
 		});
 	}
 
+	// ─── Replace mode ──────────────────────────────────────────────────
+
+	const hasApps = $derived(selectedApps.length > 0);
+	const hasPolicies = $derived(
+		selectedProfiles.length > 0 ||
+			selectedCompliancePolicies.length > 0 ||
+			selectedSecurityPolicies.length > 0
+	);
+
+	const allAppIntents: { value: AssignmentIntent; label: string }[] = [
+		{ value: 'required', label: 'Required' },
+		{ value: 'available', label: 'Available' },
+		{ value: 'availableWithoutEnrollment', label: 'Available (No Enrollment)' },
+		{ value: 'uninstall', label: 'Uninstall' }
+	];
+
+	function handleReplaceModeToggle(): void {
+		const newEnabled = !replaceMode;
+		onUpdateReplaceMode(newEnabled);
+		if (newEnabled) {
+			// Pre-check the current wizard intent for apps, and inclusions for policies
+			onUpdateReplaceConfig({
+				appIntents: hasApps ? [intent] : [],
+				policyInclusions: hasPolicies,
+				policyExclusions: false
+			});
+		} else {
+			onUpdateReplaceConfig({
+				appIntents: [],
+				policyInclusions: false,
+				policyExclusions: false
+			});
+		}
+	}
+
+	function toggleReplaceIntent(intentValue: AssignmentIntent): void {
+		const current = replaceConfig.appIntents;
+		const updated = current.includes(intentValue)
+			? current.filter((i) => i !== intentValue)
+			: [...current, intentValue];
+		onUpdateReplaceConfig({ ...replaceConfig, appIntents: updated });
+	}
+
+	function toggleReplaceInclusions(): void {
+		onUpdateReplaceConfig({
+			...replaceConfig,
+			policyInclusions: !replaceConfig.policyInclusions
+		});
+	}
+
+	function toggleReplaceExclusions(): void {
+		onUpdateReplaceConfig({
+			...replaceConfig,
+			policyExclusions: !replaceConfig.policyExclusions
+		});
+	}
+
 	// ─── Preview text derivation ───────────────────────────────────────
 
 	const intentLabel = $derived(intentOptions.find((o) => o.value === intent)?.label ?? 'Required');
@@ -179,6 +245,76 @@
 </script>
 
 <div class="space-y-6">
+	<!-- Replace mode toggle -->
+	<div>
+		<h3 class="text-ink mb-3 text-sm font-semibold">Assignment Mode</h3>
+
+		<div class="flex items-center gap-3">
+			<Toggle
+				checked={replaceMode}
+				onchange={() => handleReplaceModeToggle()}
+				label="Replace existing assignments"
+			/>
+			<span class="text-ink text-sm">Replace existing assignments</span>
+		</div>
+
+		{#if replaceMode}
+			<p class="text-muted mt-2 text-xs">
+				Existing assignments in the selected categories will be removed and replaced with the
+				assignments configured below.
+			</p>
+
+			<div class="mt-3 space-y-4">
+				{#if hasApps}
+					<div>
+						<p class="text-ink mb-2 text-xs font-medium">Replace app assignments by intent:</p>
+						<div class="flex flex-wrap gap-3">
+							{#each allAppIntents as opt (opt.value)}
+								<label class="flex cursor-pointer items-center gap-1.5">
+									<input
+										type="checkbox"
+										checked={replaceConfig.appIntents.includes(opt.value)}
+										onchange={() => toggleReplaceIntent(opt.value)}
+										class="accent-accent h-3.5 w-3.5"
+									/>
+									<span class="text-ink text-sm">{opt.label}</span>
+								</label>
+							{/each}
+						</div>
+					</div>
+				{/if}
+
+				{#if hasPolicies}
+					<div>
+						<p class="text-ink mb-2 text-xs font-medium">Replace policy assignments:</p>
+						<div class="flex flex-wrap gap-3">
+							<label class="flex cursor-pointer items-center gap-1.5">
+								<input
+									type="checkbox"
+									checked={replaceConfig.policyInclusions}
+									onchange={() => toggleReplaceInclusions()}
+									class="accent-accent h-3.5 w-3.5"
+								/>
+								<span class="text-ink text-sm">Inclusion assignments</span>
+							</label>
+							<label class="flex cursor-pointer items-center gap-1.5">
+								<input
+									type="checkbox"
+									checked={replaceConfig.policyExclusions}
+									onchange={() => toggleReplaceExclusions()}
+									class="accent-accent h-3.5 w-3.5"
+								/>
+								<span class="text-ink text-sm">Exclusion assignments</span>
+							</label>
+						</div>
+					</div>
+				{/if}
+			</div>
+
+			<div class="divider mt-4"></div>
+		{/if}
+	</div>
+
 	<!-- Intent selector -->
 	<div>
 		<h3 class="text-ink mb-3 text-sm font-semibold">Assignment Intent</h3>
