@@ -13,7 +13,8 @@ import type {
 	ConflictChoice,
 	FilterConfig,
 	GroupTarget,
-	ProgressCallback
+	ProgressCallback,
+	ReplaceConfig
 } from '$lib/types/wizard';
 import {
 	mergeAppAssignments,
@@ -40,6 +41,8 @@ export interface BulkAssignmentParams {
 	filter: FilterConfig | null;
 	conflicts: ConflictChoice[];
 	onProgress?: ProgressCallback;
+	replaceMode: boolean;
+	replaceConfig: ReplaceConfig;
 }
 
 export interface BulkAssignmentResult {
@@ -222,7 +225,7 @@ interface MergedItem {
 }
 
 function mergeAssignments(fetched: FetchedItem[], params: BulkAssignmentParams): MergedItem[] {
-	const { groups, exclusionGroups, intent, filter, conflicts } = params;
+	const { groups, exclusionGroups, intent, filter, conflicts, replaceMode, replaceConfig } = params;
 	const merged: MergedItem[] = [];
 
 	params.onProgress?.({
@@ -242,7 +245,9 @@ function mergeAssignments(fetched: FetchedItem[], params: BulkAssignmentParams):
 				intent,
 				filter,
 				conflicts,
-				itemId: item.id
+				itemId: item.id,
+				replaceMode,
+				replaceIntents: replaceConfig.appIntents
 			});
 			merged.push({
 				item,
@@ -255,7 +260,10 @@ function mergeAssignments(fetched: FetchedItem[], params: BulkAssignmentParams):
 				exclusionGroups,
 				filter,
 				conflicts,
-				itemId: item.id
+				itemId: item.id,
+				replaceMode,
+				replaceInclusions: replaceConfig.policyInclusions,
+				replaceExclusions: replaceConfig.policyExclusions
 			});
 			merged.push({
 				item,
@@ -268,7 +276,10 @@ function mergeAssignments(fetched: FetchedItem[], params: BulkAssignmentParams):
 				exclusionGroups,
 				filter,
 				conflicts,
-				itemId: item.id
+				itemId: item.id,
+				replaceMode,
+				replaceInclusions: replaceConfig.policyInclusions,
+				replaceExclusions: replaceConfig.policyExclusions
 			});
 			merged.push({
 				item,
@@ -281,7 +292,10 @@ function mergeAssignments(fetched: FetchedItem[], params: BulkAssignmentParams):
 				exclusionGroups,
 				filter,
 				conflicts,
-				itemId: item.id
+				itemId: item.id,
+				replaceMode,
+				replaceInclusions: replaceConfig.policyInclusions,
+				replaceExclusions: replaceConfig.policyExclusions
 			});
 			merged.push({
 				item,
