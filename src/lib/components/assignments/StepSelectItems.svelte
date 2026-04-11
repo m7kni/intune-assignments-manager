@@ -15,9 +15,15 @@
 	import { listConfigPolicies, getConfigPolicy } from '$lib/graph/configurations';
 	import { listCompliancePolicies, getCompliancePolicy } from '$lib/graph/compliance';
 	import { listSecurityPolicies } from '$lib/graph/security';
+	import { listUpdateRings } from '$lib/graph/updates';
+	import { listRemediationScripts } from '$lib/graph/remediations';
+	import { listScripts } from '$lib/graph/scripts';
 	import { toFriendlyMessage } from '$lib/graph/errors';
 	import type { MobileApp, ConfigurationPolicy } from '$lib/types/graph';
 	import type { DeviceCompliancePolicy } from '$lib/types/compliance';
+	import type { WindowsUpdateForBusinessConfiguration } from '$lib/types/updates';
+	import type { DeviceHealthScript } from '$lib/types/remediation';
+	import type { DeviceManagementScript } from '$lib/types/scripts';
 	import {
 		APP_PLATFORM_OPTIONS,
 		PROFILE_PLATFORM_OPTIONS,
@@ -37,6 +43,9 @@
 		selectedProfiles: ConfigurationPolicy[];
 		selectedCompliancePolicies: DeviceCompliancePolicy[];
 		selectedSecurityPolicies: ConfigurationPolicy[];
+		selectedUpdateRings: WindowsUpdateForBusinessConfiguration[];
+		selectedRemediations: DeviceHealthScript[];
+		selectedScripts: DeviceManagementScript[];
 		preselectedAppId: string | null;
 		preselectedProfileId: string | null;
 		preselectedCompliancePolicyId: string | null;
@@ -45,14 +54,23 @@
 		profiles: ConfigurationPolicy[];
 		compliancePolicies: DeviceCompliancePolicy[];
 		securityPolicies: ConfigurationPolicy[];
+		updateRings: WindowsUpdateForBusinessConfiguration[];
+		remediations: DeviceHealthScript[];
+		scripts: DeviceManagementScript[];
 		onUpdateApps: (apps: MobileApp[]) => void;
 		onUpdateProfiles: (profiles: ConfigurationPolicy[]) => void;
 		onUpdateCompliancePolicies: (policies: DeviceCompliancePolicy[]) => void;
 		onUpdateSecurityPolicies: (policies: ConfigurationPolicy[]) => void;
+		onUpdateUpdateRings: (rings: WindowsUpdateForBusinessConfiguration[]) => void;
+		onUpdateRemediations: (scripts: DeviceHealthScript[]) => void;
+		onUpdateScripts: (scripts: DeviceManagementScript[]) => void;
 		onAppsLoaded: (apps: MobileApp[]) => void;
 		onProfilesLoaded: (profiles: ConfigurationPolicy[]) => void;
 		onCompliancePoliciesLoaded: (policies: DeviceCompliancePolicy[]) => void;
 		onSecurityPoliciesLoaded: (policies: ConfigurationPolicy[]) => void;
+		onUpdateRingsLoaded: (rings: WindowsUpdateForBusinessConfiguration[]) => void;
+		onRemediationsLoaded: (scripts: DeviceHealthScript[]) => void;
+		onScriptsLoaded: (scripts: DeviceManagementScript[]) => void;
 	}
 
 	const {
@@ -60,6 +78,9 @@
 		selectedProfiles,
 		selectedCompliancePolicies,
 		selectedSecurityPolicies,
+		selectedUpdateRings,
+		selectedRemediations,
+		selectedScripts,
 		preselectedAppId,
 		preselectedProfileId,
 		preselectedCompliancePolicyId,
@@ -68,14 +89,23 @@
 		profiles,
 		compliancePolicies,
 		securityPolicies,
+		updateRings,
+		remediations,
+		scripts,
 		onUpdateApps,
 		onUpdateProfiles,
 		onUpdateCompliancePolicies,
 		onUpdateSecurityPolicies,
+		onUpdateUpdateRings,
+		onUpdateRemediations,
+		onUpdateScripts,
 		onAppsLoaded,
 		onProfilesLoaded,
 		onCompliancePoliciesLoaded,
-		onSecurityPoliciesLoaded
+		onSecurityPoliciesLoaded,
+		onUpdateRingsLoaded,
+		onRemediationsLoaded,
+		onScriptsLoaded
 	}: Props = $props();
 
 	// ─── Internal State ──────────────────────────────────────────────
@@ -94,21 +124,33 @@
 	let securitySearch = $state('');
 	let securityCategoryFilter = $state<string[]>([]);
 	let securityAssignmentStatus = $state<AssignmentStatus>('all');
+	let updateRingSearch = $state('');
+	let remediationSearch = $state('');
+	let scriptSearch = $state('');
 	let loadingApps = $state(false);
 	let loadingProfiles = $state(false);
 	let loadingCompliance = $state(false);
 	let loadingSecurity = $state(false);
+	let loadingUpdateRings = $state(false);
+	let loadingRemediations = $state(false);
+	let loadingScripts = $state(false);
 	let appsError = $state<string | null>(null);
 	let profilesError = $state<string | null>(null);
 	let complianceError = $state<string | null>(null);
 	let securityError = $state<string | null>(null);
+	let updateRingsError = $state<string | null>(null);
+	let remediationsError = $state<string | null>(null);
+	let scriptsError = $state<string | null>(null);
 	let hasPreselected = $state(false);
 
 	const tabs = [
 		{ id: 'apps', label: 'Apps' },
 		{ id: 'profiles', label: 'Config Profiles' },
-		{ id: 'compliance', label: 'Compliance Policies' },
-		{ id: 'security', label: 'Endpoint Security' }
+		{ id: 'compliance', label: 'Compliance' },
+		{ id: 'security', label: 'Security' },
+		{ id: 'updateRings', label: 'Update Rings' },
+		{ id: 'remediations', label: 'Remediations' },
+		{ id: 'scripts', label: 'Scripts' }
 	];
 
 	// ─── Derived State ───────────────────────────────────────────────
@@ -145,6 +187,38 @@
 			search: securitySearch,
 			categories: securityCategoryFilter,
 			assignmentStatus: securityAssignmentStatus
+		})
+	);
+
+	const filteredUpdateRings = $derived(
+		updateRings.filter((r) => {
+			if (!updateRingSearch) return true;
+			const q = updateRingSearch.toLowerCase();
+			return r.displayName.toLowerCase().includes(q) || r.description?.toLowerCase().includes(q);
+		})
+	);
+
+	const filteredRemediations = $derived(
+		remediations.filter((s) => {
+			if (!remediationSearch) return true;
+			const q = remediationSearch.toLowerCase();
+			return (
+				s.displayName.toLowerCase().includes(q) ||
+				s.description?.toLowerCase().includes(q) ||
+				s.publisher?.toLowerCase().includes(q)
+			);
+		})
+	);
+
+	const filteredScripts = $derived(
+		scripts.filter((s) => {
+			if (!scriptSearch) return true;
+			const q = scriptSearch.toLowerCase();
+			return (
+				s.displayName.toLowerCase().includes(q) ||
+				s.description?.toLowerCase().includes(q) ||
+				s.fileName?.toLowerCase().includes(q)
+			);
 		})
 	);
 
@@ -188,6 +262,21 @@
 			type: 'security' as const,
 			id: policy.id,
 			name: policy.name
+		})),
+		...selectedUpdateRings.map((ring) => ({
+			type: 'updateRing' as const,
+			id: ring.id,
+			name: ring.displayName
+		})),
+		...selectedRemediations.map((script) => ({
+			type: 'remediation' as const,
+			id: script.id,
+			name: script.displayName
+		})),
+		...selectedScripts.map((script) => ({
+			type: 'script' as const,
+			id: script.id,
+			name: script.displayName
 		}))
 	]);
 
@@ -256,6 +345,54 @@
 		onUpdateSecurityPolicies(selectedSecurityPolicies.filter((p) => p.id !== policyId));
 	}
 
+	function isUpdateRingSelected(id: string): boolean {
+		return selectedUpdateRings.some((r) => r.id === id);
+	}
+
+	function toggleUpdateRing(ring: WindowsUpdateForBusinessConfiguration): void {
+		if (isUpdateRingSelected(ring.id)) {
+			onUpdateUpdateRings(selectedUpdateRings.filter((r) => r.id !== ring.id));
+		} else {
+			onUpdateUpdateRings([...selectedUpdateRings, ring]);
+		}
+	}
+
+	function removeUpdateRing(id: string): void {
+		onUpdateUpdateRings(selectedUpdateRings.filter((r) => r.id !== id));
+	}
+
+	function isRemediationSelected(id: string): boolean {
+		return selectedRemediations.some((s) => s.id === id);
+	}
+
+	function toggleRemediation(script: DeviceHealthScript): void {
+		if (isRemediationSelected(script.id)) {
+			onUpdateRemediations(selectedRemediations.filter((s) => s.id !== script.id));
+		} else {
+			onUpdateRemediations([...selectedRemediations, script]);
+		}
+	}
+
+	function removeRemediation(id: string): void {
+		onUpdateRemediations(selectedRemediations.filter((s) => s.id !== id));
+	}
+
+	function isScriptSelected(id: string): boolean {
+		return selectedScripts.some((s) => s.id === id);
+	}
+
+	function toggleScript(script: DeviceManagementScript): void {
+		if (isScriptSelected(script.id)) {
+			onUpdateScripts(selectedScripts.filter((s) => s.id !== script.id));
+		} else {
+			onUpdateScripts([...selectedScripts, script]);
+		}
+	}
+
+	function removeScript(id: string): void {
+		onUpdateScripts(selectedScripts.filter((s) => s.id !== id));
+	}
+
 	// ─── Data Fetching ───────────────────────────────────────────────
 	async function fetchApps(): Promise<void> {
 		loadingApps = true;
@@ -310,6 +447,48 @@
 			securityError = toFriendlyMessage(err);
 		} finally {
 			loadingSecurity = false;
+		}
+	}
+
+	async function fetchUpdateRings(): Promise<void> {
+		loadingUpdateRings = true;
+		updateRingsError = null;
+		try {
+			const client = getGraphClient();
+			const result = await listUpdateRings(client);
+			onUpdateRingsLoaded(result);
+		} catch (err) {
+			updateRingsError = toFriendlyMessage(err);
+		} finally {
+			loadingUpdateRings = false;
+		}
+	}
+
+	async function fetchRemediations(): Promise<void> {
+		loadingRemediations = true;
+		remediationsError = null;
+		try {
+			const client = getGraphClient();
+			const result = await listRemediationScripts(client);
+			onRemediationsLoaded(result);
+		} catch (err) {
+			remediationsError = toFriendlyMessage(err);
+		} finally {
+			loadingRemediations = false;
+		}
+	}
+
+	async function fetchScripts(): Promise<void> {
+		loadingScripts = true;
+		scriptsError = null;
+		try {
+			const client = getGraphClient();
+			const result = await listScripts(client);
+			onScriptsLoaded(result);
+		} catch (err) {
+			scriptsError = toFriendlyMessage(err);
+		} finally {
+			loadingScripts = false;
 		}
 	}
 
@@ -429,6 +608,24 @@
 	});
 
 	$effect(() => {
+		if (updateRings.length === 0) {
+			fetchUpdateRings();
+		}
+	});
+
+	$effect(() => {
+		if (remediations.length === 0) {
+			fetchRemediations();
+		}
+	});
+
+	$effect(() => {
+		if (scripts.length === 0) {
+			fetchScripts();
+		}
+	});
+
+	$effect(() => {
 		if (
 			(preselectedAppId || preselectedProfileId || preselectedCompliancePolicyId || preselectedSecurityPolicyId) &&
 			!hasPreselected &&
@@ -467,6 +664,9 @@
 						if (chip.type === 'app') removeApp(chip.id);
 						else if (chip.type === 'compliance') removeCompliance(chip.id);
 						else if (chip.type === 'security') removeSecurity(chip.id);
+						else if (chip.type === 'updateRing') removeUpdateRing(chip.id);
+						else if (chip.type === 'remediation') removeRemediation(chip.id);
+						else if (chip.type === 'script') removeScript(chip.id);
 						else removeProfile(chip.id);
 					}}
 				>
@@ -840,6 +1040,205 @@
 							</p>
 							<p class="text-ink-faint truncate text-xs">
 								{categoryInfo?.label ?? 'Endpoint Security'}
+							</p>
+						</div>
+					</label>
+				{/each}
+			</div>
+		{/if}
+	</div>
+{:else if activeTab === 'updateRings'}
+	<div role="tabpanel">
+		<div class="mb-3">
+			<SearchInput
+				placeholder="Search update rings by name..."
+				bind:value={updateRingSearch}
+			/>
+		</div>
+
+		{#if updateRingsError}
+			<div class="mb-4">
+				<ErrorState message={updateRingsError} onretry={fetchUpdateRings} />
+			</div>
+		{/if}
+
+		{#if loadingUpdateRings}
+			<div class="border-border space-y-2 rounded-lg border p-2">
+				{#each Array(6) as _, i (i)}
+					<div class="flex items-center gap-3 px-2 py-2">
+						<Skeleton width="1rem" height="1rem" rounded="sm" />
+						<div class="flex-1 space-y-1">
+							<Skeleton width="50%" height="0.875rem" />
+							<Skeleton width="30%" height="0.625rem" />
+						</div>
+					</div>
+				{/each}
+			</div>
+		{:else if filteredUpdateRings.length === 0 && updateRingSearch.trim() !== ''}
+			<EmptyState
+				icon={Search}
+				title="No update rings match your search"
+				description="Try a different search term."
+			/>
+		{:else if updateRings.length === 0 && !updateRingsError}
+			<EmptyState
+				icon={Package}
+				title="No update rings found"
+				description="Your Intune tenant doesn't have any Windows update rings configured."
+			/>
+		{:else}
+			<div class="border-border max-h-96 overflow-y-auto rounded-lg border">
+				{#each filteredUpdateRings as ring (ring.id)}
+					<label
+						class="border-border hover:bg-canvas flex cursor-pointer items-center gap-3 border-b px-4 py-2.5 last:border-b-0"
+					>
+						<input
+							type="checkbox"
+							class="accent-accent h-4 w-4 rounded"
+							checked={isUpdateRingSelected(ring.id)}
+							onchange={() => toggleUpdateRing(ring)}
+						/>
+						<div class="min-w-0 flex-1">
+							<p class="text-ink truncate text-sm font-medium">
+								{ring.displayName}
+							</p>
+							<p class="text-ink-faint truncate text-xs">
+								Quality: {ring.qualityUpdatesDeferralPeriodInDays ?? 0}d, Feature: {ring.featureUpdatesDeferralPeriodInDays ?? 0}d
+								{#if ring.qualityUpdatesPaused || ring.featureUpdatesPaused}
+									<span class="text-warning ml-1">Paused</span>
+								{/if}
+							</p>
+						</div>
+					</label>
+				{/each}
+			</div>
+		{/if}
+	</div>
+{:else if activeTab === 'remediations'}
+	<div role="tabpanel">
+		<div class="mb-3">
+			<SearchInput
+				placeholder="Search remediation scripts by name..."
+				bind:value={remediationSearch}
+			/>
+		</div>
+
+		{#if remediationsError}
+			<div class="mb-4">
+				<ErrorState message={remediationsError} onretry={fetchRemediations} />
+			</div>
+		{/if}
+
+		{#if loadingRemediations}
+			<div class="border-border space-y-2 rounded-lg border p-2">
+				{#each Array(6) as _, i (i)}
+					<div class="flex items-center gap-3 px-2 py-2">
+						<Skeleton width="1rem" height="1rem" rounded="sm" />
+						<div class="flex-1 space-y-1">
+							<Skeleton width="50%" height="0.875rem" />
+							<Skeleton width="30%" height="0.625rem" />
+						</div>
+					</div>
+				{/each}
+			</div>
+		{:else if filteredRemediations.length === 0 && remediationSearch.trim() !== ''}
+			<EmptyState
+				icon={Search}
+				title="No scripts match your search"
+				description="Try a different search term."
+			/>
+		{:else if remediations.length === 0 && !remediationsError}
+			<EmptyState
+				icon={Package}
+				title="No remediation scripts found"
+				description="Your Intune tenant doesn't have any proactive remediation scripts configured."
+			/>
+		{:else}
+			<div class="border-border max-h-96 overflow-y-auto rounded-lg border">
+				{#each filteredRemediations as script (script.id)}
+					<label
+						class="border-border hover:bg-canvas flex cursor-pointer items-center gap-3 border-b px-4 py-2.5 last:border-b-0"
+					>
+						<input
+							type="checkbox"
+							class="accent-accent h-4 w-4 rounded"
+							checked={isRemediationSelected(script.id)}
+							onchange={() => toggleRemediation(script)}
+						/>
+						<div class="min-w-0 flex-1">
+							<p class="text-ink truncate text-sm font-medium">
+								{script.displayName}
+							</p>
+							<p class="text-ink-faint truncate text-xs">
+								{script.publisher ?? 'No publisher'}
+								{#if script.isGlobalScript}
+									<span class="bg-accent-light text-accent ml-1 rounded px-1.5 py-0.5 text-[10px] font-medium">Global</span>
+								{/if}
+							</p>
+						</div>
+					</label>
+				{/each}
+			</div>
+		{/if}
+	</div>
+{:else if activeTab === 'scripts'}
+	<div role="tabpanel">
+		<div class="mb-3">
+			<SearchInput
+				placeholder="Search platform scripts by name..."
+				bind:value={scriptSearch}
+			/>
+		</div>
+
+		{#if scriptsError}
+			<div class="mb-4">
+				<ErrorState message={scriptsError} onretry={fetchScripts} />
+			</div>
+		{/if}
+
+		{#if loadingScripts}
+			<div class="border-border space-y-2 rounded-lg border p-2">
+				{#each Array(6) as _, i (i)}
+					<div class="flex items-center gap-3 px-2 py-2">
+						<Skeleton width="1rem" height="1rem" rounded="sm" />
+						<div class="flex-1 space-y-1">
+							<Skeleton width="50%" height="0.875rem" />
+							<Skeleton width="30%" height="0.625rem" />
+						</div>
+					</div>
+				{/each}
+			</div>
+		{:else if filteredScripts.length === 0 && scriptSearch.trim() !== ''}
+			<EmptyState
+				icon={Search}
+				title="No scripts match your search"
+				description="Try a different search term."
+			/>
+		{:else if scripts.length === 0 && !scriptsError}
+			<EmptyState
+				icon={Package}
+				title="No platform scripts found"
+				description="Your Intune tenant doesn't have any device management scripts configured."
+			/>
+		{:else}
+			<div class="border-border max-h-96 overflow-y-auto rounded-lg border">
+				{#each filteredScripts as script (script.id)}
+					<label
+						class="border-border hover:bg-canvas flex cursor-pointer items-center gap-3 border-b px-4 py-2.5 last:border-b-0"
+					>
+						<input
+							type="checkbox"
+							class="accent-accent h-4 w-4 rounded"
+							checked={isScriptSelected(script.id)}
+							onchange={() => toggleScript(script)}
+						/>
+						<div class="min-w-0 flex-1">
+							<p class="text-ink truncate text-sm font-medium">
+								{script.displayName}
+							</p>
+							<p class="text-ink-faint truncate text-xs">
+								{script.fileName ?? ''}
+								<span class="ml-1">{script.runAsAccount === 'system' ? 'System' : 'User'}</span>
 							</p>
 						</div>
 					</label>

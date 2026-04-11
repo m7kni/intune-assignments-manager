@@ -1,25 +1,55 @@
 <script lang="ts">
 	import type { ManagedDevice } from '$lib/types/device';
-	import { getDeviceTypeInfo, getComplianceInfo, getOwnershipLabel, formatRelativeTime } from '$lib/utils/device-types';
+	import {
+		getDeviceTypeInfo,
+		getComplianceInfo,
+		getOwnershipLabel,
+		formatRelativeTime
+	} from '$lib/utils/device-types';
 	import Badge from './Badge.svelte';
 	import { ChevronRight } from 'lucide-svelte';
 
 	interface Props {
 		device: ManagedDevice;
+		selectable?: boolean;
+		selected?: boolean;
+		onToggle?: (id: string) => void;
 	}
 
-	const { device }: Props = $props();
+	const { device, selectable = false, selected = false, onToggle }: Props = $props();
 	const typeInfo = $derived(getDeviceTypeInfo(device.operatingSystem));
 	const Icon = $derived(typeInfo.icon);
 	const complianceInfo = $derived(getComplianceInfo(device.complianceState));
 	const lastSync = $derived(formatRelativeTime(device.lastSyncDateTime));
 	const ownership = $derived(getOwnershipLabel(device.managedDeviceOwnerType));
+
+	function handleCheckboxClick(e: MouseEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+		onToggle?.(device.id);
+	}
 </script>
 
 <a
 	href="/devices/{device.id}"
-	class="group border-border hover:bg-accent-subtle hover:border-l-accent flex items-center gap-4 border-b px-4 py-3 transition-all hover:border-l-2"
+	class="group border-border hover:bg-accent-subtle hover:border-l-accent flex items-center gap-4 border-b px-4 py-3 transition-all hover:border-l-2 {selected
+		? 'bg-accent-subtle/50'
+		: ''}"
 >
+	{#if selectable}
+		<!-- Checkbox -->
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<div class="flex shrink-0 items-center" onclick={handleCheckboxClick}>
+			<input
+				type="checkbox"
+				checked={selected}
+				class="accent-accent h-4 w-4 cursor-pointer rounded"
+				tabindex={-1}
+			/>
+		</div>
+	{/if}
+
 	<!-- Platform icon -->
 	<div class="bg-accent-light flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
 		<Icon size={20} class="text-accent" />

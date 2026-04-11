@@ -21,7 +21,7 @@
 	interface Props {
 		open: boolean;
 		mode: 'add' | 'edit';
-		itemKind: 'app' | 'profile' | 'compliance' | 'security';
+		itemKind: 'app' | 'profile' | 'compliance' | 'security' | 'script';
 		existingTarget?: AssignmentTarget;
 		existingIntent?: AssignmentIntent | null;
 		existingTargetName?: string;
@@ -278,7 +278,7 @@
 		}
 
 		const resolvedIntent =
-			itemKind === 'profile' || itemKind === 'compliance' || itemKind === 'security' || isExclusion ? null : intent;
+			itemKind === 'profile' || itemKind === 'compliance' || itemKind === 'security' || itemKind === 'script' || isExclusion ? null : intent;
 		onSave(target, resolvedIntent);
 	}
 

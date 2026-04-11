@@ -8,9 +8,9 @@ Intune Assignments Manager — a SvelteKit web app for bulk-managing Microsoft I
 
 
 ## Quality Checks
-Always run the full build and type-check (`npm run build` or equivalent) after completing any code changes. Do not consider a task done until the build passes cleanly with zero errors.
+Always run the full build and type-check (`pnpm build`) after completing any code changes. Do not consider a task done until the build passes cleanly with zero errors.
 
-After editing files, check for duplicate imports and stale references from the previous code. Run ESLint or the project linter to catch these before proceeding.
+After editing files, check for duplicate imports and stale references from the previous code. Run `pnpm lint` to catch these before proceeding.
 
 ## Svelte 5 Conventions
 When working in Svelte 5 files (.svelte, .svelte.ts): use `SvelteMap` and `SvelteSet` instead of native `Map`/`Set`, use `const` (not `let`) for `$derived` runes, avoid deprecated `svelte:component` syntax, and ensure all `{#each}` blocks have unique keys.
@@ -43,6 +43,7 @@ No test framework is configured.
 - **Tailwind CSS 4** — OKLCH color tokens defined in `src/app.css` via `@theme`
 - **@azure/msal-browser** — OAuth2 PKCE auth against Microsoft Entra ID
 - **Zod** — runtime validation of Graph API responses
+- **lucide-svelte** — icon library
 - **Cloudflare Pages** — no Node.js built-ins, Web APIs only
 
 ## Architecture
@@ -50,6 +51,8 @@ No test framework is configured.
 ### Authentication
 
 MSAL.js handles OAuth2 popup flow entirely client-side. Auth state lives in `src/lib/stores/auth.svelte.ts` using Svelte runes. MSAL is lazy-imported on first auth action (SSR-safe with `browser` guard). Single env var: `PUBLIC_ENTRA_CLIENT_ID`.
+
+Incremental consent is managed via `src/lib/auth/permission-check.ts` and `src/lib/stores/permissions.svelte.ts` — features that need extra Graph scopes trigger a consent popup before proceeding.
 
 ### Graph API Client (`src/lib/graph/client.ts`)
 
@@ -60,6 +63,8 @@ Factory function `createGraphClient(getAccessToken)` provides three methods:
 - `batch()` — batch endpoint, auto-chunks at 20 requests per batch
 
 Custom error hierarchy: `GraphApiError` → `RateLimitError` (429), `AuthenticationError` (401), `PermissionError` (403). Errors are converted to user-friendly messages via `toFriendlyMessage()` in `src/lib/graph/errors.ts`.
+
+Additional domain-specific Graph modules: `compliance.ts`, `security.ts`, `devices.ts`, `status.ts`, `filters.ts`, `merge.ts`.
 
 ### Bulk Assignment Flow (`src/lib/graph/execute.ts`)
 
@@ -82,12 +87,17 @@ SvelteKit file-based routing:
 - `/` — Dashboard
 - `/apps`, `/apps/[id]` — Browse and detail for mobile apps
 - `/profiles`, `/profiles/[id]` — Browse and detail for config profiles
+- `/compliance`, `/compliance/[id]` — Compliance policies
+- `/security`, `/security/[id]` — Endpoint security policies
+- `/devices`, `/devices/[id]` — Managed devices
 - `/assign` — 5-step bulk assignment wizard
 - `/audit` — Intune audit log
+- `/status` — App install status reports
+- `/settings` — App settings
 
 ### Type System
 
-Three-tier validation: TypeScript interfaces (`src/lib/types/graph.ts`) → Zod schemas (`src/lib/types/schemas.ts`) → business logic types (`src/lib/types/wizard.ts`).
+Three-tier validation: TypeScript interfaces → Zod schemas → business logic types. Core files in `src/lib/types/`: `graph.ts`, `schemas.ts`, `wizard.ts`. Domain-specific pairs: `compliance.ts`/`compliance-schemas.ts`, `device.ts`/`device-schemas.ts`, `security.ts`, `status.ts`/`status-schemas.ts`.
 
 ## Code Style
 
@@ -98,4 +108,5 @@ Three-tier validation: TypeScript interfaces (`src/lib/types/graph.ts`) → Zod 
 - **Graph API base**: `https://graph.microsoft.com/beta`
 
 ## Validation
-You can use claude code chrome MCP server to validate changes and implementations work. You do not need to do this after every change but after new or significant features/changes are introduced to validate they work. You should run pnpm dev and then launch the browser to the right URL provided by pnpm dev output and validate the changes work and no errors exist in the browser console or are returned to the node console
+
+Use the Claude Code Chrome MCP server to validate significant changes in a browser. Run `pnpm dev`, navigate to the URL from its output, and check that the feature works with no console errors. Not required after every change — use for new features or major modifications.

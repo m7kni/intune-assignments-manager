@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { SvelteSet } from 'svelte/reactivity';
 	import { fly } from 'svelte/transition';
 	import AuthGuard from '$lib/components/ui/AuthGuard.svelte';
 	import PermissionGuard from '$lib/components/ui/PermissionGuard.svelte';
@@ -11,16 +12,25 @@
 	import DropdownMenu from '$lib/components/ui/DropdownMenu.svelte';
 	import DeviceRow from '$lib/components/ui/DeviceRow.svelte';
 	import MultiSelectFilter from '$lib/components/ui/MultiSelectFilter.svelte';
+	import BulkActionDialog from '$lib/components/devices/BulkActionDialog.svelte';
 	import {
 		Search,
 		Monitor,
 		ArrowDownAZ,
 		ArrowUpZA,
 		Clock,
-		ShieldCheck
+		ShieldCheck,
+		RefreshCw,
+		RotateCcw,
+		Lock,
+		Power,
+		KeyRound,
+		UserMinus,
+		Trash2,
+		X
 	} from 'lucide-svelte';
 	import { getGraphClient } from '$lib/stores/graph';
-	import type { ManagedDevice } from '$lib/types/device';
+	import type { ManagedDevice, DeviceAction } from '$lib/types/device';
 	import { toFriendlyMessage } from '$lib/graph/errors';
 	import { listDevices, loadMoreDevices } from '$lib/graph/devices';
 	import {
@@ -67,6 +77,60 @@
 	let platformFilter = $state<string[]>([]);
 	let complianceFilter = $state<string[]>([]);
 	let ownershipFilter = $state<string[]>([]);
+
+	// ─── Multi-select state ────────────────────────────────────────
+	let selectedDeviceIds = new SvelteSet<string>();
+	let bulkActionOpen = $state(false);
+	let bulkAction = $state<DeviceAction>('syncDevice');
+
+	const selectedCount = $derived(selectedDeviceIds.size);
+	const hasSelection = $derived(selectedCount > 0);
+
+	const selectedDevices = $derived.by(() => {
+		return filteredDevices
+			.filter((d) => selectedDeviceIds.has(d.id))
+			.map((d) => ({ id: d.id, deviceName: d.deviceName }));
+	});
+
+	const allOnPageSelected = $derived.by(() => {
+		if (filteredDevices.length === 0) return false;
+		return filteredDevices.every((d) => selectedDeviceIds.has(d.id));
+	});
+
+	function toggleDevice(id: string) {
+		if (selectedDeviceIds.has(id)) {
+			selectedDeviceIds.delete(id);
+		} else {
+			selectedDeviceIds.add(id);
+		}
+	}
+
+	function toggleSelectAll() {
+		if (allOnPageSelected) {
+			// Deselect all visible
+			for (const d of filteredDevices) {
+				selectedDeviceIds.delete(d.id);
+			}
+		} else {
+			// Select all visible
+			for (const d of filteredDevices) {
+				selectedDeviceIds.add(d.id);
+			}
+		}
+	}
+
+	function clearSelection() {
+		selectedDeviceIds.clear();
+	}
+
+	function openBulkAction(action: DeviceAction) {
+		bulkAction = action;
+		bulkActionOpen = true;
+	}
+
+	function closeBulkAction() {
+		bulkActionOpen = false;
+	}
 
 	const sortOptions = [
 		{ id: 'name-asc', label: 'Name A\u2013Z', icon: ArrowDownAZ },
@@ -233,19 +297,33 @@
 					<div
 						class="border-border bg-surface/95 sticky top-12 z-10 border-b backdrop-blur-sm"
 					>
-						<div class="px-4 py-2">
-							<p class="text-muted text-xs font-medium tracking-wide uppercase">
-								{filteredDevices.length}{filtersActive || search.trim() !== ''
-									? ` of ${devices.length}`
-									: ''} device{filteredDevices.length !== 1 ? 's' : ''}
-								{#if search.trim() !== ''}
-									matching "{search.trim()}"
-								{/if}
-							</p>
+						<div class="flex items-center gap-3 px-4 py-2">
+							<!-- Select all checkbox -->
+							<label class="flex cursor-pointer items-center gap-2">
+								<input
+									type="checkbox"
+									checked={allOnPageSelected}
+									onchange={toggleSelectAll}
+									class="accent-accent h-3.5 w-3.5 rounded"
+								/>
+								<span class="text-muted text-xs font-medium tracking-wide uppercase">
+									{#if hasSelection}
+										{selectedCount} selected
+									{:else}
+										{filteredDevices.length}{filtersActive || search.trim() !== ''
+											? ` of ${devices.length}`
+											: ''} device{filteredDevices.length !== 1 ? 's' : ''}
+									{/if}
+									{#if search.trim() !== '' && !hasSelection}
+										matching "{search.trim()}"
+									{/if}
+								</span>
+							</label>
 						</div>
 						<div
 							class="border-border flex items-center gap-4 border-t px-4 py-1.5 text-[10px] font-semibold tracking-wider uppercase"
 						>
+							<div class="w-4 shrink-0"></div>
 							<div class="w-10 shrink-0"></div>
 							<div class="text-muted min-w-0 flex-1">Device</div>
 							<span class="text-muted hidden w-24 text-right sm:block">OS Version</span>
@@ -258,7 +336,12 @@
 
 					{#each filteredDevices as device, i (device.id)}
 						<div in:fly={{ y: 10, duration: 200, delay: Math.min(i * 30, 300) }}>
-							<DeviceRow {device} />
+							<DeviceRow
+								{device}
+								selectable={true}
+								selected={selectedDeviceIds.has(device.id)}
+								onToggle={toggleDevice}
+							/>
 						</div>
 					{/each}
 				</div>
@@ -270,7 +353,101 @@
 						</Button>
 					</div>
 				{/if}
+
+				<!-- Floating bulk action toolbar -->
+				{#if hasSelection}
+					<div
+						class="fixed bottom-6 left-1/2 z-40 -translate-x-1/2"
+						transition:fly={{ y: 20, duration: 200 }}
+					>
+						<div
+							class="border-border bg-surface flex items-center gap-2 rounded-xl border px-4 py-3 shadow-lg"
+						>
+							<span class="text-ink mr-2 text-sm font-medium whitespace-nowrap">
+								{selectedCount} device{selectedCount !== 1 ? 's' : ''} selected
+							</span>
+
+							<div class="bg-border mx-1 h-6 w-px"></div>
+
+							<!-- Non-destructive actions -->
+							<Button
+								variant="primary"
+								size="sm"
+								icon={RefreshCw}
+								onclick={() => openBulkAction('syncDevice')}
+							>
+								Sync
+							</Button>
+							<Button
+								variant="secondary"
+								size="sm"
+								icon={RotateCcw}
+								onclick={() => openBulkAction('rebootNow')}
+							>
+								Restart
+							</Button>
+							<Button
+								variant="secondary"
+								size="sm"
+								icon={Lock}
+								onclick={() => openBulkAction('remoteLock')}
+							>
+								Lock
+							</Button>
+							<Button
+								variant="ghost"
+								size="sm"
+								icon={Power}
+								onclick={() => openBulkAction('shutDown')}
+							>
+								Shut Down
+							</Button>
+							<Button
+								variant="ghost"
+								size="sm"
+								icon={KeyRound}
+								onclick={() => openBulkAction('resetPasscode')}
+							>
+								Reset Passcode
+							</Button>
+
+							<div class="bg-border mx-1 h-6 w-px"></div>
+
+							<!-- Destructive actions -->
+							<Button
+								variant="destructive"
+								size="sm"
+								icon={UserMinus}
+								onclick={() => openBulkAction('retire')}
+							>
+								Retire
+							</Button>
+							<Button
+								variant="destructive"
+								size="sm"
+								icon={Trash2}
+								onclick={() => openBulkAction('wipe')}
+							>
+								Wipe
+							</Button>
+
+							<div class="bg-border mx-1 h-6 w-px"></div>
+
+							<Button variant="ghost" size="sm" icon={X} onclick={clearSelection}>
+								Clear
+							</Button>
+						</div>
+					</div>
+				{/if}
 			{/if}
 		</div>
 	</PermissionGuard>
 </AuthGuard>
+
+<!-- Bulk action dialog -->
+<BulkActionDialog
+	open={bulkActionOpen}
+	action={bulkAction}
+	devices={selectedDevices}
+	onClose={closeBulkAction}
+/>

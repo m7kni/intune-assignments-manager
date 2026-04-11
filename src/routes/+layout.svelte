@@ -16,7 +16,13 @@
 		ShieldAlert,
 		Swords,
 		Activity,
-		Monitor
+		Monitor,
+		RefreshCw,
+		Stethoscope,
+		FileCode,
+		Plane,
+		GitCompare,
+		BarChart3
 	} from 'lucide-svelte';
 	import favicon from '$lib/assets/favicon.svg';
 	import { auth, initAuth, login, logout } from '$lib/stores/auth.svelte';
@@ -74,16 +80,26 @@
 				{ href: '/profiles', label: 'Config Profiles', icon: Settings },
 				{ href: '/compliance', label: 'Compliance', icon: ShieldAlert },
 				{ href: '/security', label: 'Endpoint Security', icon: Swords },
-				{ href: '/status', label: 'Deploy Status', icon: Activity }
+				{ href: '/updates', label: 'Windows Updates', icon: RefreshCw },
+				{ href: '/remediations', label: 'Remediations', icon: Stethoscope },
+				{ href: '/scripts', label: 'Platform Scripts', icon: FileCode }
 			]
 		},
 		{
 			label: 'Devices',
-			items: [{ href: '/devices', label: 'Device Inventory', icon: Monitor }]
+			items: [
+				{ href: '/devices', label: 'Device Inventory', icon: Monitor },
+				{ href: '/autopilot', label: 'Autopilot', icon: Plane }
+			]
 		},
 		{
-			label: 'Activity',
-			items: [{ href: '/audit', label: 'Audit Log', icon: ClipboardList }]
+			label: 'Tools',
+			items: [
+				{ href: '/compare', label: 'Policy Compare', icon: GitCompare },
+				{ href: '/reports', label: 'Reports', icon: BarChart3 },
+				{ href: '/status', label: 'Deploy Status', icon: Activity },
+				{ href: '/audit', label: 'Audit Log', icon: ClipboardList }
+			]
 		},
 		{
 			label: 'Settings',

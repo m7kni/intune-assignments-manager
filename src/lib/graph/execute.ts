@@ -24,6 +24,8 @@ import {
 import { getAppAssignments } from '$lib/graph/apps';
 import { getConfigAssignments } from '$lib/graph/configurations';
 import { getCompliancePolicyAssignments } from '$lib/graph/compliance';
+import { getRemediationAssignments } from '$lib/graph/remediations';
+import { getScriptAssignments } from '$lib/graph/scripts';
 
 // ─── Constants ─────────────────────────────────────────────────────
 
@@ -87,6 +89,15 @@ function getAssignmentUrl(item: AssignableItem): string {
 	if (item.kind === 'security') {
 		return `/deviceManagement/configurationPolicies/${item.id}/assignments`;
 	}
+	if (item.kind === 'updateRing') {
+		return `/deviceManagement/deviceConfigurations/${item.id}/assignments`;
+	}
+	if (item.kind === 'remediation') {
+		return `/deviceManagement/deviceHealthScripts/${item.id}/assignments`;
+	}
+	if (item.kind === 'script') {
+		return `/deviceManagement/deviceManagementScripts/${item.id}/assignments`;
+	}
 	return `/deviceManagement/configurationPolicies/${item.id}/assignments`;
 }
 
@@ -99,6 +110,15 @@ function getAssignUrl(item: AssignableItem): string {
 	}
 	if (item.kind === 'security') {
 		return `/deviceManagement/configurationPolicies/${item.id}/assign`;
+	}
+	if (item.kind === 'updateRing') {
+		return `/deviceManagement/deviceConfigurations/${item.id}/assign`;
+	}
+	if (item.kind === 'remediation') {
+		return `/deviceManagement/deviceHealthScripts/${item.id}/assign`;
+	}
+	if (item.kind === 'script') {
+		return `/deviceManagement/deviceManagementScripts/${item.id}/assign`;
 	}
 	return `/deviceManagement/configurationPolicies/${item.id}/assign`;
 }
@@ -175,6 +195,10 @@ async function fetchCurrentAssignments(
 					fullAssignments = await getCompliancePolicyAssignments(client, item.id);
 				} else if (item.kind === 'security') {
 					fullAssignments = await getConfigAssignments(client, item.id);
+				} else if (item.kind === 'remediation') {
+					fullAssignments = await getRemediationAssignments(client, item.id);
+				} else if (item.kind === 'script') {
+					fullAssignments = await getScriptAssignments(client, item.id);
 				} else {
 					fullAssignments = await getConfigAssignments(client, item.id);
 				}
@@ -284,6 +308,54 @@ function mergeAssignments(fetched: FetchedItem[], params: BulkAssignmentParams):
 			merged.push({
 				item,
 				body: { assignments: mergedList }
+			});
+		} else if (item.kind === 'updateRing') {
+			const mergedList = mergeProfileAssignments({
+				current: assignments as ConfigurationPolicyAssignment[],
+				groups,
+				exclusionGroups,
+				filter,
+				conflicts,
+				itemId: item.id,
+				replaceMode,
+				replaceInclusions: replaceConfig.policyInclusions,
+				replaceExclusions: replaceConfig.policyExclusions
+			});
+			merged.push({
+				item,
+				body: { assignments: mergedList }
+			});
+		} else if (item.kind === 'remediation') {
+			const mergedList = mergeProfileAssignments({
+				current: assignments as ConfigurationPolicyAssignment[],
+				groups,
+				exclusionGroups,
+				filter,
+				conflicts,
+				itemId: item.id,
+				replaceMode,
+				replaceInclusions: replaceConfig.policyInclusions,
+				replaceExclusions: replaceConfig.policyExclusions
+			});
+			merged.push({
+				item,
+				body: { deviceHealthScriptAssignments: mergedList.map((a) => ({ ...a, runRemediationScript: true })) }
+			});
+		} else if (item.kind === 'script') {
+			const mergedList = mergeProfileAssignments({
+				current: assignments as ConfigurationPolicyAssignment[],
+				groups,
+				exclusionGroups,
+				filter,
+				conflicts,
+				itemId: item.id,
+				replaceMode,
+				replaceInclusions: replaceConfig.policyInclusions,
+				replaceExclusions: replaceConfig.policyExclusions
+			});
+			merged.push({
+				item,
+				body: { deviceManagementScriptAssignments: mergedList }
 			});
 		} else {
 			const mergedList = mergeProfileAssignments({

@@ -3,7 +3,6 @@ import type {
 	ComplianceState,
 	DeviceOwnerType,
 	DevicePolicyComplianceState,
-	DeviceAction,
 	DeviceActionInfo,
 	ManagementAgent
 } from '$lib/types/device';
@@ -148,45 +147,66 @@ export function getManagementAgentLabel(agent: ManagementAgent): string {
 
 export const DEVICE_ACTIONS: DeviceActionInfo[] = [
 	{
-		action: 'syncDevice' as DeviceAction,
+		action: 'syncDevice',
 		label: 'Sync',
 		description: 'Trigger a sync check-in',
+		icon: 'RefreshCw',
 		destructive: false,
+		requiresConfirmation: true,
 		requiresTypedConfirmation: false
 	},
 	{
-		action: 'rebootNow' as DeviceAction,
+		action: 'rebootNow',
 		label: 'Restart',
 		description: 'Restart the device',
+		icon: 'RotateCcw',
 		destructive: false,
+		requiresConfirmation: true,
 		requiresTypedConfirmation: false
 	},
 	{
-		action: 'remoteLock' as DeviceAction,
+		action: 'remoteLock',
 		label: 'Lock',
 		description: 'Lock the device remotely',
+		icon: 'Lock',
 		destructive: false,
+		requiresConfirmation: true,
 		requiresTypedConfirmation: false
 	},
 	{
-		action: 'retire' as DeviceAction,
-		label: 'Retire',
-		description: 'Remove corporate data and unenroll',
-		destructive: true,
-		requiresTypedConfirmation: true
-	},
-	{
-		action: 'wipe' as DeviceAction,
-		label: 'Wipe',
-		description: 'Factory reset — all data will be erased',
-		destructive: true,
-		requiresTypedConfirmation: true
-	},
-	{
-		action: 'shutDown' as DeviceAction,
+		action: 'shutDown',
 		label: 'Shut Down',
 		description: 'Remotely shut down the device',
+		icon: 'Power',
 		destructive: false,
+		requiresConfirmation: true,
 		requiresTypedConfirmation: false
+	},
+	{
+		action: 'resetPasscode',
+		label: 'Reset Passcode',
+		description: 'Reset the device passcode',
+		icon: 'KeyRound',
+		destructive: false,
+		requiresConfirmation: true,
+		requiresTypedConfirmation: false
+	},
+	{
+		action: 'retire',
+		label: 'Retire',
+		description: 'Remove corporate data and unenroll',
+		icon: 'UserMinus',
+		destructive: true,
+		requiresConfirmation: true,
+		requiresTypedConfirmation: true
+	},
+	{
+		action: 'wipe',
+		label: 'Wipe',
+		description: 'Factory reset — all data will be erased',
+		icon: 'Trash2',
+		destructive: true,
+		requiresConfirmation: true,
+		requiresTypedConfirmation: true
 	}
 ];
