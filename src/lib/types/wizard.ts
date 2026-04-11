@@ -19,6 +19,17 @@ export interface FilterConfig {
 	filterType: 'include' | 'exclude';
 }
 
+// ─── Replace Configuration ───────────────────────────────────────
+
+export interface ReplaceConfig {
+	/** Which app intent categories to replace (empty = no app replacement) */
+	appIntents: AssignmentIntent[];
+	/** Whether to replace inclusion assignments for policies */
+	policyInclusions: boolean;
+	/** Whether to replace exclusion assignments for policies */
+	policyExclusions: boolean;
+}
+
 // ─── Wizard State ──────────────────────────────────────────────────
 
 export interface WizardState {
@@ -30,6 +41,8 @@ export interface WizardState {
 	intent: AssignmentIntent;
 	filterConfig: FilterConfig | null;
 	exclusionGroups: GroupTarget[];
+	replaceMode: boolean;
+	replaceConfig: ReplaceConfig;
 }
 
 export function createDefaultWizardState(): WizardState {
@@ -41,7 +54,13 @@ export function createDefaultWizardState(): WizardState {
 		selectedGroups: [],
 		intent: 'required',
 		filterConfig: null,
-		exclusionGroups: []
+		exclusionGroups: [],
+		replaceMode: false,
+		replaceConfig: {
+			appIntents: [],
+			policyInclusions: false,
+			policyExclusions: false
+		}
 	};
 }
 

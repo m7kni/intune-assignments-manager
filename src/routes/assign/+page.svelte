@@ -350,7 +350,13 @@
 				selectedGroups: Array.from(groupMap.values()),
 				exclusionGroups: Array.from(exclusionMap.values()),
 				intent: bestIntent,
-				filterConfig
+				filterConfig,
+				replaceMode: false,
+				replaceConfig: {
+					appIntents: [],
+					policyInclusions: false,
+					policyExclusions: false
+				}
 			};
 
 			currentStepIndex = 3;
