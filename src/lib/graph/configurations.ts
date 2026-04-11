@@ -77,3 +77,13 @@ export async function assignConfigPolicy(
 		body: { assignments }
 	});
 }
+
+export async function getConfigPolicySettings(
+	client: GraphClient,
+	policyId: string
+): Promise<unknown[]> {
+	const response = await client.request<{ value: unknown[] }>(
+		`/deviceManagement/configurationPolicies/${policyId}/settings`
+	);
+	return response.value;
+}

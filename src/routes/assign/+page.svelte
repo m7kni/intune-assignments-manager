@@ -34,6 +34,9 @@
 	} from '$lib/types/wizard';
 	import type { MobileApp, ConfigurationPolicy, AssignmentIntent } from '$lib/types/graph';
 	import type { DeviceCompliancePolicy } from '$lib/types/compliance';
+	import type { WindowsUpdateForBusinessConfiguration } from '$lib/types/updates';
+	import type { DeviceHealthScript } from '$lib/types/remediation';
+	import type { DeviceManagementScript } from '$lib/types/scripts';
 	import { getCompliancePolicy } from '$lib/graph/compliance';
 
 	// ─── CSV Import ───────────────────────────────────────────────
@@ -57,6 +60,9 @@
 	let cachedProfiles: ConfigurationPolicy[] = $state([]);
 	let cachedCompliancePolicies: DeviceCompliancePolicy[] = $state([]);
 	let cachedSecurityPolicies: ConfigurationPolicy[] = $state([]);
+	let cachedUpdateRings: WindowsUpdateForBusinessConfiguration[] = $state([]);
+	let cachedRemediations: DeviceHealthScript[] = $state([]);
+	let cachedScripts: DeviceManagementScript[] = $state([]);
 
 	// ─── URL Param Pre-selection ───────────────────────────────────
 	const preselectedAppId = page.url.searchParams.get('appId');
@@ -72,7 +78,10 @@
 					wizard.selectedApps.length > 0 ||
 					wizard.selectedProfiles.length > 0 ||
 					wizard.selectedCompliancePolicies.length > 0 ||
-					wizard.selectedSecurityPolicies.length > 0
+					wizard.selectedSecurityPolicies.length > 0 ||
+					wizard.selectedUpdateRings.length > 0 ||
+					wizard.selectedRemediations.length > 0 ||
+					wizard.selectedScripts.length > 0
 				);
 			case 1:
 				return wizard.selectedGroups.length > 0;
@@ -100,7 +109,10 @@
 		wizard.selectedApps.length +
 			wizard.selectedProfiles.length +
 			wizard.selectedCompliancePolicies.length +
-			wizard.selectedSecurityPolicies.length
+			wizard.selectedSecurityPolicies.length +
+			wizard.selectedUpdateRings.length +
+			wizard.selectedRemediations.length +
+			wizard.selectedScripts.length
 	);
 
 	const confirmMessage = $derived.by(() => {
@@ -170,6 +182,18 @@
 		wizard.selectedSecurityPolicies = policies;
 	}
 
+	function updateUpdateRings(rings: WindowsUpdateForBusinessConfiguration[]): void {
+		wizard.selectedUpdateRings = rings;
+	}
+
+	function updateRemediations(scripts: DeviceHealthScript[]): void {
+		wizard.selectedRemediations = scripts;
+	}
+
+	function updateScripts(scripts: DeviceManagementScript[]): void {
+		wizard.selectedScripts = scripts;
+	}
+
 	function updateGroups(groups: GroupTarget[]): void {
 		wizard.selectedGroups = groups;
 	}
@@ -226,6 +250,21 @@
 				kind: 'security' as const,
 				id: p.id,
 				displayName: p.name
+			})),
+			...wizard.selectedUpdateRings.map((r) => ({
+				kind: 'updateRing' as const,
+				id: r.id,
+				displayName: r.displayName
+			})),
+			...wizard.selectedRemediations.map((r) => ({
+				kind: 'remediation' as const,
+				id: r.id,
+				displayName: r.displayName
+			})),
+			...wizard.selectedScripts.map((s) => ({
+				kind: 'script' as const,
+				id: s.id,
+				displayName: s.displayName
 			}))
 		];
 
@@ -370,6 +409,9 @@
 				selectedProfiles: profiles,
 				selectedCompliancePolicies: compliancePolicies,
 				selectedSecurityPolicies: securityPolicies,
+				selectedUpdateRings: [],
+				selectedRemediations: [],
+				selectedScripts: [],
 				selectedGroups: Array.from(groupMap.values()),
 				exclusionGroups: Array.from(exclusionMap.values()),
 				intent: bestIntent,
@@ -435,6 +477,9 @@
 						selectedProfiles={wizard.selectedProfiles}
 						selectedCompliancePolicies={wizard.selectedCompliancePolicies}
 						selectedSecurityPolicies={wizard.selectedSecurityPolicies}
+						selectedUpdateRings={wizard.selectedUpdateRings}
+						selectedRemediations={wizard.selectedRemediations}
+						selectedScripts={wizard.selectedScripts}
 						{preselectedAppId}
 						{preselectedProfileId}
 						preselectedCompliancePolicyId={preselectedCompliancePolicyId}
@@ -443,14 +488,23 @@
 						profiles={cachedProfiles}
 						compliancePolicies={cachedCompliancePolicies}
 						securityPolicies={cachedSecurityPolicies}
+						updateRings={cachedUpdateRings}
+						remediations={cachedRemediations}
+						scripts={cachedScripts}
 						onUpdateApps={updateApps}
 						onUpdateProfiles={updateProfiles}
 						onUpdateCompliancePolicies={updateCompliancePolicies}
 						onUpdateSecurityPolicies={updateSecurityPolicies}
+						onUpdateUpdateRings={updateUpdateRings}
+						onUpdateRemediations={updateRemediations}
+						onUpdateScripts={updateScripts}
 						onAppsLoaded={(apps) => (cachedApps = apps)}
 						onProfilesLoaded={(profiles) => (cachedProfiles = profiles)}
 						onCompliancePoliciesLoaded={(policies) => (cachedCompliancePolicies = policies)}
 						onSecurityPoliciesLoaded={(policies) => (cachedSecurityPolicies = policies)}
+						onUpdateRingsLoaded={(rings) => (cachedUpdateRings = rings)}
+						onRemediationsLoaded={(scripts) => (cachedRemediations = scripts)}
+						onScriptsLoaded={(scripts) => (cachedScripts = scripts)}
 					/>
 				{:else if currentStepIndex === 1}
 					<StepSelectGroups

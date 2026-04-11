@@ -125,14 +125,35 @@ export type DeviceAction =
 	| 'retire'
 	| 'wipe'
 	| 'remoteLock'
-	| 'shutDown';
+	| 'shutDown'
+	| 'resetPasscode';
 
 export interface DeviceActionInfo {
 	action: DeviceAction;
 	label: string;
 	description: string;
+	icon: string;
 	destructive: boolean;
+	requiresConfirmation: boolean;
 	requiresTypedConfirmation: boolean;
+}
+
+// ─── Bulk Action Types ────────────────────────────────────────────
+
+export interface ActionResult {
+	deviceId: string;
+	deviceName: string;
+	action: DeviceAction;
+	status: 'success' | 'error';
+	error?: string;
+}
+
+export interface BulkActionProgress {
+	total: number;
+	completed: number;
+	succeeded: number;
+	failed: number;
+	results: ActionResult[];
 }
 
 // ─── Device Detail Aggregate ───────────────────────────────────────

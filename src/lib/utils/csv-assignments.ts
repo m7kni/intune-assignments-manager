@@ -25,7 +25,7 @@ export const CSV_HEADERS = [
 // ─── Export Types ───────────────────────────────────────────────────
 
 export interface ExportableAssignment {
-	itemType: 'app' | 'profile' | 'compliance' | 'security';
+	itemType: 'app' | 'profile' | 'compliance' | 'security' | 'script';
 	itemName: string;
 	itemId: string;
 	target: AssignmentTarget;
@@ -140,7 +140,7 @@ export function exportAssignmentsCsv(
 // ─── Import Types ───────────────────────────────────────────────────
 
 export interface CsvAssignmentRow {
-	itemType: 'app' | 'profile' | 'compliance' | 'security';
+	itemType: 'app' | 'profile' | 'compliance' | 'security' | 'script';
 	itemName: string;
 	itemId: string;
 	targetType: 'group' | 'exclusion' | 'allDevices' | 'allUsers';
@@ -172,7 +172,7 @@ export interface ImportValidationResult {
 
 // ─── Import Parsing ─────────────────────────────────────────────────
 
-const VALID_ITEM_TYPES = new Set(['app', 'profile', 'compliance', 'security']);
+const VALID_ITEM_TYPES = new Set(['app', 'profile', 'compliance', 'security', 'script']);
 const VALID_TARGET_TYPES = new Set(['group', 'exclusion', 'allDevices', 'allUsers']);
 
 export function parseAssignmentRows(parsed: CsvParseResult): {
@@ -205,7 +205,7 @@ export function parseAssignmentRows(parsed: CsvParseResult): {
 				rowIndex,
 				field: 'ItemType',
 				value: raw['ItemType'] ?? '',
-				message: `ItemType must be "app", "profile", "compliance", or "security"`
+				message: `ItemType must be "app", "profile", "compliance", "security", or "script"`
 			});
 			continue;
 		}

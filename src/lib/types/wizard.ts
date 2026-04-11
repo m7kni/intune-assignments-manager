@@ -1,5 +1,8 @@
 import type { MobileApp, ConfigurationPolicy, AssignmentIntent } from './graph';
 import type { DeviceCompliancePolicy } from './compliance';
+import type { WindowsUpdateForBusinessConfiguration } from './updates';
+import type { DeviceHealthScript } from './remediation';
+import type { DeviceManagementScript } from './scripts';
 
 // ─── Group Target ──────────────────────────────────────────────────
 
@@ -37,6 +40,9 @@ export interface WizardState {
 	selectedProfiles: ConfigurationPolicy[];
 	selectedCompliancePolicies: DeviceCompliancePolicy[];
 	selectedSecurityPolicies: ConfigurationPolicy[];
+	selectedUpdateRings: WindowsUpdateForBusinessConfiguration[];
+	selectedRemediations: DeviceHealthScript[];
+	selectedScripts: DeviceManagementScript[];
 	selectedGroups: GroupTarget[];
 	intent: AssignmentIntent;
 	filterConfig: FilterConfig | null;
@@ -51,6 +57,9 @@ export function createDefaultWizardState(): WizardState {
 		selectedProfiles: [],
 		selectedCompliancePolicies: [],
 		selectedSecurityPolicies: [],
+		selectedUpdateRings: [],
+		selectedRemediations: [],
+		selectedScripts: [],
 		selectedGroups: [],
 		intent: 'required',
 		filterConfig: null,
@@ -89,7 +98,7 @@ export type ConflictResolution = 'update' | 'skip';
 export interface AssignmentConflict {
 	itemId: string;
 	itemName: string;
-	itemType: 'app' | 'profile' | 'compliance' | 'security';
+	itemType: 'app' | 'profile' | 'compliance' | 'security' | 'updateRing' | 'remediation' | 'script';
 	targetDisplayName: string;
 	targetKey: string;
 	existingIntent: string | null;
@@ -105,7 +114,10 @@ export type AssignableItem =
 	| { kind: 'app'; id: string; displayName: string }
 	| { kind: 'profile'; id: string; displayName: string }
 	| { kind: 'compliance'; id: string; displayName: string }
-	| { kind: 'security'; id: string; displayName: string };
+	| { kind: 'security'; id: string; displayName: string }
+	| { kind: 'updateRing'; id: string; displayName: string }
+	| { kind: 'remediation'; id: string; displayName: string }
+	| { kind: 'script'; id: string; displayName: string };
 
 export interface ConflictChoice {
 	itemId: string;
@@ -116,7 +128,7 @@ export interface ConflictChoice {
 export interface AssignmentResult {
 	itemId: string;
 	itemName: string;
-	itemKind: 'app' | 'profile' | 'compliance' | 'security';
+	itemKind: 'app' | 'profile' | 'compliance' | 'security' | 'updateRing' | 'remediation' | 'script';
 	status: 'success' | 'error';
 	error?: string;
 }

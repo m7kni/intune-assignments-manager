@@ -14,7 +14,9 @@
 		Lock,
 		Power,
 		Trash2,
-		AlertTriangle
+		AlertTriangle,
+		UserMinus,
+		KeyRound
 	} from 'lucide-svelte';
 
 	interface Props {
@@ -44,8 +46,9 @@
 		rebootNow: RotateCcw,
 		remoteLock: Lock,
 		shutDown: Power,
-		retire: Trash2,
-		wipe: AlertTriangle
+		resetPasscode: KeyRound,
+		retire: UserMinus,
+		wipe: Trash2
 	};
 
 	const nonDestructive = DEVICE_ACTIONS.filter((a) => !a.destructive);
