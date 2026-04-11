@@ -26,6 +26,7 @@
 		type WizardState,
 		type GroupTarget,
 		type FilterConfig,
+		type ReplaceConfig,
 		type AssignmentConflict,
 		type AssignmentResult,
 		type BulkProgress,
@@ -101,6 +102,13 @@
 			wizard.selectedSecurityPolicies.length
 	);
 
+	const confirmMessage = $derived.by(() => {
+		if (!wizard.replaceMode) {
+			return 'This will apply the configured assignments to all selected items and groups. This action cannot be easily undone.';
+		}
+		return 'This will apply the configured assignments and remove existing assignments in the replaced categories. This action cannot be easily undone.';
+	});
+
 	// Step transition direction
 	let direction = $state<'forward' | 'back'>('forward');
 
@@ -173,6 +181,14 @@
 		wizard.filterConfig = config;
 	}
 
+	function updateReplaceMode(enabled: boolean): void {
+		wizard.replaceMode = enabled;
+	}
+
+	function updateReplaceConfig(config: ReplaceConfig): void {
+		wizard.replaceConfig = config;
+	}
+
 	function updateConflicts(c: AssignmentConflict[]): void {
 		conflicts = c;
 	}
@@ -223,6 +239,8 @@
 				intent: wizard.intent,
 				filter: wizard.filterConfig,
 				conflicts: conflictChoices,
+				replaceMode: wizard.replaceMode,
+				replaceConfig: wizard.replaceConfig,
 				onProgress: (p) => {
 					executionProgress = p;
 				}
@@ -391,7 +409,7 @@
 		<ConfirmDialog
 			open={confirmDialogOpen}
 			title="Apply Assignments"
-			message="This will apply the configured assignments to all selected items and groups. This action cannot be easily undone."
+			message={confirmMessage}
 			confirmLabel="Apply Assignments"
 			onConfirm={handleConfirmApply}
 			onCancel={() => (confirmDialogOpen = false)}
@@ -447,6 +465,10 @@
 						selectedGroups={wizard.selectedGroups}
 						onUpdateIntent={updateIntent}
 						onUpdateFilter={updateFilter}
+						replaceMode={wizard.replaceMode}
+						replaceConfig={wizard.replaceConfig}
+						onUpdateReplaceMode={updateReplaceMode}
+						onUpdateReplaceConfig={updateReplaceConfig}
 					/>
 				{:else if currentStepIndex === 3}
 					<StepReview {wizard} {conflicts} onUpdateConflicts={updateConflicts} />
