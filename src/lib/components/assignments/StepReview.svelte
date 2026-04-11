@@ -13,6 +13,7 @@
 	import type {
 		MobileAppAssignment,
 		ConfigurationPolicyAssignment,
+		AssignmentIntent,
 		AssignmentTarget,
 		BatchRequestItem,
 		GraphPagedResponse
@@ -62,6 +63,18 @@
 	const updateCount = $derived(conflicts.filter((c) => c.resolution === 'update').length);
 	const skipCount = $derived(conflicts.filter((c) => c.resolution === 'skip').length);
 	const newCount = $derived(totalAssignments - conflicts.length);
+
+	// ─── Replace mode removal tracking ─────────────────────────────
+	const removalCount = $derived.by(() => {
+		if (!diffResult || !wizard.replaceMode) return 0;
+		return diffResult.summary.removed;
+	});
+
+	const itemsWithRemovals = $derived.by(() => {
+		if (!diffResult || !wizard.replaceMode) return 0;
+		return diffResult.items.filter((item) => item.entries.some((e) => e.status === 'removed'))
+			.length;
+	});
 
 	// ─── Conflict Detection ────────────────────────────────────────
 	async function detectConflicts(): Promise<void> {
@@ -149,6 +162,22 @@
 					const wizardTarget = wizardTargetKeys.get(key);
 
 					if (wizardTarget) {
+						// In replace mode, targets in replaced categories aren't conflicts — they're replacements
+						if (wizard.replaceMode) {
+							const existingIntent = assignment.intent ?? null;
+							const isExclusion =
+								assignment.target['@odata.type'] ===
+								'#microsoft.graph.exclusionGroupAssignmentTarget';
+
+							if (item.type === 'app' && wizard.replaceConfig.appIntents.includes(existingIntent as AssignmentIntent)) {
+								continue;
+							}
+							if (item.type !== 'app') {
+								if (!isExclusion && wizard.replaceConfig.policyInclusions) continue;
+								if (isExclusion && wizard.replaceConfig.policyExclusions) continue;
+							}
+						}
+
 						// Conflict: existing assignment targets the same group
 						detected.push({
 							itemId: item.id,
@@ -186,7 +215,11 @@
 				newIntent: item.type !== 'app' ? null : wizard.intent,
 				newFilter: wizard.filterConfig,
 				groupNames,
-				filterNames
+				filterNames,
+				replaceMode: wizard.replaceMode,
+				replaceIntents: wizard.replaceConfig.appIntents,
+				replaceInclusions: wizard.replaceConfig.policyInclusions,
+				replaceExclusions: wizard.replaceConfig.policyExclusions
 			}));
 
 			diffResult = computeFullDiff(diffItems);
@@ -276,6 +309,17 @@
 		</button>
 	</div>
 {:else}
+	{#if wizard.replaceMode && removalCount > 0}
+		<div class="panel-inset border-ember bg-ember-light mb-4 flex items-start gap-2 border-l-2">
+			<AlertTriangle size={16} class="text-ember mt-0.5 shrink-0" />
+			<p class="text-ink text-sm">
+				<strong>Replace mode is active.</strong>
+				{removalCount} existing assignment{removalCount !== 1 ? 's' : ''} will be removed
+				across {itemsWithRemovals} item{itemsWithRemovals !== 1 ? 's' : ''}.
+			</p>
+		</div>
+	{/if}
+
 	<!-- View toggle -->
 	<div class="mb-3">
 		<Tabs
@@ -459,13 +503,61 @@
 							{/if}
 						</div>
 					{/each}
-				{/each}
-			</div>
+
+				<!-- Removed assignments (replace mode) -->
+				{#if wizard.replaceMode && diffResult}
+					{@const itemDiff = diffResult.items.find((d) => d.itemId === item.id)}
+					{#if itemDiff}
+						{#each itemDiff.entries.filter((e) => e.status === 'removed') as entry (entry.targetKey)}
+							<div
+								class="border-border border-l-ember bg-ember-light/50 grid grid-cols-12 items-center gap-2 border-b border-l-2 px-4 py-2.5 last:border-b-0"
+							>
+								<div class="col-span-4 min-w-0">
+									<p class="text-ink truncate text-sm font-medium line-through opacity-60">
+										{item.name}
+									</p>
+									<p class="text-muted text-xs">
+										{item.type === 'app' ? 'App' : item.type === 'compliance' ? 'Compliance' : item.type === 'security' ? 'Security' : 'Profile'}
+									</p>
+								</div>
+								<div class="col-span-3 min-w-0">
+									<p class="text-ink truncate text-sm line-through opacity-60">
+										{entry.targetDisplayName}
+										{#if entry.isExclusion}
+											<span class="text-xs">(Exclusion)</span>
+										{/if}
+									</p>
+								</div>
+								<div class="col-span-2">
+									<Badge variant="neutral">
+										<span class="text-ember">Removed</span>
+									</Badge>
+								</div>
+								<div class="col-span-3 min-w-0">
+									{#if entry.currentFilterName}
+										<p class="text-muted truncate text-xs line-through opacity-60">
+											{entry.currentFilterName} ({entry.currentFilterMode})
+										</p>
+									{:else}
+										<p class="text-muted text-xs">—</p>
+									{/if}
+								</div>
+							</div>
+						{/each}
+					{/if}
+				{/if}
+			{/each}
 		</div>
+	</div>
 
 		<!-- Total summary -->
 		<div class="text-muted mt-4 text-sm">
 			{totalAssignments} total assignment{totalAssignments !== 1 ? 's' : ''} will be processed.
+			{#if wizard.replaceMode && removalCount > 0}
+				<span class="text-ember font-medium">
+					{removalCount} will be removed.
+				</span>
+			{/if}
 		</div>
 	{:else if diffResult}
 		<AssignmentDiff diff={diffResult} />
