@@ -1,4 +1,5 @@
 import type {
+	AssignmentIntent,
 	AssignmentTarget,
 	MobileAppAssignment,
 	ConfigurationPolicyAssignment
@@ -19,7 +20,7 @@ export interface DiffItemParams {
 	groupNames: Map<string, string>;
 	filterNames: Map<string, string>;
 	replaceMode?: boolean;
-	replaceIntents?: string[];
+	replaceIntents?: AssignmentIntent[];
 	replaceInclusions?: boolean;
 	replaceExclusions?: boolean;
 }
@@ -132,7 +133,7 @@ export function computeItemDiff(params: DiffItemParams): ItemDiff {
 			let status: DiffStatus = 'unchanged';
 
 			if (params.replaceMode) {
-				if (params.itemType === 'app' && params.replaceIntents?.includes(current.intent ?? '')) {
+				if (params.itemType === 'app' && params.replaceIntents?.includes(current.intent as AssignmentIntent)) {
 					status = 'removed';
 				} else if (params.itemType !== 'app') {
 					if (params.replaceInclusions && !current.isExclusion) {

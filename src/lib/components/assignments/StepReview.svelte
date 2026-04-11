@@ -26,9 +26,10 @@
 		wizard: WizardState;
 		conflicts: AssignmentConflict[];
 		onUpdateConflicts: (conflicts: AssignmentConflict[]) => void;
+		onRemovalCount?: (count: number) => void;
 	}
 
-	const { wizard, conflicts, onUpdateConflicts }: Props = $props();
+	const { wizard, conflicts, onUpdateConflicts, onRemovalCount }: Props = $props();
 
 	let loading = $state(true);
 	let loadError: string | null = $state(null);
@@ -223,6 +224,7 @@
 			}));
 
 			diffResult = computeFullDiff(diffItems);
+			onRemovalCount?.(diffResult.summary.removed);
 			hasLoaded = true;
 		} catch (err) {
 			loadError = toFriendlyMessage(err);
