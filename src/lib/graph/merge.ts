@@ -21,6 +21,8 @@ export interface MergeAppParams {
 	filter: FilterConfig | null;
 	conflicts: ConflictChoice[];
 	itemId: string;
+	replaceMode?: boolean;
+	replaceIntents?: AssignmentIntent[];
 }
 
 export interface MergeProfileParams {
@@ -30,6 +32,9 @@ export interface MergeProfileParams {
 	filter: FilterConfig | null;
 	conflicts: ConflictChoice[];
 	itemId: string;
+	replaceMode?: boolean;
+	replaceInclusions?: boolean;
+	replaceExclusions?: boolean;
 }
 
 export interface MergeComplianceParams {
@@ -39,6 +44,9 @@ export interface MergeComplianceParams {
 	filter: FilterConfig | null;
 	conflicts: ConflictChoice[];
 	itemId: string;
+	replaceMode?: boolean;
+	replaceInclusions?: boolean;
+	replaceExclusions?: boolean;
 }
 
 // ─── Target Key ────────────────────────────────────────────────────
@@ -170,6 +178,23 @@ export function mergeAppAssignments(params: MergeAppParams): MobileAppAssignment
 		});
 	}
 
+	// ─── Replace mode: remove assignments in replaced intent categories ──
+	if (params.replaceMode && params.replaceIntents && params.replaceIntents.length > 0) {
+		const newTargetKeys = new Set<string>();
+		for (const group of groups) {
+			newTargetKeys.add(getTargetKey(buildAssignmentTarget(group, filter)));
+		}
+		for (const group of exclusionGroups) {
+			newTargetKeys.add(getTargetKey(buildExclusionTarget(group, filter)));
+		}
+
+		for (const [key, assignment] of existingByKey) {
+			if (params.replaceIntents.includes(assignment.intent) && !newTargetKeys.has(key)) {
+				existingByKey.delete(key);
+			}
+		}
+	}
+
 	return Array.from(existingByKey.values());
 }
 
@@ -223,6 +248,29 @@ export function mergeProfileAssignments(
 		});
 	}
 
+	// ─── Replace mode: remove assignments in replaced categories ──
+	if (params.replaceMode) {
+		const newInclusionKeys = new Set<string>();
+		const newExclusionKeys = new Set<string>();
+		for (const group of groups) {
+			newInclusionKeys.add(getTargetKey(buildAssignmentTarget(group, filter)));
+		}
+		for (const group of exclusionGroups) {
+			newExclusionKeys.add(getTargetKey(buildExclusionTarget(group, filter)));
+		}
+
+		for (const [key, assignment] of existingByKey) {
+			const isExclusion =
+				assignment.target['@odata.type'] === '#microsoft.graph.exclusionGroupAssignmentTarget';
+			if (params.replaceInclusions && !isExclusion && !newInclusionKeys.has(key)) {
+				existingByKey.delete(key);
+			}
+			if (params.replaceExclusions && isExclusion && !newExclusionKeys.has(key)) {
+				existingByKey.delete(key);
+			}
+		}
+	}
+
 	return Array.from(existingByKey.values());
 }
 
@@ -272,6 +320,29 @@ export function mergeCompliancePolicyAssignments(
 			id: '',
 			target
 		});
+	}
+
+	// ─── Replace mode: remove assignments in replaced categories ──
+	if (params.replaceMode) {
+		const newInclusionKeys = new Set<string>();
+		const newExclusionKeys = new Set<string>();
+		for (const group of groups) {
+			newInclusionKeys.add(getTargetKey(buildAssignmentTarget(group, filter)));
+		}
+		for (const group of exclusionGroups) {
+			newExclusionKeys.add(getTargetKey(buildExclusionTarget(group, filter)));
+		}
+
+		for (const [key, assignment] of existingByKey) {
+			const isExclusion =
+				assignment.target['@odata.type'] === '#microsoft.graph.exclusionGroupAssignmentTarget';
+			if (params.replaceInclusions && !isExclusion && !newInclusionKeys.has(key)) {
+				existingByKey.delete(key);
+			}
+			if (params.replaceExclusions && isExclusion && !newExclusionKeys.has(key)) {
+				existingByKey.delete(key);
+			}
+		}
 	}
 
 	return Array.from(existingByKey.values());
