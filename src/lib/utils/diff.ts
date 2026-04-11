@@ -18,6 +18,10 @@ export interface DiffItemParams {
 	newFilter: FilterConfig | null;
 	groupNames: Map<string, string>;
 	filterNames: Map<string, string>;
+	replaceMode?: boolean;
+	replaceIntents?: string[];
+	replaceInclusions?: boolean;
+	replaceExclusions?: boolean;
 }
 
 function resolveDisplayName(target: AssignmentTarget, groupNames: Map<string, string>): string {
@@ -125,17 +129,32 @@ export function computeItemDiff(params: DiffItemParams): ItemDiff {
 		const next = newMap.get(key);
 
 		if (current && !next) {
+			let status: DiffStatus = 'unchanged';
+
+			if (params.replaceMode) {
+				if (params.itemType === 'app' && params.replaceIntents?.includes(current.intent ?? '')) {
+					status = 'removed';
+				} else if (params.itemType !== 'app') {
+					if (params.replaceInclusions && !current.isExclusion) {
+						status = 'removed';
+					}
+					if (params.replaceExclusions && current.isExclusion) {
+						status = 'removed';
+					}
+				}
+			}
+
 			entries.push({
-				status: 'unchanged',
+				status,
 				targetKey: key,
 				targetDisplayName: current.displayName,
 				isExclusion: current.isExclusion,
 				currentIntent: current.intent,
 				currentFilterName: current.filterName,
 				currentFilterMode: current.filterMode,
-				newIntent: current.intent,
-				newFilterName: current.filterName,
-				newFilterMode: current.filterMode
+				newIntent: status === 'removed' ? null : current.intent,
+				newFilterName: status === 'removed' ? null : current.filterName,
+				newFilterMode: status === 'removed' ? null : current.filterMode
 			});
 		} else if (!current && next) {
 			entries.push({
