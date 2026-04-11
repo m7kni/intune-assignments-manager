@@ -50,6 +50,7 @@
 	let executionResults: AssignmentResult[] = $state([]);
 	let executing = $state(false);
 	let executionError: string | null = $state(null);
+	let removalCount = $state(0);
 
 	// Lifted data caches (survive back-navigation)
 	let cachedApps: MobileApp[] = $state([]);
@@ -106,6 +107,9 @@
 		if (!wizard.replaceMode) {
 			return 'This will apply the configured assignments to all selected items and groups. This action cannot be easily undone.';
 		}
+		if (removalCount > 0) {
+			return `This will apply the configured assignments and remove ${removalCount} existing assignment${removalCount !== 1 ? 's' : ''} in the replaced categories. This action cannot be easily undone.`;
+		}
 		return 'This will apply the configured assignments and remove existing assignments in the replaced categories. This action cannot be easily undone.';
 	});
 
@@ -146,6 +150,7 @@
 		executionResults = [];
 		executing = false;
 		executionError = null;
+		removalCount = 0;
 	}
 
 	// ─── State Update Callbacks ────────────────────────────────────
@@ -471,7 +476,12 @@
 						onUpdateReplaceConfig={updateReplaceConfig}
 					/>
 				{:else if currentStepIndex === 3}
-					<StepReview {wizard} {conflicts} onUpdateConflicts={updateConflicts} />
+					<StepReview
+						{wizard}
+						{conflicts}
+						onUpdateConflicts={updateConflicts}
+						onRemovalCount={(count) => (removalCount = count)}
+					/>
 				{:else if currentStepIndex === 4}
 					<StepResults
 						progress={executionProgress}
