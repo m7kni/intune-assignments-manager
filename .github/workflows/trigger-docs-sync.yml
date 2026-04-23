@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   trigger-sync:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
     steps:
       - name: Trigger documentation sync in parent repo
