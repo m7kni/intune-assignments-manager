@@ -3,8 +3,8 @@ site_name = "Intune Assignments Manager"
 site_description = "A web application for bulk-managing Microsoft Intune app and configuration profile assignments via the Microsoft Graph API"
 site_url = "https://m7kni.io/intune-assignments-manager/"
 site_author = "Rob Knighton"
-repo_name = "rknightion/intune-assignments-manager"
-repo_url = "https://github.com/rknightion/intune-assignments-manager"
+repo_name = "m7kni/intune-assignments-manager"
+repo_url = "https://github.com/m7kni/intune-assignments-manager"
 edit_uri = "edit/main/docs/"
 nav = [
   { Home = "index.md" },
@@ -143,7 +143,7 @@ fallback_to_build_date = true
 exclude = ["index.md"]
 
 [project.plugins."git-committers"]
-repository = "rknightion/intune-assignments-manager"
+repository = "m7kni/intune-assignments-manager"
 branch = "main"
 
 [project.plugins."git-authors"]
@@ -244,7 +244,7 @@ keywords = [
 
 [[project.extra.social]]
 icon = "fontawesome/brands/github"
-link = "https://github.com/rknightion/intune-assignments-manager"
+link = "https://github.com/m7kni/intune-assignments-manager"
 name = "GitHub Repository"
 
 [project.extra.version]
