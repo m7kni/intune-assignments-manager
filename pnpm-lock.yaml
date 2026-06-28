@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@azure/msal-browser':
         specifier: ^5.2.0
-        version: 5.2.0
+        version: 5.15.0
       '@fontsource-variable/jetbrains-mono':
         specifier: ^5.2.8
         version: 5.2.8
@@ -81,12 +81,12 @@ importers:
 
 packages:
 
-  '@azure/msal-browser@5.2.0':
-    resolution: {integrity: sha512-YP2XEo6Bsi9urkyWxe5s2yl0ZJhJ46BJjUYIhXe6TUQguj460+wFioztwNAGgL33ECn/s3p0UK6CAQDJ5K7bnw==}
+  '@azure/msal-browser@5.15.0':
+    resolution: {integrity: sha512-2NYT6v+eeQn8kmNddr9LnbXSvXbVELpmFMmfFvtRxD7I/5+5GlkMlncApeuRFj+mY6C9syOwQip1a0Y+TIbyiA==}
     engines: {node: '>=0.8.0'}
 
-  '@azure/msal-common@16.0.4':
-    resolution: {integrity: sha512-0KZ9/wbUyZN65JLAx5bGNfWjkD0kRMUgM99oSpZFg7wEOb3XcKIiHrFnIpgyc8zZ70fHodyh8JKEOel1oN24Gw==}
+  '@azure/msal-common@16.10.0':
+    resolution: {integrity: sha512-iYtjpanlv6963Jprs0MvzIap07V+QhultjQctfbEDQCflsDAEeO3R7XnVA5gk30fhoBFLdgJT7VqO0TGsEsN9w==}
     engines: {node: '>=0.8.0'}
 
   '@cloudflare/kv-asset-handler@0.4.2':
@@ -1685,11 +1685,11 @@ packages:
 
 snapshots:
 
-  '@azure/msal-browser@5.2.0':
+  '@azure/msal-browser@5.15.0':
     dependencies:
-      '@azure/msal-common': 16.0.4
+      '@azure/msal-common': 16.10.0
 
-  '@azure/msal-common@16.0.4': {}
+  '@azure/msal-common@16.10.0': {}
 
   '@cloudflare/kv-asset-handler@0.4.2': {}
 
