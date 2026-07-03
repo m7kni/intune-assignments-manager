@@ -32,9 +32,11 @@ These counts are fetched from the Microsoft Graph API when you first load the da
 
 The **Recent Activity** feed shows the last 5 Intune audit events related to assignments. Each entry displays:
 
-- **Activity** -- the operation that was performed (e.g. "Patch mobileAppAssignment")
-- **Actor** -- the user principal name or application that performed the action
-- **Time** -- relative timestamp (e.g. "5m ago", "2h ago", "3d ago")
+| Field | Description |
+|---|---|
+| **Activity** | The operation that was performed (e.g. "Patch mobileAppAssignment") |
+| **Actor** | The user principal name or application that performed the action |
+| **Time** | Relative timestamp (e.g. "5m ago", "2h ago", "3d ago") |
 
 The activity feed pulls from the Intune audit log, filtered to assignment-related operations.
 
@@ -42,9 +44,11 @@ The activity feed pulls from the Intune audit log, filtered to assignment-relate
 
 Three quick-action buttons are available in the sidebar:
 
-- **Bulk Assign** -- navigates to the [Bulk Assignment](bulk-assignment.md) wizard at `/assign`
-- **Browse Apps** -- navigates to the [Apps](apps.md) list at `/apps`
-- **Browse Profiles** -- navigates to the [Configuration Profiles](profiles.md) list at `/profiles`
+| Button | Destination |
+|---|---|
+| **Bulk Assign** | The [Bulk Assignment](bulk-assignment.md) wizard at `/assign` |
+| **Browse Apps** | The [Apps](apps.md) list at `/apps` |
+| **Browse Profiles** | The [Configuration Profiles](profiles.md) list at `/profiles` |
 
 ## Caching and Refresh
 

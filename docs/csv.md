@@ -88,10 +88,12 @@ Rows with validation errors are displayed with their error messages. Valid rows 
 
 On successful validation, the wizard is pre-populated and jumps directly to the **Review step (Step 4)**:
 
-- **Items**: All apps and profiles from the CSV are selected
-- **Groups**: All target and exclusion groups from the CSV are selected
-- **Intent**: Set to the most common intent value across all rows
-- **Filter**: Set to the filter from the CSV if all rows use the same filter; otherwise left empty
+| Field | Value |
+|---|---|
+| **Items** | All apps and profiles from the CSV are selected |
+| **Groups** | All target and exclusion groups from the CSV are selected |
+| **Intent** | Set to the most common intent value across all rows |
+| **Filter** | Set to the filter from the CSV if all rows use the same filter; otherwise left empty |
 
 You can review the merged assignments and resolve any conflicts before applying.
 

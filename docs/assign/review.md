@@ -40,9 +40,11 @@ A table showing every assignment that will be processed:
 
 Summary counters at the top show:
 
-- **New** -- assignments that do not exist today (shown with a blue dot)
-- **Updates** -- existing assignments that will be changed (shown with a yellow dot)
-- **Skipped** -- conflicts you chose to skip (shown with a gray dot)
+| Counter | Meaning |
+|---|---|
+| **New** | Assignments that do not exist today (shown with a blue dot) |
+| **Updates** | Existing assignments that will be changed (shown with a yellow dot) |
+| **Skipped** | Conflicts you chose to skip (shown with a gray dot) |
 
 ### Change Preview
 

@@ -21,10 +21,12 @@ The Configuration Profiles section (`/profiles`) displays all **Settings Catalog
 
 The profile list shows every Settings Catalog policy returned by the Microsoft Graph API. Each row displays:
 
-- **Profile name** -- the display name of the policy
-- **Platform** -- the target platform (Windows, macOS, iOS/iPadOS, Android, Linux)
-- **Technologies** -- the management technology (e.g. MDM, Config Manager)
-- **Assignment badge** -- indicates whether the profile has at least one assignment
+| Field | Description |
+|---|---|
+| **Profile name** | The display name of the policy |
+| **Platform** | The target platform (Windows, macOS, iOS/iPadOS, Android, Linux) |
+| **Technologies** | The management technology (e.g. MDM, Config Manager) |
+| **Assignment badge** | Indicates whether the profile has at least one assignment |
 
 Profiles are sorted alphabetically by name (A--Z) by default.
 

@@ -135,9 +135,11 @@ flowchart TD
 
 Additional type files:
 
-- `src/lib/types/diff.ts` — Assignment diff types for comparing before/after states
-- `src/lib/types/status.ts` — Status and reports types
-- `src/lib/types/status-schemas.ts` — Zod schemas for Reports API responses
+| File | Purpose |
+|---|---|
+| `src/lib/types/diff.ts` | Assignment diff types for comparing before/after states |
+| `src/lib/types/status.ts` | Status and reports types |
+| `src/lib/types/status-schemas.ts` | Zod schemas for Reports API responses |
 
 ## Graph API Client Architecture
 

@@ -49,8 +49,10 @@ After execution completes, a summary banner shows the outcome:
 
 Below the summary, each item is listed with its status:
 
-- **Success** -- green check icon, item name and type
-- **Error** -- red X icon, item name, type, and the error message from the Graph API
+| Status | Shown as |
+|---|---|
+| **Success** | Green check icon, item name and type |
+| **Error** | Red X icon, item name, type, and the error message from the Graph API |
 
 ## Handling Failures
 

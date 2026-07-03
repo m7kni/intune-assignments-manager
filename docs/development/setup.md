@@ -50,7 +50,7 @@ You need a Microsoft Entra ID (Azure AD) app registration to authenticate:
 2. Create or select your app registration
 3. Copy the **Application (client) ID** into your `.env` file
 4. Under **Authentication**, add a **Single-page application** platform with the redirect URI:
-    ```
+    ```text
     http://localhost:5173
     ```
 5. Ensure the following **delegated** API permissions are granted (Tier 1 scopes):

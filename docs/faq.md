@@ -27,10 +27,12 @@ A: Access tokens expire after approximately 1 hour. The app automatically attemp
 
 A: Navigate to **Settings** and check the permission tiers. The app uses incremental consent -- you can grant permissions in stages. Some operations require higher-level permissions:
 
-- **Read-only browsing**: `DeviceManagementApps.Read.All`, `DeviceManagementConfiguration.Read.All`
-- **Assignment management**: `DeviceManagementApps.ReadWrite.All`, `DeviceManagementConfiguration.ReadWrite.All`
-- **Group search**: `Group.Read.All`
-- **Audit log**: `DeviceManagementApps.Read.All`
+| Operation | Required scopes |
+|---|---|
+| **Read-only browsing** | `DeviceManagementApps.Read.All`, `DeviceManagementConfiguration.Read.All` |
+| **Assignment management** | `DeviceManagementApps.ReadWrite.All`, `DeviceManagementConfiguration.ReadWrite.All` |
+| **Group search** | `Group.Read.All` |
+| **Audit log** | `DeviceManagementApps.Read.All` |
 
 Click **Grant Permissions** on the Settings page for the tier you need.
 
@@ -74,11 +76,13 @@ A: No. The wizard applies a single intent to all selected items and groups. If y
 
 A: Check the following:
 
-- **Missing headers**: The CSV must include `ItemType`, `ItemName`, and `TargetType` columns at minimum
-- **Invalid ItemType**: Must be `app` or `profile` (case-insensitive)
-- **Invalid TargetType**: Must be `group`, `exclusion`, `allDevices`, or `allUsers`
-- **Missing group info**: `group` and `exclusion` targets require either `GroupId` or `GroupName`
-- **Unresolved IDs**: App/profile/group IDs must exist in your tenant. If using names instead of IDs, the names must match exactly
+| Error | Cause |
+|---|---|
+| **Missing headers** | The CSV must include `ItemType`, `ItemName`, and `TargetType` columns at minimum |
+| **Invalid ItemType** | Must be `app` or `profile` (case-insensitive) |
+| **Invalid TargetType** | Must be `group`, `exclusion`, `allDevices`, or `allUsers` |
+| **Missing group info** | `group` and `exclusion` targets require either `GroupId` or `GroupName` |
+| **Unresolved IDs** | App/profile/group IDs must exist in your tenant. If using names instead of IDs, the names must match exactly |
 
 ---
 

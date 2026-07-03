@@ -8,7 +8,7 @@ tags:
 
 # Developer Documentation
 
-This section covers setting up the Intune Assignments Manager for local development, understanding the codebase architecture, and contributing changes. The app is a client-side SvelteKit SPA that authenticates with Microsoft Entra ID and communicates directly with the Microsoft Graph API from the browser.
+The Intune Assignments Manager is a client-side SvelteKit SPA that authenticates with Microsoft Entra ID and communicates directly with the Microsoft Graph API from the browser. This section covers local development setup, codebase architecture, and contributing changes.
 
 <div class="grid cards" markdown>
 

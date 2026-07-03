@@ -16,10 +16,12 @@ The Apps section (`/apps`) displays all mobile applications configured in your I
 
 The app list shows every mobile app returned by the Microsoft Graph API. Each row displays:
 
-- **App icon** -- fetched from the Graph API and cached
-- **App name** -- the display name of the app
-- **App type** -- derived from the Graph `@odata.type` property (e.g. Store App, LOB App, Win32 App, Web App)
-- **Assignment badge** -- indicates whether the app has at least one assignment
+| Field | Description |
+|---|---|
+| **App icon** | Fetched from the Graph API and cached |
+| **App name** | The display name of the app |
+| **App type** | Derived from the Graph `@odata.type` property (e.g. Store App, LOB App, Win32 App, Web App) |
+| **Assignment badge** | Indicates whether the app has at least one assignment |
 
 Apps are sorted alphabetically by name (A--Z) by default.
 
