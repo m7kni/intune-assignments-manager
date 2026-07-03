@@ -1,0 +1,22 @@
+title: Intune Assignments Manager Documentation
+description: Bulk-manage Microsoft Intune app and configuration profile assignments via the Microsoft Graph API
+
+tags:
+  - microsoft-intune
+  - endpoint-management
+  - bulk-assignment
+  - microsoft-graph
+  - azure-ad
+  - configuration-profiles
+  - mobile-apps
+
+keywords: microsoft intune, bulk assignment, configuration profiles, microsoft graph api, azure ad, mobile device management
+
+image: assets/social-card.png
+twitter:
+  creator: "@rknightion"
+  site: "@rknightion"
+
+robots: index,follow
+language: en
+canonical_base: https://m7kni.io/intune-assignments-manager/

@@ -1,0 +1,117 @@
+/* Intune Assignments Manager - Documentation Styles */
+
+/* Hero banner gradient */
+.md-typeset .hero-banner {
+	background: linear-gradient(135deg, #673ab7 0%, #3f51b5 50%, #512da8 100%);
+	color: white;
+	padding: 3rem 2rem;
+	border-radius: 0.75rem;
+	margin-bottom: 2rem;
+	text-align: center;
+}
+
+.md-typeset .hero-banner h1 {
+	color: white;
+	font-size: 2.25rem;
+	margin-bottom: 0.5rem;
+}
+
+.md-typeset .hero-banner p {
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 1.15rem;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+/* Grid card hover effects */
+.md-typeset .grid.cards > ul > li {
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.md-typeset .grid.cards > ul > li:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Feature card icon styling */
+.md-typeset .grid.cards > ul > li .twemoji {
+	font-size: 1.5rem;
+	margin-right: 0.5rem;
+}
+
+/* Subtle header accent */
+.md-header {
+	border-bottom: 2px solid rgba(103, 58, 183, 0.3);
+}
+
+/* Content area link styling */
+.md-typeset a:not(.md-button):not(.md-nav__link) {
+	text-decoration-thickness: 1px;
+	text-underline-offset: 2px;
+}
+
+/* Admonition custom colors for Intune-specific types */
+.md-typeset .admonition.tip,
+.md-typeset details.tip {
+	border-color: #673ab7;
+}
+
+.md-typeset .tip > .admonition-title,
+.md-typeset .tip > summary {
+	background-color: rgba(103, 58, 183, 0.1);
+}
+
+/* Code block enhancements */
+.md-typeset pre > code {
+	border-radius: 0.5rem;
+}
+
+/* Table styling */
+.md-typeset table:not([class]) {
+	border-radius: 0.5rem;
+	overflow: hidden;
+}
+
+.md-typeset table:not([class]) th {
+	background-color: rgba(103, 58, 183, 0.08);
+}
+
+/* Dark mode overrides */
+[data-md-color-scheme='slate'] .md-typeset .hero-banner {
+	background: linear-gradient(135deg, #512da8 0%, #283593 50%, #4527a0 100%);
+}
+
+[data-md-color-scheme='slate'] .md-typeset .grid.cards > ul > li:hover {
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+[data-md-color-scheme='slate'] .md-header {
+	border-bottom: 2px solid rgba(149, 117, 205, 0.3);
+}
+
+[data-md-color-scheme='slate'] .md-typeset table:not([class]) th {
+	background-color: rgba(149, 117, 205, 0.12);
+}
+
+/* Status badges */
+.md-typeset .status-badge {
+	display: inline-block;
+	padding: 0.15rem 0.5rem;
+	border-radius: 1rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.md-typeset .status-badge--new {
+	background-color: rgba(103, 58, 183, 0.15);
+	color: #673ab7;
+}
+
+[data-md-color-scheme='slate'] .md-typeset .status-badge--new {
+	background-color: rgba(149, 117, 205, 0.2);
+	color: #b39ddb;
+}
