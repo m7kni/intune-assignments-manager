@@ -21,3 +21,6 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Superpowers scratch (plans/specs) - never publish
+docs/superpowers/
