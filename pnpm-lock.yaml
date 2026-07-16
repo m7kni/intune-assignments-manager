@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@azure/msal-browser':
         specifier: ^5.2.0
-        version: 5.17.0
+        version: 5.17.1
       '@fontsource-variable/jetbrains-mono':
         specifier: ^5.2.8
         version: 5.2.8
@@ -65,7 +65,7 @@ importers:
         version: 5.53.2
       svelte-check:
         specifier: ^4.4.3
-        version: 4.7.3(picomatch@4.0.3)(svelte@5.53.2)(typescript@7.0.2)
+        version: 4.7.2(picomatch@4.0.3)(svelte@5.53.2)(typescript@7.0.2)
       tailwindcss:
         specifier: ^4.2.0
         version: 4.3.2
@@ -81,12 +81,12 @@ importers:
 
 packages:
 
-  '@azure/msal-browser@5.17.0':
-    resolution: {integrity: sha512-/yTnW2TCk9Mh+2b/NOaHAN+MryUNxzRTaJD/YtrqOA9bpBWfTXn/iyReRbaLrK/btBo3stEzLyEvuWp2NZ5DuA==}
+  '@azure/msal-browser@5.17.1':
+    resolution: {integrity: sha512-zBhRGzABKSI7hfWh5EaZmril5ybZ7imBN1qEZl5sDTaelr+l8SnPjZO50Q4dnKnm347YPIlBMSnXKZyh3Yu5DQ==}
     engines: {node: '>=0.8.0'}
 
-  '@azure/msal-common@16.11.1':
-    resolution: {integrity: sha512-yPohvMwWLv1XnaWnIUyKUh8CvcVChCGqG/VluGwfGmaAfrZTNt5yQ+sIs462Sgw6+e2K83KGmMJ860p73ZSCrw==}
+  '@azure/msal-common@16.11.2':
+    resolution: {integrity: sha512-yDhtBOGDCdK9ipQ9g3+wmlMEPnZx2pXaDicDd9jYyR1L+7lEbvEohTDmF5qejZDutZY3m9pWPxeYxzNC701A2w==}
     engines: {node: '>=0.8.0'}
 
   '@cloudflare/kv-asset-handler@0.4.2':
@@ -1642,8 +1642,8 @@ packages:
     resolution: {integrity: sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g==}
     engines: {node: '>=18'}
 
-  svelte-check@4.7.3:
-    resolution: {integrity: sha512-DHdTCGX62R0fCxBEaT+USdASAnoaRBaaNczkRJl0K7o3WyoCeVUbVxo6fKqpOll/B+WMWCsiFK0eFrJSNBKZIg==}
+  svelte-check@4.7.2:
+    resolution: {integrity: sha512-GoS4XJdGswlq0rIT1vtFLzJY1bvHtY37McY9H9Gkm1Ggw/ICdZYn8J/Z8Yi0BEL0i3R4+jtaWVePjyppMlij/A==}
     engines: {node: '>= 18.0.0'}
     hasBin: true
     peerDependencies:
@@ -1830,11 +1830,11 @@ packages:
 
 snapshots:
 
-  '@azure/msal-browser@5.17.0':
+  '@azure/msal-browser@5.17.1':
     dependencies:
-      '@azure/msal-common': 16.11.1
+      '@azure/msal-common': 16.11.2
 
-  '@azure/msal-common@16.11.1': {}
+  '@azure/msal-common@16.11.2': {}
 
   '@cloudflare/kv-asset-handler@0.4.2': {}
 
@@ -3047,7 +3047,7 @@ snapshots:
 
   supports-color@10.2.2: {}
 
-  svelte-check@4.7.3(picomatch@4.0.3)(svelte@5.53.2)(typescript@7.0.2):
+  svelte-check@4.7.2(picomatch@4.0.3)(svelte@5.53.2)(typescript@7.0.2):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@sveltejs/load-config': 0.2.0
