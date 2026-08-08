@@ -46,7 +46,7 @@ Three quick-action buttons are available in the sidebar:
 
 | Button              | Destination                                                   |
 | ------------------- | ------------------------------------------------------------- |
-| **Bulk Assign**     | The [Bulk Assignment](bulk-assignment.md) wizard at `/assign` |
+| **Bulk Assign**     | The [Bulk Assignment](assign/index.md) wizard at `/assign` |
 | **Browse Apps**     | The [Apps](apps.md) list at `/apps`                           |
 | **Browse Profiles** | The [Configuration Profiles](profiles.md) list at `/profiles` |
 

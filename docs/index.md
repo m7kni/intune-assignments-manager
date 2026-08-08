@@ -73,7 +73,7 @@ The app runs entirely client-side. Your credentials and data never leave your br
 
   Five-step wizard for assigning apps and profiles to groups at scale.
 
-  [:octicons-arrow-right-24: Bulk Assignment](bulk-assignment.md)
+  [:octicons-arrow-right-24: Bulk Assignment](assign/index.md)
 
 - :material-file-delimited-outline:{ .lg .middle } **CSV Import / Export**
 

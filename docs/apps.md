@@ -88,7 +88,7 @@ Click any app row to navigate to the app detail page (`/apps/[id]`). This page s
 - Description
 - Current assignments
 
-A **Bulk Assign** button is available that navigates to the [Bulk Assignment](bulk-assignment.md) wizard with this app pre-selected.
+A **Bulk Assign** button is available that navigates to the [Bulk Assignment](assign/index.md) wizard with this app pre-selected.
 
 ## Empty States
 

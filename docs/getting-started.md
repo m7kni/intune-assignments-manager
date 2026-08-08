@@ -115,4 +115,4 @@ The sign-in flow uses a popup window. If your browser blocks popups, you will ne
 
 - Review the [Permissions](permissions.md) page to understand what each scope enables
 - Browse your [Apps](apps.md) and [Configuration Profiles](profiles.md)
-- Try the [Bulk Assignment](bulk-assignment.md) wizard
+- Try the [Bulk Assignment](assign/index.md) wizard

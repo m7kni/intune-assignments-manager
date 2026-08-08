@@ -91,7 +91,7 @@ Click any profile row to navigate to the profile detail page (`/profiles/[id]`).
 - Setting count
 - Current assignments
 
-A **Bulk Assign** button is available that navigates to the [Bulk Assignment](bulk-assignment.md) wizard with this profile pre-selected.
+A **Bulk Assign** button is available that navigates to the [Bulk Assignment](assign/index.md) wizard with this profile pre-selected.
 
 ## Pagination
 
