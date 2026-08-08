@@ -17,7 +17,15 @@ export interface ReportConfig {
 	icon: string;
 }
 
-export interface AppDeploymentReportItem {
+// The report row shapes below are `type` aliases, NOT `interface`s, on purpose.
+// They are rendered by ReportTable, whose `rows` prop is `Record<string, unknown>[]`.
+// TypeScript refuses to assign an `interface` to `Record<string, unknown>` because
+// interfaces stay open to declaration merging, so it cannot guarantee the implicit
+// index signature; a `type` alias has no such escape hatch and is accepted. Changing
+// any of these back to `interface` reintroduces 6 type errors in
+// src/routes/reports/[type]/+page.svelte.
+
+export type AppDeploymentReportItem = {
 	applicationId: string;
 	displayName: string;
 	platform?: string;
@@ -26,16 +34,16 @@ export interface AppDeploymentReportItem {
 	pendingInstallDeviceCount: number;
 	notApplicableDeviceCount: number;
 	notInstalledDeviceCount: number;
-}
+};
 
-export interface UnassignedItem {
+export type UnassignedItem = {
 	id: string;
 	displayName: string;
 	itemType: 'app' | 'profile' | 'compliance' | 'security';
 	lastModified?: string;
-}
+};
 
-export interface StaleDevice {
+export type StaleDevice = {
 	id: string;
 	deviceName: string;
 	userDisplayName?: string;
@@ -44,20 +52,20 @@ export interface StaleDevice {
 	lastSyncDateTime: string;
 	daysSinceSync: number;
 	complianceState: string;
-}
+};
 
-export interface FailedDeploymentItem {
+export type FailedDeploymentItem = {
 	applicationId: string;
 	displayName: string;
 	platform?: string;
 	failedDeviceCount: number;
-}
+};
 
-export interface AssignmentCoverageItem {
+export type AssignmentCoverageItem = {
 	id: string;
 	displayName: string;
 	itemType: string;
 	assignmentCount: number;
 	hasAllDevices: boolean;
 	hasAllUsers: boolean;
-}
+};

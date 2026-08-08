@@ -1,5 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
+	import type { IconComponent } from '$lib/types/ui';
 	import { goto } from '$app/navigation';
 	import {
 		LayoutDashboard,
@@ -25,7 +26,7 @@
 		id: string;
 		label: string;
 		group: string;
-		icon: any;
+		icon: IconComponent;
 		action: () => void;
 		keywords?: string;
 	}

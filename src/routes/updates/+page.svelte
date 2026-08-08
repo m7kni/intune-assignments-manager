@@ -10,13 +10,7 @@
 	import Badge from '$lib/components/ui/Badge.svelte';
 	import Tabs from '$lib/components/ui/Tabs.svelte';
 	import DropdownMenu from '$lib/components/ui/DropdownMenu.svelte';
-	import {
-		Search,
-		RefreshCw,
-		ArrowDownAZ,
-		ArrowUpZA,
-		ChevronRight
-	} from 'lucide-svelte';
+	import { Search, RefreshCw, ArrowDownAZ, ArrowUpZA, ChevronRight } from 'lucide-svelte';
 	import { getGraphClient } from '$lib/stores/graph';
 	import { toFriendlyMessage } from '$lib/graph/errors';
 	import {
@@ -82,13 +76,9 @@
 		}
 
 		if (sortBy === 'name-desc') {
-			result = [...result].sort((a, b) =>
-				getItemName(b).localeCompare(getItemName(a))
-			);
+			result = [...result].sort((a, b) => getItemName(b).localeCompare(getItemName(a)));
 		} else {
-			result = [...result].sort((a, b) =>
-				getItemName(a).localeCompare(getItemName(b))
-			);
+			result = [...result].sort((a, b) => getItemName(a).localeCompare(getItemName(b)));
 		}
 
 		return result;
@@ -109,22 +99,10 @@
 			]);
 
 			const allItems: UpdateItem[] = [
-				...rings.map(
-					(data) =>
-						({ category: 'updateRing' as const, data })
-				),
-				...features.map(
-					(data) =>
-						({ category: 'featureUpdate' as const, data })
-				),
-				...quality.map(
-					(data) =>
-						({ category: 'qualityUpdate' as const, data })
-				),
-				...drivers.map(
-					(data) =>
-						({ category: 'driverUpdate' as const, data })
-				)
+				...rings.map((data) => ({ category: 'updateRing' as const, data })),
+				...features.map((data) => ({ category: 'featureUpdate' as const, data })),
+				...quality.map((data) => ({ category: 'qualityUpdate' as const, data })),
+				...drivers.map((data) => ({ category: 'driverUpdate' as const, data }))
 			];
 
 			items = allItems;
@@ -207,11 +185,7 @@
 
 		<!-- Category tabs -->
 		<div class="mb-4">
-			<Tabs
-				tabs={categoryTabs}
-				active={activeCategory}
-				onchange={(id) => (activeCategory = id)}
-			/>
+			<Tabs tabs={categoryTabs} active={activeCategory} onchange={(id) => (activeCategory = id)} />
 		</div>
 
 		<!-- Filter bar -->
@@ -238,7 +212,7 @@
 				<div class="border-border border-b px-4 py-2.5">
 					<Skeleton width="10rem" height="0.75rem" />
 				</div>
-				{#each Array(8) as _, i}
+				{#each Array(8) as _, i (i)}
 					<div class="border-border flex items-center gap-4 border-b px-4 py-3">
 						<Skeleton width="2.5rem" height="2.5rem" rounded="lg" />
 						<div class="flex-1 space-y-1">
@@ -316,11 +290,7 @@
 								<Badge variant="info">Expedited</Badge>
 							{/if}
 							{#if item.category === 'driverUpdate'}
-								<Badge
-									variant={item.data.approvalType === 'automatic'
-										? 'required'
-										: 'neutral'}
-								>
+								<Badge variant={item.data.approvalType === 'automatic' ? 'required' : 'neutral'}>
 									{item.data.approvalType === 'automatic' ? 'Auto' : 'Manual'}
 								</Badge>
 							{/if}

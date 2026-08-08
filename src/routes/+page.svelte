@@ -52,19 +52,18 @@
 		try {
 			const client = getGraphClient();
 
-			const [apps, profiles, compliancePolicies, securityPolicies, auditResult] =
-				await Promise.all([
+			const [apps, profiles, compliancePolicies, securityPolicies, auditResult] = await Promise.all(
+				[
 					client.fetchAll<MobileApp>('/deviceAppManagement/mobileApps'),
-					client.fetchAll<ConfigurationPolicy>(
-						'/deviceManagement/configurationPolicies'
-					),
+					client.fetchAll<ConfigurationPolicy>('/deviceManagement/configurationPolicies'),
 					listCompliancePolicies(client),
 					listSecurityPolicies(client),
 					listAuditEvents(client, {
 						filter: buildAssignmentFilter(),
 						top: 5
 					})
-				]);
+				]
+			);
 
 			dashboardCache.setCounts(
 				apps.length,
@@ -134,7 +133,7 @@
 	<!-- Stat cards -->
 	{#if dashboardCache.loading && dashboardCache.appCount === null}
 		<div class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-			{#each Array(4) as _}
+			{#each Array(4) as _, i (i)}
 				<Skeleton height="5.5rem" rounded="lg" />
 			{/each}
 		</div>
@@ -175,7 +174,7 @@
 				</h2>
 				{#if dashboardCache.loading && dashboardCache.recentActivity.length === 0}
 					<div class="panel space-y-3 p-4">
-						{#each Array(5) as _}
+						{#each Array(5) as _, i (i)}
 							<div class="flex items-center gap-3">
 								<Skeleton width="2rem" height="2rem" rounded="full" />
 								<div class="flex-1 space-y-1">

@@ -11,13 +11,7 @@
 	import DropdownMenu from '$lib/components/ui/DropdownMenu.svelte';
 	import CompliancePolicyRow from '$lib/components/ui/CompliancePolicyRow.svelte';
 	import MultiSelectFilter from '$lib/components/ui/MultiSelectFilter.svelte';
-	import {
-		Search,
-		ShieldAlert,
-		ArrowDownAZ,
-		ArrowUpZA,
-		SlidersHorizontal
-	} from 'lucide-svelte';
+	import { Search, ShieldAlert, ArrowDownAZ, ArrowUpZA, SlidersHorizontal } from 'lucide-svelte';
 	import { getGraphClient } from '$lib/stores/graph';
 	import type { GraphPagedResponse } from '$lib/types/graph';
 	import type { DeviceCompliancePolicy } from '$lib/types/compliance';
@@ -75,9 +69,7 @@
 		return result;
 	});
 
-	const filtersActive = $derived(
-		hasActiveComplianceFilters(platformFilter, assignmentStatus)
-	);
+	const filtersActive = $derived(hasActiveComplianceFilters(platformFilter, assignmentStatus));
 
 	async function fetchPolicies(): Promise<void> {
 		loading = true;
@@ -109,8 +101,7 @@
 		loadingMore = true;
 		try {
 			const client = getGraphClient();
-			const response =
-				await client.request<GraphPagedResponse<DeviceCompliancePolicy>>(nextLink);
+			const response = await client.request<GraphPagedResponse<DeviceCompliancePolicy>>(nextLink);
 			const newPolicies = response.value.map(
 				(item) => deviceCompliancePolicySchema.parse(item) as DeviceCompliancePolicy
 			);
@@ -181,7 +172,7 @@
 				<div class="border-border border-b px-4 py-2.5">
 					<Skeleton width="10rem" height="0.75rem" />
 				</div>
-				{#each Array(8) as _, i}
+				{#each Array(8) as _, i (i)}
 					<div class="border-border flex items-center gap-4 border-b px-4 py-3">
 						<Skeleton width="2.5rem" height="2.5rem" rounded="lg" />
 						<div class="flex-1 space-y-1">

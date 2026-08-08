@@ -22,10 +22,7 @@
 	import type { ConfigurationPolicy } from '$lib/types/graph';
 	import { toFriendlyMessage } from '$lib/graph/errors';
 	import { listSecurityPolicies } from '$lib/graph/security';
-	import {
-		getSecurityCategoryInfo,
-		getSecurityCategoryLabel
-	} from '$lib/utils/security-types';
+	import { getSecurityCategoryInfo, getSecurityCategoryLabel } from '$lib/utils/security-types';
 	import { getPlatformLabel } from '$lib/utils/profile-types';
 	import {
 		filterSecurityPolicies,
@@ -84,10 +81,7 @@
 	});
 
 	const filtersActive = $derived(
-		hasActiveSecurityFilters(
-			activeCategory !== 'all' ? [activeCategory] : [],
-			assignmentStatus
-		)
+		hasActiveSecurityFilters(activeCategory !== 'all' ? [activeCategory] : [], assignmentStatus)
 	);
 
 	async function fetchPolicies(): Promise<void> {
@@ -118,11 +112,7 @@
 
 		<!-- Category tabs -->
 		<div class="mb-4">
-			<Tabs
-				tabs={categoryTabs}
-				active={activeCategory}
-				onchange={(id) => (activeCategory = id)}
-			/>
+			<Tabs tabs={categoryTabs} active={activeCategory} onchange={(id) => (activeCategory = id)} />
 		</div>
 
 		<!-- Filter bar -->
@@ -165,7 +155,7 @@
 				<div class="border-border border-b px-4 py-2.5">
 					<Skeleton width="10rem" height="0.75rem" />
 				</div>
-				{#each Array(8) as _, i}
+				{#each Array(8) as _, i (i)}
 					<div class="border-border flex items-center gap-4 border-b px-4 py-3">
 						<Skeleton width="2.5rem" height="2.5rem" rounded="lg" />
 						<div class="flex-1 space-y-1">
@@ -204,9 +194,7 @@
 				</div>
 
 				{#each filteredPolicies as policy, i (policy.id)}
-					{@const catInfo = getSecurityCategoryInfo(
-						policy.templateReference?.templateFamily ?? ''
-					)}
+					{@const catInfo = getSecurityCategoryInfo(policy.templateReference?.templateFamily ?? '')}
 					{@const CatIcon = catInfo?.icon ?? Swords}
 					<div in:fly={{ y: 10, duration: 200, delay: Math.min(i * 30, 300) }}>
 						<a
@@ -228,9 +216,7 @@
 									{policy.name}
 								</p>
 								<p class="text-ink-faint truncate text-xs">
-									{getSecurityCategoryLabel(
-										policy.templateReference?.templateFamily ?? ''
-									)}
+									{getSecurityCategoryLabel(policy.templateReference?.templateFamily ?? '')}
 								</p>
 							</div>
 

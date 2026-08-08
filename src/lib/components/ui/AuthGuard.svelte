@@ -31,7 +31,7 @@
 			<Skeleton height="5rem" rounded="lg" />
 		</div>
 		<div class="mt-4 space-y-2">
-			{#each Array(5) as _}
+			{#each Array(5) as _, i (i)}
 				<Skeleton height="3rem" rounded="lg" />
 			{/each}
 		</div>

@@ -1,5 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
+	import type { IconComponent } from '$lib/types/ui';
 	import type { Snippet } from 'svelte';
 	import Spinner from './Spinner.svelte';
 
@@ -8,7 +9,7 @@
 		size?: 'sm' | 'md' | 'lg';
 		loading?: boolean;
 		disabled?: boolean;
-		icon?: any;
+		icon?: IconComponent;
 		href?: string;
 		type?: 'button' | 'submit' | 'reset';
 		onclick?: (e: MouseEvent) => void;

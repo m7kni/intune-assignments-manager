@@ -182,7 +182,7 @@
 				<div class="border-border border-b px-4 py-2.5">
 					<Skeleton width="10rem" height="0.75rem" />
 				</div>
-				{#each Array(8) as _, i}
+				{#each Array(8) as _, i (i)}
 					<div class="border-border flex items-center gap-4 border-b px-4 py-3">
 						<Skeleton width="2.5rem" height="2.5rem" rounded="lg" />
 						<div class="flex-1 space-y-1">

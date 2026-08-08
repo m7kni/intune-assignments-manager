@@ -164,7 +164,15 @@
 				return a.lastSyncDateTime.localeCompare(b.lastSyncDateTime);
 			});
 		} else if (sortBy === 'compliance') {
-			const order = ['compliant', 'inGracePeriod', 'unknown', 'noncompliant', 'error', 'conflict', 'configManager'];
+			const order = [
+				'compliant',
+				'inGracePeriod',
+				'unknown',
+				'noncompliant',
+				'error',
+				'conflict',
+				'configManager'
+			];
 			result = [...result].sort(
 				(a, b) => order.indexOf(a.complianceState) - order.indexOf(b.complianceState)
 			);
@@ -222,19 +230,12 @@
 		featureName="Device Inventory"
 	>
 		<div class="animate-fade-in-up">
-			<PageHeader
-				title="Devices"
-				icon={Monitor}
-				description="Browse managed device inventory"
-			/>
+			<PageHeader title="Devices" icon={Monitor} description="Browse managed device inventory" />
 
 			<!-- Filter bar -->
 			<div class="mb-4 flex flex-wrap items-center gap-3">
 				<div class="min-w-0 flex-1">
-					<SearchInput
-						placeholder="Filter by name, user, serial number..."
-						bind:value={search}
-					/>
+					<SearchInput placeholder="Filter by name, user, serial number..." bind:value={search} />
 				</div>
 				<MultiSelectFilter
 					label="Platform"
@@ -270,7 +271,7 @@
 					<div class="border-border border-b px-4 py-2.5">
 						<Skeleton width="10rem" height="0.75rem" />
 					</div>
-					{#each Array(8) as _, i}
+					{#each Array(8) as _, i (i)}
 						<div class="border-border flex items-center gap-4 border-b px-4 py-3">
 							<Skeleton width="2.5rem" height="2.5rem" rounded="lg" />
 							<div class="flex-1 space-y-1">
@@ -295,9 +296,7 @@
 				/>
 			{:else}
 				<div class="panel overflow-clip p-0">
-					<div
-						class="border-border bg-surface/95 sticky top-12 z-10 border-b backdrop-blur-sm"
-					>
+					<div class="border-border bg-surface/95 sticky top-12 z-10 border-b backdrop-blur-sm">
 						<div class="flex items-center gap-3 px-4 py-2">
 							<!-- Select all checkbox -->
 							<label class="flex cursor-pointer items-center gap-2">
@@ -434,9 +433,7 @@
 
 							<div class="bg-border mx-1 h-6 w-px"></div>
 
-							<Button variant="ghost" size="sm" icon={X} onclick={clearSelection}>
-								Clear
-							</Button>
+							<Button variant="ghost" size="sm" icon={X} onclick={clearSelection}>Clear</Button>
 						</div>
 					</div>
 				{/if}

@@ -540,9 +540,7 @@
 
 		if (preselectedCompliancePolicyId) {
 			if (!preselectedAppId && !preselectedProfileId) activeTab = 'compliance';
-			const existing = compliancePolicies.find(
-				(p) => p.id === preselectedCompliancePolicyId
-			);
+			const existing = compliancePolicies.find((p) => p.id === preselectedCompliancePolicyId);
 			if (existing) {
 				if (!isComplianceSelected(existing.id)) {
 					onUpdateCompliancePolicies([...selectedCompliancePolicies, existing]);
@@ -562,9 +560,7 @@
 		if (preselectedSecurityPolicyId) {
 			if (!preselectedAppId && !preselectedProfileId && !preselectedCompliancePolicyId)
 				activeTab = 'security';
-			const existing = securityPolicies.find(
-				(p) => p.id === preselectedSecurityPolicyId
-			);
+			const existing = securityPolicies.find((p) => p.id === preselectedSecurityPolicyId);
 			if (existing) {
 				if (!isSecuritySelected(existing.id)) {
 					onUpdateSecurityPolicies([...selectedSecurityPolicies, existing]);
@@ -628,7 +624,10 @@
 
 	$effect(() => {
 		if (
-			(preselectedAppId || preselectedProfileId || preselectedCompliancePolicyId || preselectedSecurityPolicyId) &&
+			(preselectedAppId ||
+				preselectedProfileId ||
+				preselectedCompliancePolicyId ||
+				preselectedSecurityPolicyId) &&
 			!hasPreselected &&
 			(apps.length > 0 ||
 				profiles.length > 0 ||
@@ -717,7 +716,7 @@
 
 		{#if loadingApps}
 			<div class="border-border space-y-2 rounded-lg border p-2">
-				{#each Array(6) as _}
+				{#each Array(6) as _, i (i)}
 					<div class="flex items-center gap-3 px-2 py-2">
 						<Skeleton width="1rem" height="1rem" rounded="sm" />
 						<Skeleton width="1.125rem" height="1.125rem" rounded="sm" />
@@ -813,7 +812,7 @@
 
 		{#if loadingProfiles}
 			<div class="border-border space-y-2 rounded-lg border p-2">
-				{#each Array(6) as _}
+				{#each Array(6) as _, i (i)}
 					<div class="flex items-center gap-3 px-2 py-2">
 						<Skeleton width="1rem" height="1rem" rounded="sm" />
 						<Skeleton width="1.125rem" height="1.125rem" rounded="sm" />
@@ -905,7 +904,7 @@
 
 		{#if loadingCompliance}
 			<div class="border-border space-y-2 rounded-lg border p-2">
-				{#each Array(6) as _}
+				{#each Array(6) as _, i (i)}
 					<div class="flex items-center gap-3 px-2 py-2">
 						<Skeleton width="1rem" height="1rem" rounded="sm" />
 						<Skeleton width="1.125rem" height="1.125rem" rounded="sm" />
@@ -997,7 +996,7 @@
 
 		{#if loadingSecurity}
 			<div class="border-border space-y-2 rounded-lg border p-2">
-				{#each Array(6) as _}
+				{#each Array(6) as _, i (i)}
 					<div class="flex items-center gap-3 px-2 py-2">
 						<Skeleton width="1rem" height="1rem" rounded="sm" />
 						<Skeleton width="1.125rem" height="1.125rem" rounded="sm" />
@@ -1023,7 +1022,9 @@
 		{:else}
 			<div class="border-border max-h-96 overflow-y-auto rounded-lg border">
 				{#each filteredSecurity as policy (policy.id)}
-					{@const categoryInfo = getSecurityCategoryInfo(policy.templateReference?.templateFamily ?? '')}
+					{@const categoryInfo = getSecurityCategoryInfo(
+						policy.templateReference?.templateFamily ?? ''
+					)}
 					{@const Icon = categoryInfo?.icon ?? Package}
 					<label
 						class="border-border hover:bg-canvas flex cursor-pointer items-center gap-3 border-b px-4 py-2.5 last:border-b-0"
@@ -1051,10 +1052,7 @@
 {:else if activeTab === 'updateRings'}
 	<div role="tabpanel">
 		<div class="mb-3">
-			<SearchInput
-				placeholder="Search update rings by name..."
-				bind:value={updateRingSearch}
-			/>
+			<SearchInput placeholder="Search update rings by name..." bind:value={updateRingSearch} />
 		</div>
 
 		{#if updateRingsError}
@@ -1104,7 +1102,8 @@
 								{ring.displayName}
 							</p>
 							<p class="text-ink-faint truncate text-xs">
-								Quality: {ring.qualityUpdatesDeferralPeriodInDays ?? 0}d, Feature: {ring.featureUpdatesDeferralPeriodInDays ?? 0}d
+								Quality: {ring.qualityUpdatesDeferralPeriodInDays ?? 0}d, Feature: {ring.featureUpdatesDeferralPeriodInDays ??
+									0}d
 								{#if ring.qualityUpdatesPaused || ring.featureUpdatesPaused}
 									<span class="text-warning ml-1">Paused</span>
 								{/if}
@@ -1173,7 +1172,10 @@
 							<p class="text-ink-faint truncate text-xs">
 								{script.publisher ?? 'No publisher'}
 								{#if script.isGlobalScript}
-									<span class="bg-accent-light text-accent ml-1 rounded px-1.5 py-0.5 text-[10px] font-medium">Global</span>
+									<span
+										class="bg-accent-light text-accent ml-1 rounded px-1.5 py-0.5 text-[10px] font-medium"
+										>Global</span
+									>
 								{/if}
 							</p>
 						</div>
@@ -1185,10 +1187,7 @@
 {:else if activeTab === 'scripts'}
 	<div role="tabpanel">
 		<div class="mb-3">
-			<SearchInput
-				placeholder="Search platform scripts by name..."
-				bind:value={scriptSearch}
-			/>
+			<SearchInput placeholder="Search platform scripts by name..." bind:value={scriptSearch} />
 		</div>
 
 		{#if scriptsError}

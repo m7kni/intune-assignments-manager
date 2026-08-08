@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
+import type { IconComponent } from '$lib/types/ui';
+
 interface DynamicItem {
 	id: string;
 	label: string;
 	group: string;
-	icon: any;
+	icon: IconComponent;
 	action: () => void;
 	keywords?: string;
 }

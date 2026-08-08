@@ -17,11 +17,7 @@
 	import { getGraphClient } from '$lib/stores/graph';
 	import { getDeviceDetail } from '$lib/graph/devices';
 	import { toFriendlyMessage } from '$lib/graph/errors';
-	import {
-		getDeviceTypeInfo,
-		getComplianceInfo,
-		formatStorageSize
-	} from '$lib/utils/device-types';
+	import { getDeviceTypeInfo, getComplianceInfo, formatStorageSize } from '$lib/utils/device-types';
 	import type { DeviceDetail } from '$lib/types/device';
 	import { ArrowLeft, Package } from 'lucide-svelte';
 
@@ -58,16 +54,15 @@
 	}
 
 	$effect(() => {
-		page.params.id;
+		// Bare read, deliberately: this is the effect's only tracked dependency, so
+		// navigating between device ids refetches. `void` keeps it a statement.
+		void page.params.id;
 		untrack(() => fetchData());
 	});
 </script>
 
 <AuthGuard>
-	<PermissionGuard
-		requiredScopes={[...TIER_2_SCOPES]}
-		featureName="Device Detail"
-	>
+	<PermissionGuard requiredScopes={[...TIER_2_SCOPES]} featureName="Device Detail">
 		<div class="animate-fade-in-up">
 			{#if error}
 				<div class="mb-4">
@@ -149,11 +144,7 @@
 
 				<!-- Tabs -->
 				<div class="mb-4">
-					<Tabs
-						{tabs}
-						active={activeTab}
-						onchange={(id) => (activeTab = id)}
-					/>
+					<Tabs {tabs} active={activeTab} onchange={(id) => (activeTab = id)} />
 				</div>
 
 				<!-- Tab content -->
@@ -181,9 +172,7 @@
 						/>
 					{:else}
 						<div class="panel overflow-clip p-0">
-							<div
-								class="border-border bg-surface/95 sticky top-12 z-10 border-b backdrop-blur-sm"
-							>
+							<div class="border-border bg-surface/95 sticky top-12 z-10 border-b backdrop-blur-sm">
 								<div class="px-4 py-2">
 									<p class="text-muted text-xs font-medium tracking-wide uppercase">
 										{detectedApps.length} detected app{detectedApps.length !== 1 ? 's' : ''}

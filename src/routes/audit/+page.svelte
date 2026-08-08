@@ -10,13 +10,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Badge from '$lib/components/ui/Badge.svelte';
 	import MultiSelectFilter from '$lib/components/ui/MultiSelectFilter.svelte';
-	import {
-		Search,
-		ClipboardList,
-		ChevronDown,
-		ChevronRight,
-		RefreshCw
-	} from 'lucide-svelte';
+	import { Search, ClipboardList, ChevronDown, ChevronRight, RefreshCw } from 'lucide-svelte';
 	import { getGraphClient } from '$lib/stores/graph';
 	import { toFriendlyMessage } from '$lib/graph/errors';
 	import { listAuditEvents, fetchAuditNextPage, buildAuditFilter } from '$lib/graph/audit';
@@ -185,7 +179,9 @@
 			{#each [{ label: 'Today', days: 0 }, { label: '7 days', days: 7 }, { label: '30 days', days: 30 }, { label: 'All time', days: null }] as preset (preset.label)}
 				<button
 					onclick={() => setPreset(preset.days)}
-					class="border-border hover:border-accent hover:text-accent rounded-full border px-3 py-1 text-xs font-medium transition-colors {isPresetActive(preset.days)
+					class="border-border hover:border-accent hover:text-accent rounded-full border px-3 py-1 text-xs font-medium transition-colors {isPresetActive(
+						preset.days
+					)
 						? 'bg-accent border-accent text-white'
 						: 'text-ink-faint'}"
 				>
@@ -240,9 +236,7 @@
 				Assignments only
 			</button>
 
-			<Button variant="primary" size="sm" icon={RefreshCw} onclick={applyFilters}>
-				Refresh
-			</Button>
+			<Button variant="primary" size="sm" icon={RefreshCw} onclick={applyFilters}>Refresh</Button>
 		</div>
 
 		<!-- Search -->
@@ -264,7 +258,7 @@
 				<div class="border-border border-b px-4 py-2.5">
 					<Skeleton width="10rem" height="0.75rem" />
 				</div>
-				{#each Array(6) as _}
+				{#each Array(6) as _, i (i)}
 					<div class="border-border flex items-center gap-3 border-b px-4 py-3">
 						<Skeleton width="1rem" height="1rem" rounded="sm" />
 						<div class="flex-1 space-y-1">
@@ -387,9 +381,7 @@
 									<p class="text-ink font-mono text-xs">{evt.correlationId}</p>
 								</div>
 								<div>
-									<span class="text-muted text-xs font-medium tracking-wide uppercase"
-										>Result</span
-									>
+									<span class="text-muted text-xs font-medium tracking-wide uppercase">Result</span>
 									<p class="text-ink">{evt.activityResult}</p>
 								</div>
 							</div>

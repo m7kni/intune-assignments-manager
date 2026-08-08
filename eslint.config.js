@@ -16,6 +16,19 @@ export default [
 				...globals.browser,
 				...globals.node
 			}
+		},
+		rules: {
+			// `_` is the deliberate throwaway convention here, mostly for the item
+			// binding in `{#each items as _, i}` where only the index is used.
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					varsIgnorePattern: '^_',
+					argsIgnorePattern: '^_',
+					caughtErrorsIgnorePattern: '^_',
+					destructuredArrayIgnorePattern: '^_'
+				}
+			]
 		}
 	},
 	{
