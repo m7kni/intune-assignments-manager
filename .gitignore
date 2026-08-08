@@ -24,3 +24,6 @@ vite.config.ts.timestamp-*
 
 # Superpowers scratch (plans/specs) - never publish
 docs/superpowers/
+
+# Zensical docs build output (the hub builds from docs/ - this is local-only)
+/site

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import type { MobileApp, ConfigurationPolicy, AssignmentIntent } from './graph';
 import type { DeviceCompliancePolicy } from './compliance';
 import type { WindowsUpdateForBusinessConfiguration } from './updates';

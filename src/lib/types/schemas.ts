@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { z } from 'zod';
 
 // ─── Assignment Filter Fields (shared) ──────────────────────────────

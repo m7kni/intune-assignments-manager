@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import type { AssignmentTarget } from '$lib/types/graph';
 import type { CsvParseResult } from './csv';
 import type { GraphClient } from '$lib/graph/client';

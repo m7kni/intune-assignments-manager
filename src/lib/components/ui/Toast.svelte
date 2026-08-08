@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import { X, CheckCircle, XCircle, AlertTriangle, Info } from 'lucide-svelte';
 	import type { Notification } from '$lib/stores/notifications.svelte';

@@ -1,1 +1,3 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 // place files you want to import through the `$lib` alias in this folder.

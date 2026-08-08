@@ -27,7 +27,7 @@ npm install -g pnpm
 ## Clone and Install
 
 ```bash
-git clone https://github.com/your-org/intune-assignments-manager.git
+git clone https://github.com/rknightion/intune-assignments-manager.git
 cd intune-assignments-manager
 pnpm install
 ```

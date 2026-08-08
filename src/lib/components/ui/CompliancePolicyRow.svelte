@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import type { DeviceCompliancePolicy } from '$lib/types/compliance';
 	import { getCompliancePlatformInfo } from '$lib/utils/compliance-types';

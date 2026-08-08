@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import type { DeviceHealthScript } from '$lib/types/remediation';
 	import Badge from './Badge.svelte';

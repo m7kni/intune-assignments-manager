@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { Monitor, Smartphone, TabletSmartphone, Settings } from 'lucide-svelte';
 
 export interface ProfileTypeInfo {

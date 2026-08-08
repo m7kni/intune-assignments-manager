@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { RefreshCw, Star, ShieldCheck, Cpu } from 'lucide-svelte';
 import type { UpdateCategory } from '$lib/types/updates';
 

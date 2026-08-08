@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 export class GraphApiError extends Error {
 	readonly status: number;
 	readonly code: string;

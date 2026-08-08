@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import AuthGuard from '$lib/components/ui/AuthGuard.svelte';
 	import PermissionGuard from '$lib/components/ui/PermissionGuard.svelte';

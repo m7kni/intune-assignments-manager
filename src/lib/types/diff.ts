@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 export type DiffStatus = 'added' | 'removed' | 'changed' | 'unchanged';
 
 export interface DiffEntry {

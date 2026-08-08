@@ -74,7 +74,7 @@ After deployment, add your Cloudflare Pages URL as a redirect URI in your Azure 
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/intune-assignments-manager.git
+git clone https://github.com/rknightion/intune-assignments-manager.git
 cd intune-assignments-manager
 
 # Install dependencies (pnpm is required)

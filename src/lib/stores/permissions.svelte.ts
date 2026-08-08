@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { browser } from '$app/environment';
 import { auth } from '$lib/stores/auth.svelte';
 import { hasConsented, hasAllScopes, requestConsent } from '$lib/auth/permission-check';

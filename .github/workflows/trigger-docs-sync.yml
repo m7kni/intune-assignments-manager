@@ -25,14 +25,11 @@ jobs:
       id-token: write # exchanged for a tailnet identity and an OpenBao token
     if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
     steps:
-      # Mints a GitHub App installation token carrying contents:write on the docs
-      # hub ONLY, replacing DOCS_SYNC_PAT. Nothing durable is stored here.
+      # Mints a per-run GitHub App installation token carrying contents:write on
+      # the docs hub ONLY. Nothing durable is stored in this repo.
       #
-      # This repo is in the m7kni ORG, so it has its own Tailscale federated
-      # identity pinned to owner id 278668071 -- the rknightion one would refuse
-      # its token. The OpenBao permission set is the SAME shared `docs-sync`
-      # (every consumer dispatches at the same hub, which lives in rknightion,
-      # so the App installation boundary is not crossed); only the role differs.
+      # Every docs-sync consumer shares one `docs-sync` permission set, because
+      # they all dispatch at the same hub; the per-repo control is the role.
       - name: Mint a scoped docs-sync token
         id: bao
         uses: rknightion/.github/.github/actions/broker-token@1cd0af4cdb0f46266b34f3b981543e32e7c98b4a

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { Shield, Flame, Lock, Radar, ShieldOff, UserCheck } from 'lucide-svelte';
 import type { ConfigurationPolicy } from '$lib/types/graph';
 import type { EndpointSecurityCategory } from '$lib/types/security';

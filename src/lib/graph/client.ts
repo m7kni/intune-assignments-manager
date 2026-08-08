@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import type { BatchRequestItem, BatchResponseItem, GraphPagedResponse } from '$lib/types/graph';
 import { GraphApiError, RateLimitError, AuthenticationError, PermissionError } from './errors';
 

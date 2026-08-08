@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import type { GraphClient } from './client';
 import type { BatchRequestItem } from '$lib/types/graph';
 import type { DeviceAction, BulkActionProgress, ActionResult } from '$lib/types/device';

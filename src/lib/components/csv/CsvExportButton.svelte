@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import { Download } from 'lucide-svelte';
 	import Button from '$lib/components/ui/Button.svelte';

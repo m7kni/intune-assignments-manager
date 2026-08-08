@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 // ─── Policy Comparison Types ────────────────────────────────────────
 
 export type PolicyType = 'configProfile' | 'compliance' | 'security';

@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import { AlertTriangle } from 'lucide-svelte';
 	import Button from './Button.svelte';

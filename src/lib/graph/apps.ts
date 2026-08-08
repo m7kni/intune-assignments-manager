@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import type { GraphClient } from './client';
 import type { MobileApp, MobileAppAssignment, GraphPagedResponse } from '$lib/types/graph';
 import { mobileAppSchema, mobileAppAssignmentSchema } from '$lib/types/schemas';

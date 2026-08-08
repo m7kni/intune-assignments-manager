@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 // ─── Endpoint Security Category Types ───────────────────────────────
 
 export type EndpointSecurityCategory =

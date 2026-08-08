@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 export function downloadCsv(csvContent: string, filename: string): void {
 	const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
 	const url = URL.createObjectURL(blob);

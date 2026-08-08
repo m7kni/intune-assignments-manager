@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { Monitor, Smartphone, TabletSmartphone, Laptop } from 'lucide-svelte';
 import type {
 	ComplianceState,

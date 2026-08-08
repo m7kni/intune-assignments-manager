@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import type { ConfigurationPolicy } from '$lib/types/graph';
 	import { getProfileTypeInfo } from '$lib/utils/profile-types';

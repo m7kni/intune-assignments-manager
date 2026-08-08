@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import type { AssignmentTarget } from './graph';
 
 // ─── Autopilot Device Types ───────────────────────────────────────

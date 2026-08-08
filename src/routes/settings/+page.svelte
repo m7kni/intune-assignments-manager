@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import AuthGuard from '$lib/components/ui/AuthGuard.svelte';
 	import PageHeader from '$lib/components/ui/PageHeader.svelte';

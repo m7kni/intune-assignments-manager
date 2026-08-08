@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import { page } from '$app/state';
 	import { ChevronRight, Search } from 'lucide-svelte';

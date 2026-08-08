@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { auth, login } from '$lib/stores/auth.svelte';

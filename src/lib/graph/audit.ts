@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import type { GraphClient } from './client';
 import type { AuditEvent } from '$lib/types/graph';
 import { auditEventSchema } from '$lib/types/schemas';

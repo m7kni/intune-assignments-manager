@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/state';

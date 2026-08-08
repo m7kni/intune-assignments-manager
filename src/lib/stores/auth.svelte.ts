@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import type { AccountInfo } from '@azure/msal-browser';
 import { browser } from '$app/environment';
 

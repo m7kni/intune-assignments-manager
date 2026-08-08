@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { TIER_1_SCOPES, TIER_2_SCOPES, TIER_3_SCOPES, TIER_4_SCOPES } from './config';
 
 // ─── Types ──────────────────────────────────────────────────────────

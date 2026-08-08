@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { goto } from '$app/navigation';
 import { commandPalette } from './command-palette.svelte';
 

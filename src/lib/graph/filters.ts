@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import type { GraphClient } from './client';
 import type { AssignmentFilter } from '$lib/types/graph';
 import { assignmentFilterSchema } from '$lib/types/schemas';

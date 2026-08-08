@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import { ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-svelte';
 

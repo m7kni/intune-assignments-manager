@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
 	import { getActionInfo } from '$lib/utils/device-actions';

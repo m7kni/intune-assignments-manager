@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import { ChevronDown, X } from 'lucide-svelte';
 	import type { FilterOption } from '$lib/utils/filters';

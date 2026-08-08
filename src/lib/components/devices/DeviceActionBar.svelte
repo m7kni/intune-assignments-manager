@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import PermissionGuard from '$lib/components/ui/PermissionGuard.svelte';
 	import Button from '$lib/components/ui/Button.svelte';

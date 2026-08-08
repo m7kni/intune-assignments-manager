@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { Monitor, Smartphone, TabletSmartphone, Globe } from 'lucide-svelte';
 import type { MobileApp, ConfigurationPolicy } from '$lib/types/graph';
 import type { DeviceCompliancePolicy } from '$lib/types/compliance';

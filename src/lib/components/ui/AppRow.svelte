@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import type { MobileApp } from '$lib/types/graph';
 	import { getAppTypeInfo } from '$lib/utils/app-types';

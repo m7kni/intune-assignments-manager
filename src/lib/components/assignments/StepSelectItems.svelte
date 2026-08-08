@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import { X, Package, Search } from 'lucide-svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';

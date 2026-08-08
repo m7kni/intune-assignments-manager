@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import type { GraphClient } from '$lib/graph/client';
 import type { IntuneReportResponse } from '$lib/types/status';
 import type {

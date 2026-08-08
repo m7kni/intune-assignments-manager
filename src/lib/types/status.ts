@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+
 // ─── App Install Status Types ───────────────────────────────────────
 
 export type AppInstallState =

@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import Badge from '$lib/components/ui/Badge.svelte';
 	import { Monitor, Users, UsersRound, UserMinus, Pencil, Trash2 } from 'lucide-svelte';

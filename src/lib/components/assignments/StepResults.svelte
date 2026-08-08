@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
 	import { CheckCircle, XCircle, AlertTriangle, RotateCcw, Plus } from 'lucide-svelte';
 	import Spinner from '$lib/components/ui/Spinner.svelte';
