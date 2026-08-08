@@ -1,7 +1,6 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"description": "PR CI now exists (.github/workflows/ci.yml -> ci-success), and main's ruleset requires it, so Renovate uses GitHub-native auto-merge and its PRs merge only on a green ci-success. The previous platformAutomerge:false override, which let Renovate self-merge with no checks at all because the repo had no PR CI, has been removed.",
-	"minimumReleaseAge": "3 days",
+	"description": "PR CI now exists (.github/workflows/ci.yml -> ci-success), and main's ruleset requires it, so Renovate uses GitHub-native auto-merge and its PRs merge only on a green ci-success. The previous platformAutomerge:false override, which let Renovate self-merge with no checks at all because the repo had no PR CI, has been removed. The npm release-age cooldown that keeps Renovate above pnpm's 24h install floor is inherited from the fleet config (m7kni/renovate-config config.js) - do not re-add it here, a local value would override the fleet one.",
 	"packageRules": [
 		{
 			"description": "Hold TypeScript on 6.x. TS 7.0 broke BOTH quality gates at once: typescript-eslint (see typescript-eslint/typescript-eslint#10940) refuses to load, and svelte-check demands a TS6+TS7 side-by-side install plus a --tsgo flag. Both tools were already at their latest published versions, so there was nothing to upgrade to - the only fix was pinning TypeScript back. pnpm build still passed throughout, because Vite strips types without checking them, so the breakage was silent. Lift this once typescript-eslint ships TS >=7.1 support AND svelte-check supports TS 7 without the side-by-side dance.",
