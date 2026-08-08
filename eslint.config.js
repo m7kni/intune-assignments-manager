@@ -31,6 +31,8 @@ export default [
 		}
 	},
 	{
-		ignores: ['build/', '.svelte-kit/', 'dist/', '.wrangler/']
+		// `site/` is zensical build output and `docs/javascripts/` is vendored
+		// third-party JS (mathjax bootstrap) — neither is ours to lint.
+		ignores: ['build/', '.svelte-kit/', 'dist/', '.wrangler/', 'site/', 'docs/javascripts/']
 	}
 ];

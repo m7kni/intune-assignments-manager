@@ -1,5 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": "No pull_request CI here, so there is no ci-success check to gate a ruleset on. Renovate self-merges its automerge-eligible PRs directly (platformAutomerge:false) instead of GitHub native auto-merge - i.e. traditional merge without required checks. If real PR CI is added later, add a ci-success ruleset and drop this override.",
-  "platformAutomerge": false
+  "platformAutomerge": false,
+  "packageRules": [
+    {
+      "description": "Hold TypeScript on 6.x. TS 7.0 broke BOTH quality gates at once: typescript-eslint (see typescript-eslint/typescript-eslint#10940) refuses to load, and svelte-check demands a TS6+TS7 side-by-side install plus a --tsgo flag. Both tools were already at their latest published versions, so there was nothing to upgrade to - the only fix was pinning TypeScript back. pnpm build still passed throughout, because Vite strips types without checking them, so the breakage was silent. Lift this once typescript-eslint ships TS >=7.1 support AND svelte-check supports TS 7 without the side-by-side dance.",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7.0.0"
+    }
+  ]
 }
