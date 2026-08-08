@@ -230,14 +230,10 @@
 			parts.push(`${profileCount} profile${profileCount !== 1 ? 's' : ''}`);
 		}
 		if (complianceCount > 0) {
-			parts.push(
-				`${complianceCount} compliance polic${complianceCount !== 1 ? 'ies' : 'y'}`
-			);
+			parts.push(`${complianceCount} compliance polic${complianceCount !== 1 ? 'ies' : 'y'}`);
 		}
 		if (securityCount > 0) {
-			parts.push(
-				`${securityCount} security polic${securityCount !== 1 ? 'ies' : 'y'}`
-			);
+			parts.push(`${securityCount} security polic${securityCount !== 1 ? 'ies' : 'y'}`);
 		}
 		return parts.join(' and ');
 	});

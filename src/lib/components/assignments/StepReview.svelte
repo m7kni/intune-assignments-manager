@@ -171,7 +171,10 @@
 								assignment.target['@odata.type'] ===
 								'#microsoft.graph.exclusionGroupAssignmentTarget';
 
-							if (item.type === 'app' && wizard.replaceConfig.appIntents.includes(existingIntent as AssignmentIntent)) {
+							if (
+								item.type === 'app' &&
+								wizard.replaceConfig.appIntents.includes(existingIntent as AssignmentIntent)
+							) {
 								continue;
 							}
 							if (item.type !== 'app') {
@@ -317,8 +320,8 @@
 			<AlertTriangle size={16} class="text-ember mt-0.5 shrink-0" />
 			<p class="text-ink text-sm">
 				<strong>Replace mode is active.</strong>
-				{removalCount} existing assignment{removalCount !== 1 ? 's' : ''} will be removed
-				across {itemsWithRemovals} item{itemsWithRemovals !== 1 ? 's' : ''}.
+				{removalCount} existing assignment{removalCount !== 1 ? 's' : ''} will be removed across {itemsWithRemovals}
+				item{itemsWithRemovals !== 1 ? 's' : ''}.
 			</p>
 		</div>
 	{/if}
@@ -392,7 +395,15 @@
 						>
 							<div class="col-span-4 min-w-0">
 								<p class="text-ink truncate text-sm font-medium">{item.name}</p>
-								<p class="text-muted text-xs">{item.type === 'app' ? 'App' : item.type === 'compliance' ? 'Compliance' : item.type === 'security' ? 'Security' : 'Profile'}</p>
+								<p class="text-muted text-xs">
+									{item.type === 'app'
+										? 'App'
+										: item.type === 'compliance'
+											? 'Compliance'
+											: item.type === 'security'
+												? 'Security'
+												: 'Profile'}
+								</p>
 							</div>
 							<div class="col-span-3 min-w-0">
 								<p class="text-ink truncate text-sm">{group.displayName}</p>
@@ -458,7 +469,15 @@
 						>
 							<div class="col-span-4 min-w-0">
 								<p class="text-ink truncate text-sm font-medium">{item.name}</p>
-								<p class="text-muted text-xs">{item.type === 'app' ? 'App' : item.type === 'compliance' ? 'Compliance' : item.type === 'security' ? 'Security' : 'Profile'}</p>
+								<p class="text-muted text-xs">
+									{item.type === 'app'
+										? 'App'
+										: item.type === 'compliance'
+											? 'Compliance'
+											: item.type === 'security'
+												? 'Security'
+												: 'Profile'}
+								</p>
 							</div>
 							<div class="col-span-3 min-w-0">
 								<p class="text-ink truncate text-sm">{group.displayName}</p>
@@ -507,51 +526,57 @@
 						</div>
 					{/each}
 
-				<!-- Removed assignments (replace mode) -->
-				{#if wizard.replaceMode && diffResult}
-					{@const itemDiff = diffResult.items.find((d) => d.itemId === item.id)}
-					{#if itemDiff}
-						{#each itemDiff.entries.filter((e) => e.status === 'removed') as entry (entry.targetKey)}
-							<div
-								class="border-border border-l-ember bg-ember-light/50 grid grid-cols-12 items-center gap-2 border-b border-l-2 px-4 py-2.5 last:border-b-0"
-							>
-								<div class="col-span-4 min-w-0">
-									<p class="text-ink truncate text-sm font-medium line-through opacity-60">
-										{item.name}
-									</p>
-									<p class="text-muted text-xs">
-										{item.type === 'app' ? 'App' : item.type === 'compliance' ? 'Compliance' : item.type === 'security' ? 'Security' : 'Profile'}
-									</p>
-								</div>
-								<div class="col-span-3 min-w-0">
-									<p class="text-ink truncate text-sm line-through opacity-60">
-										{entry.targetDisplayName}
-										{#if entry.isExclusion}
-											<span class="text-xs">(Exclusion)</span>
-										{/if}
-									</p>
-								</div>
-								<div class="col-span-2">
-									<Badge variant="neutral">
-										<span class="text-ember">Removed</span>
-									</Badge>
-								</div>
-								<div class="col-span-3 min-w-0">
-									{#if entry.currentFilterName}
-										<p class="text-muted truncate text-xs line-through opacity-60">
-											{entry.currentFilterName} ({entry.currentFilterMode})
+					<!-- Removed assignments (replace mode) -->
+					{#if wizard.replaceMode && diffResult}
+						{@const itemDiff = diffResult.items.find((d) => d.itemId === item.id)}
+						{#if itemDiff}
+							{#each itemDiff.entries.filter((e) => e.status === 'removed') as entry (entry.targetKey)}
+								<div
+									class="border-border border-l-ember bg-ember-light/50 grid grid-cols-12 items-center gap-2 border-b border-l-2 px-4 py-2.5 last:border-b-0"
+								>
+									<div class="col-span-4 min-w-0">
+										<p class="text-ink truncate text-sm font-medium line-through opacity-60">
+											{item.name}
 										</p>
-									{:else}
-										<p class="text-muted text-xs">—</p>
-									{/if}
+										<p class="text-muted text-xs">
+											{item.type === 'app'
+												? 'App'
+												: item.type === 'compliance'
+													? 'Compliance'
+													: item.type === 'security'
+														? 'Security'
+														: 'Profile'}
+										</p>
+									</div>
+									<div class="col-span-3 min-w-0">
+										<p class="text-ink truncate text-sm line-through opacity-60">
+											{entry.targetDisplayName}
+											{#if entry.isExclusion}
+												<span class="text-xs">(Exclusion)</span>
+											{/if}
+										</p>
+									</div>
+									<div class="col-span-2">
+										<Badge variant="neutral">
+											<span class="text-ember">Removed</span>
+										</Badge>
+									</div>
+									<div class="col-span-3 min-w-0">
+										{#if entry.currentFilterName}
+											<p class="text-muted truncate text-xs line-through opacity-60">
+												{entry.currentFilterName} ({entry.currentFilterMode})
+											</p>
+										{:else}
+											<p class="text-muted text-xs">—</p>
+										{/if}
+									</div>
 								</div>
-							</div>
-						{/each}
+							{/each}
+						{/if}
 					{/if}
-				{/if}
-			{/each}
+				{/each}
+			</div>
 		</div>
-	</div>
 
 		<!-- Total summary -->
 		<div class="text-muted mt-4 text-sm">

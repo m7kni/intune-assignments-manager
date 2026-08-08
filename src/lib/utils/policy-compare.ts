@@ -13,10 +13,7 @@ import type {
  * Flatten nested Graph API setting objects into key-value pairs for comparison.
  * Handles Settings Catalog format with nested settingInstance structures.
  */
-export function flattenSettingValue(
-	setting: unknown,
-	prefix = ''
-): Record<string, unknown> {
+export function flattenSettingValue(setting: unknown, prefix = ''): Record<string, unknown> {
 	const result: Record<string, unknown> = {};
 
 	if (setting === null || setting === undefined) {

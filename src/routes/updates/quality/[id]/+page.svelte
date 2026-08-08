@@ -24,10 +24,7 @@
 	import { ensureFiltersLoaded, getFilterById } from '$lib/stores/filter-cache';
 	import { toFriendlyMessage } from '$lib/graph/errors';
 	import { exportAssignmentsCsv, type ExportableAssignment } from '$lib/utils/csv-assignments';
-	import type {
-		WindowsQualityUpdateProfile,
-		UpdateAssignment
-	} from '$lib/types/updates';
+	import type { WindowsQualityUpdateProfile, UpdateAssignment } from '$lib/types/updates';
 	import type { AssignmentTarget, AssignmentIntent } from '$lib/types/graph';
 
 	let profile = $state<WindowsQualityUpdateProfile | null>(null);
@@ -288,9 +285,7 @@
 							filename="{profile?.displayName ?? 'quality-update'}-assignments.csv"
 							disabled={assignments.length === 0}
 						/>
-						<Button variant="primary" icon={Layers} href="/assign">
-							Edit in Bulk Assign
-						</Button>
+						<Button variant="primary" icon={Layers} href="/assign">Edit in Bulk Assign</Button>
 					</div>
 				</div>
 
@@ -320,9 +315,7 @@
 					{#if profile.expeditedUpdateSettings}
 						{#if profile.expeditedUpdateSettings.qualityUpdateRelease}
 							<div>
-								<p class="text-muted text-xs font-medium uppercase">
-									Quality Update Release
-								</p>
+								<p class="text-muted text-xs font-medium uppercase">Quality Update Release</p>
 								<p class="text-ink text-sm">
 									{profile.expeditedUpdateSettings.qualityUpdateRelease}
 								</p>
@@ -330,9 +323,7 @@
 						{/if}
 						{#if profile.expeditedUpdateSettings.daysUntilForcedReboot !== null}
 							<div>
-								<p class="text-muted text-xs font-medium uppercase">
-									Days Until Forced Reboot
-								</p>
+								<p class="text-muted text-xs font-medium uppercase">Days Until Forced Reboot</p>
 								<p class="text-ink text-sm">
 									{profile.expeditedUpdateSettings.daysUntilForcedReboot} days
 								</p>
@@ -411,9 +402,7 @@
 		itemKind="profile"
 		existingTarget={editingAssignment?.target}
 		existingIntent={null}
-		existingTargetName={editingAssignment
-			? resolveTargetName(editingAssignment.target)
-			: undefined}
+		existingTargetName={editingAssignment ? resolveTargetName(editingAssignment.target) : undefined}
 		onSave={handleEditorSave}
 		onCancel={() => (editorOpen = false)}
 	/>

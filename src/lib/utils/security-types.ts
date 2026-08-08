@@ -68,9 +68,7 @@ export const SECURITY_TEMPLATE_FAMILIES = SECURITY_CATEGORIES.map((c) => c.templ
 
 const categoryByFamily = new Map(SECURITY_CATEGORIES.map((c) => [c.templateFamily, c]));
 
-export function getSecurityCategoryInfo(
-	templateFamily: string
-): SecurityCategoryInfo | undefined {
+export function getSecurityCategoryInfo(templateFamily: string): SecurityCategoryInfo | undefined {
 	return categoryByFamily.get(templateFamily);
 }
 

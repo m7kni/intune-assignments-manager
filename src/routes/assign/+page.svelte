@@ -483,8 +483,8 @@
 						selectedScripts={wizard.selectedScripts}
 						{preselectedAppId}
 						{preselectedProfileId}
-						preselectedCompliancePolicyId={preselectedCompliancePolicyId}
-						preselectedSecurityPolicyId={preselectedSecurityPolicyId}
+						{preselectedCompliancePolicyId}
+						{preselectedSecurityPolicyId}
 						apps={cachedApps}
 						profiles={cachedProfiles}
 						compliancePolicies={cachedCompliancePolicies}

@@ -41,7 +41,11 @@ function sleep(ms: number): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function buildUrl(path: string, params?: Record<string, string>, version?: GraphApiVersion): string {
+function buildUrl(
+	path: string,
+	params?: Record<string, string>,
+	version?: GraphApiVersion
+): string {
 	const baseUrl = version ? `${GRAPH_BASE}/${version}` : GRAPH_BASE_URL;
 	const url = new URL(baseUrl + path);
 	if (params) {

@@ -10,13 +10,7 @@
 	import ErrorState from '$lib/components/ui/ErrorState.svelte';
 	import DropdownMenu from '$lib/components/ui/DropdownMenu.svelte';
 	import ScriptRow from '$lib/components/ui/ScriptRow.svelte';
-	import {
-		Search,
-		FileCode,
-		ArrowDownAZ,
-		ArrowUpZA,
-		Clock
-	} from 'lucide-svelte';
+	import { Search, FileCode, ArrowDownAZ, ArrowUpZA, Clock } from 'lucide-svelte';
 	import { getGraphClient } from '$lib/stores/graph';
 	import type { DeviceManagementScript } from '$lib/types/scripts';
 	import { listScripts } from '$lib/graph/scripts';
@@ -52,8 +46,7 @@
 		} else if (sortBy === 'modified') {
 			result = [...result].sort(
 				(a, b) =>
-					new Date(b.lastModifiedDateTime).getTime() -
-					new Date(a.lastModifiedDateTime).getTime()
+					new Date(b.lastModifiedDateTime).getTime() - new Date(a.lastModifiedDateTime).getTime()
 			);
 		} else {
 			result = [...result].sort((a, b) => a.displayName.localeCompare(b.displayName));
@@ -145,9 +138,10 @@
 						class="border-border bg-surface/95 sticky top-12 z-10 border-b px-4 py-2.5 backdrop-blur-sm"
 					>
 						<p class="text-muted text-xs font-medium tracking-wide uppercase">
-							{filteredScripts.length}{search.trim() !== ''
-								? ` of ${scripts.length}`
-								: ''} script{filteredScripts.length !== 1 ? 's' : ''}
+							{filteredScripts.length}{search.trim() !== '' ? ` of ${scripts.length}` : ''} script{filteredScripts.length !==
+							1
+								? 's'
+								: ''}
 							{#if search.trim() !== ''}
 								matching "{search.trim()}"
 							{/if}

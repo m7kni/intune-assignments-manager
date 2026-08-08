@@ -23,9 +23,7 @@
 	const filteredPolicies = $derived(
 		search.trim() === ''
 			? policies
-			: policies.filter((p) =>
-					p.displayName.toLowerCase().includes(search.trim().toLowerCase())
-				)
+			: policies.filter((p) => p.displayName.toLowerCase().includes(search.trim().toLowerCase()))
 	);
 
 	const selectedPolicy = $derived(policies.find((p) => p.id === selected));

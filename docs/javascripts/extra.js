@@ -11,16 +11,16 @@ document.addEventListener('DOMContentLoaded', function () {
 		offers: {
 			'@type': 'Offer',
 			price: '0',
-			priceCurrency: 'USD',
+			priceCurrency: 'USD'
 		},
 		author: {
 			'@type': 'Person',
 			name: 'Rob Knighton',
-			url: 'https://m7kni.io',
+			url: 'https://m7kni.io'
 		},
 		url: 'https://m7kni.io/intune-assignments-manager/',
 		softwareRequirements: 'Modern web browser with JavaScript enabled',
-		applicationSubCategory: 'IT Administration',
+		applicationSubCategory: 'IT Administration'
 	};
 
 	var script = document.createElement('script');

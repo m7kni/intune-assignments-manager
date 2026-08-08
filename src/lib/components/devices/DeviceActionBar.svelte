@@ -149,7 +149,8 @@
 <ConfirmDialog
 	open={confirmOpen}
 	title="Confirm {confirmAction?.label ?? 'Action'}"
-	message="{confirmAction?.description ?? 'Are you sure?'} This action will be sent to {deviceName}."
+	message="{confirmAction?.description ??
+		'Are you sure?'} This action will be sent to {deviceName}."
 	confirmLabel={confirmAction?.label ?? 'Confirm'}
 	onConfirm={handleConfirm}
 	onCancel={() => {
@@ -160,57 +161,50 @@
 
 <!-- Destructive confirmation dialog (typed name required) -->
 {#if destructiveOpen && destructiveAction}
-	<div
-		class="fixed inset-0 z-50 flex items-center justify-center"
-	>
-	<div
-		class="border-border bg-surface animate-scale-in relative z-10 w-full max-w-md rounded-xl border p-0 shadow-lg"
-	>
-		<div class="p-6">
-			<div class="mb-3 flex items-center gap-3">
-				<div class="bg-ember-light flex h-10 w-10 items-center justify-center rounded-xl">
-					<AlertTriangle size={20} class="text-ember" />
+	<div class="fixed inset-0 z-50 flex items-center justify-center">
+		<div
+			class="border-border bg-surface animate-scale-in relative z-10 w-full max-w-md rounded-xl border p-0 shadow-lg"
+		>
+			<div class="p-6">
+				<div class="mb-3 flex items-center gap-3">
+					<div class="bg-ember-light flex h-10 w-10 items-center justify-center rounded-xl">
+						<AlertTriangle size={20} class="text-ember" />
+					</div>
+					<h2 class="text-ink text-lg font-semibold">{destructiveAction.label} Device</h2>
 				</div>
-				<h2 class="text-ink text-lg font-semibold">{destructiveAction.label} Device</h2>
+				<p class="text-muted text-sm">
+					{destructiveAction.description}
+				</p>
+				<p class="text-ember mt-2 text-sm font-medium">This action cannot be undone.</p>
+				<div class="mt-4">
+					<label class="text-ink mb-1.5 block text-sm font-medium" for="confirm-input">
+						Type <span class="font-mono font-semibold">{deviceName}</span> to confirm
+					</label>
+					<input
+						id="confirm-input"
+						type="text"
+						class="border-border bg-canvas focus:border-accent focus:ring-accent/20 w-full rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+						placeholder={deviceName}
+						bind:value={typedConfirmation}
+						onkeydown={(e) => {
+							if (e.key === 'Enter' && typedConfirmationMatch) handleDestructiveConfirm();
+						}}
+					/>
+				</div>
 			</div>
-			<p class="text-muted text-sm">
-				{destructiveAction.description}
-			</p>
-			<p class="text-ember mt-2 text-sm font-medium">
-				This action cannot be undone.
-			</p>
-			<div class="mt-4">
-				<label class="text-ink mb-1.5 block text-sm font-medium" for="confirm-input">
-					Type <span class="font-mono font-semibold">{deviceName}</span> to confirm
-				</label>
-				<input
-					id="confirm-input"
-					type="text"
-					class="border-border bg-canvas focus:border-accent focus:ring-accent/20 w-full rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:outline-none"
-					placeholder={deviceName}
-					bind:value={typedConfirmation}
-					onkeydown={(e) => {
-						if (e.key === 'Enter' && typedConfirmationMatch) handleDestructiveConfirm();
-					}}
-				/>
+			<div class="border-border flex justify-end gap-3 border-t px-6 py-4">
+				<Button variant="ghost" onclick={closeDestructive}>Cancel</Button>
+				<Button
+					variant="destructive"
+					disabled={!typedConfirmationMatch}
+					onclick={handleDestructiveConfirm}
+				>
+					{destructiveAction.label}
+				</Button>
 			</div>
 		</div>
-		<div class="border-border flex justify-end gap-3 border-t px-6 py-4">
-			<Button variant="ghost" onclick={closeDestructive}>Cancel</Button>
-			<Button
-				variant="destructive"
-				disabled={!typedConfirmationMatch}
-				onclick={handleDestructiveConfirm}
-			>
-				{destructiveAction.label}
-			</Button>
-		</div>
-	</div>
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div
-		class="fixed inset-0 bg-black/50 backdrop-blur-sm"
-		onclick={closeDestructive}
-	></div>
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<div class="fixed inset-0 bg-black/50 backdrop-blur-sm" onclick={closeDestructive}></div>
 	</div>
 {/if}

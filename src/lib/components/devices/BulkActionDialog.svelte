@@ -74,9 +74,7 @@
 		progress ? Math.round((progress.completed / progress.total) * 100) : 0
 	);
 
-	const failedResults = $derived(
-		progress?.results.filter((r) => r.status === 'error') ?? []
-	);
+	const failedResults = $derived(progress?.results.filter((r) => r.status === 'error') ?? []);
 
 	// Reset state when dialog opens
 	$effect(() => {
@@ -107,14 +105,9 @@
 
 		const client = getGraphClient();
 
-		const result = await executeBulkDeviceActions(
-			client,
-			devices,
-			action,
-			(p) => {
-				progress = p;
-			}
-		);
+		const result = await executeBulkDeviceActions(client, devices, action, (p) => {
+			progress = p;
+		});
 
 		progress = result;
 		phase = 'results';
@@ -143,21 +136,16 @@
 		};
 
 		const client = getGraphClient();
-		const retryResult = await executeBulkDeviceActions(
-			client,
-			failedDevices,
-			action,
-			(p) => {
-				// Merge with existing succeeded results
-				progress = {
-					total: failedDevices.length + succeededResults.length,
-					completed: succeededResults.length + p.completed,
-					succeeded: succeededResults.length + p.succeeded,
-					failed: p.failed,
-					results: [...succeededResults, ...p.results]
-				};
-			}
-		);
+		const retryResult = await executeBulkDeviceActions(client, failedDevices, action, (p) => {
+			// Merge with existing succeeded results
+			progress = {
+				total: failedDevices.length + succeededResults.length,
+				completed: succeededResults.length + p.completed,
+				succeeded: succeededResults.length + p.succeeded,
+				failed: p.failed,
+				results: [...succeededResults, ...p.results]
+			};
+		});
 
 		progress = {
 			total: failedDevices.length + succeededResults.length,
@@ -184,14 +172,12 @@
 						? 'bg-ember-light'
 						: 'bg-accent-light'} flex h-10 w-10 items-center justify-center rounded-xl"
 				>
-					<ActionIcon
-						size={20}
-						class={isDestructive ? 'text-ember' : 'text-accent'}
-					/>
+					<ActionIcon size={20} class={isDestructive ? 'text-ember' : 'text-accent'} />
 				</div>
 				<div>
 					<h2 class="text-ink text-lg font-semibold">
-						{actionInfo.label} {devices.length} Device{devices.length !== 1 ? 's' : ''}
+						{actionInfo.label}
+						{devices.length} Device{devices.length !== 1 ? 's' : ''}
 					</h2>
 					<p class="text-muted text-sm">{actionInfo.description}</p>
 				</div>
@@ -204,13 +190,11 @@
 						<div class="text-sm">
 							{#if action === 'wipe'}
 								<p class="text-ember font-medium">
-									This will factory reset all selected devices. All data will be permanently
-									erased.
+									This will factory reset all selected devices. All data will be permanently erased.
 								</p>
 							{:else if action === 'retire'}
 								<p class="text-ember font-medium">
-									This will remove corporate data and unenroll all selected devices from
-									management.
+									This will remove corporate data and unenroll all selected devices from management.
 								</p>
 							{/if}
 							<p class="text-ink-faint mt-1">This action cannot be undone.</p>
@@ -235,11 +219,7 @@
 
 			{#if action === 'wipe'}
 				<label class="mb-3 flex cursor-pointer items-start gap-2">
-					<input
-						type="checkbox"
-						bind:checked={wipeAcknowledged}
-						class="accent-ember mt-0.5"
-					/>
+					<input type="checkbox" bind:checked={wipeAcknowledged} class="accent-ember mt-0.5" />
 					<span class="text-sm text-ink">
 						I understand this will factory reset {devices.length} device{devices.length !== 1
 							? 's'
@@ -271,7 +251,8 @@
 				disabled={!canConfirm}
 				onclick={handleConfirm}
 			>
-				{actionInfo.label} {devices.length} Device{devices.length !== 1 ? 's' : ''}
+				{actionInfo.label}
+				{devices.length} Device{devices.length !== 1 ? 's' : ''}
 			</Button>
 		</div>
 	{:else if phase === 'progress'}

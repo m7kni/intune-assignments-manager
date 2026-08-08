@@ -28,10 +28,10 @@ import { getToken } from '$lib/stores/auth.svelte';
 let clientInstance: GraphClient | null = null;
 
 export function getGraphClient(): GraphClient {
-    if (clientInstance === null) {
-        clientInstance = createGraphClient(getToken);
-    }
-    return clientInstance;
+	if (clientInstance === null) {
+		clientInstance = createGraphClient(getToken);
+	}
+	return clientInstance;
 }
 ```
 
@@ -54,16 +54,14 @@ Makes a single HTTP request to the Graph API.
 
 ```typescript
 interface RequestOptions {
-    method?: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
-    body?: unknown;
-    headers?: Record<string, string>;
-    params?: Record<string, string>;
-    version?: 'beta' | 'v1.0';
+	method?: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+	body?: unknown;
+	headers?: Record<string, string>;
+	params?: Record<string, string>;
+	version?: 'beta' | 'v1.0';
 }
 
-const app = await client.request<MobileApp>(
-    `/deviceAppManagement/mobileApps/${id}`
-);
+const app = await client.request<MobileApp>(`/deviceAppManagement/mobileApps/${id}`);
 ```
 
 **Retry behaviour**:
@@ -76,11 +74,11 @@ const app = await client.request<MobileApp>(
 
 **Headers** sent on every request:
 
-| Header | Value |
-|---|---|
-| `Authorization` | `Bearer {token}` |
-| `Content-Type` | `application/json` |
-| `ConsistencyLevel` | `eventual` |
+| Header             | Value              |
+| ------------------ | ------------------ |
+| `Authorization`    | `Bearer {token}`   |
+| `Content-Type`     | `application/json` |
+| `ConsistencyLevel` | `eventual`         |
 
 The `ConsistencyLevel: eventual` header is required by several Graph API endpoints that use advanced query capabilities (e.g., `$count`, `$search`, `$filter` with `ne`).
 
@@ -90,12 +88,10 @@ Fetches all pages of a paginated Graph API response by following `@odata.nextLin
 
 ```typescript
 interface FetchAllOptions extends RequestOptions {
-    maxPages?: number; // Default: 50
+	maxPages?: number; // Default: 50
 }
 
-const allApps = await client.fetchAll<MobileApp>(
-    '/deviceAppManagement/mobileApps'
-);
+const allApps = await client.fetchAll<MobileApp>('/deviceAppManagement/mobileApps');
 ```
 
 The method:
@@ -106,7 +102,7 @@ The method:
 4. Repeats until there are no more pages or `maxPages` is reached
 
 !!! tip
-    Set `maxPages` when you only need a sample of data (e.g., dashboard counts) to avoid fetching hundreds of pages.
+Set `maxPages` when you only need a sample of data (e.g., dashboard counts) to avoid fetching hundreds of pages.
 
 ### `batch(requests[], options?)`
 
@@ -114,29 +110,29 @@ Sends multiple Graph API requests in a single HTTP call using the `/$batch` endp
 
 ```typescript
 interface BatchRequestItem {
-    id: string;
-    method: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
-    url: string;
-    body?: unknown;
-    headers?: Record<string, string>;
+	id: string;
+	method: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+	url: string;
+	body?: unknown;
+	headers?: Record<string, string>;
 }
 
 interface BatchOptions {
-    version?: 'beta' | 'v1.0';
+	version?: 'beta' | 'v1.0';
 }
 
 const requests: BatchRequestItem[] = appIds.map((id) => ({
-    id,
-    method: 'GET',
-    url: `/deviceAppManagement/mobileApps/${id}/assignments`
+	id,
+	method: 'GET',
+	url: `/deviceAppManagement/mobileApps/${id}/assignments`
 }));
 
 const responses = await client.batch(requests);
 
 for (const response of responses) {
-    if (response.status === 200) {
-        // response.body contains the result
-    }
+	if (response.status === 200) {
+		// response.body contains the result
+	}
 }
 ```
 
@@ -156,9 +152,9 @@ All errors thrown by the client extend `GraphApiError`:
 
 ```typescript
 class GraphApiError extends Error {
-    readonly status: number;
-    readonly code: string;
-    readonly requestId: string | undefined;
+	readonly status: number;
+	readonly code: string;
+	readonly requestId: string | undefined;
 }
 ```
 
@@ -166,7 +162,7 @@ class GraphApiError extends Error {
 
 ```typescript
 class RateLimitError extends GraphApiError {
-    readonly retryAfterSeconds: number;
+	readonly retryAfterSeconds: number;
 }
 ```
 
@@ -196,12 +192,12 @@ Utility function that converts any error into a user-facing string:
 import { toFriendlyMessage } from '$lib/graph/errors';
 
 try {
-    await client.request('/some/endpoint');
+	await client.request('/some/endpoint');
 } catch (err) {
-    const message = toFriendlyMessage(err);
-    // "Microsoft Graph is rate limiting requests. Please wait 5 seconds..."
-    // "Your session has expired. Please sign in again."
-    // "You do not have permission to perform this action..."
+	const message = toFriendlyMessage(err);
+	// "Microsoft Graph is rate limiting requests. Please wait 5 seconds..."
+	// "Your session has expired. Please sign in again."
+	// "You do not have permission to perform this action..."
 }
 ```
 
@@ -213,9 +209,9 @@ Convenience function that converts the error to a friendly message and dispatche
 import { notifyGraphError } from '$lib/graph/errors';
 
 try {
-    await client.request('/some/endpoint');
+	await client.request('/some/endpoint');
 } catch (err) {
-    notifyGraphError(err);
+	notifyGraphError(err);
 }
 ```
 
@@ -226,12 +222,12 @@ Most endpoints use the `beta` API version. Some endpoints only work correctly on
 ```typescript
 // Use v1.0 for a specific request
 const result = await client.request('/some/endpoint', {
-    version: 'v1.0'
+	version: 'v1.0'
 });
 
 // Use v1.0 for batch requests
 const responses = await client.batch(requests, {
-    version: 'v1.0'
+	version: 'v1.0'
 });
 ```
 
@@ -241,18 +237,18 @@ The `POST /$batch` request format sent to Graph:
 
 ```json
 {
-    "requests": [
-        {
-            "id": "1",
-            "method": "GET",
-            "url": "/deviceAppManagement/mobileApps/abc-123/assignments"
-        },
-        {
-            "id": "2",
-            "method": "GET",
-            "url": "/deviceAppManagement/mobileApps/def-456/assignments"
-        }
-    ]
+	"requests": [
+		{
+			"id": "1",
+			"method": "GET",
+			"url": "/deviceAppManagement/mobileApps/abc-123/assignments"
+		},
+		{
+			"id": "2",
+			"method": "GET",
+			"url": "/deviceAppManagement/mobileApps/def-456/assignments"
+		}
+	]
 }
 ```
 
@@ -283,27 +279,27 @@ The response contains a `responses` array with per-request status codes and bodi
 ```
 
 !!! note
-    Batch responses may arrive in a different order than the requests. Always match responses to requests using the `id` field.
+Batch responses may arrive in a different order than the requests. Always match responses to requests using the `id` field.
 
 ## Graph API Modules
 
 Domain-specific Graph operations are organized into separate modules in `src/lib/graph/`:
 
-| Module | File | Purpose |
-|---|---|---|
-| Apps | `apps.ts` | Mobile app queries, assignment reads/writes |
+| Module         | File                | Purpose                                               |
+| -------------- | ------------------- | ----------------------------------------------------- |
+| Apps           | `apps.ts`           | Mobile app queries, assignment reads/writes           |
 | Configurations | `configurations.ts` | Configuration policy queries, assignment reads/writes |
-| Groups | `groups.ts` | Azure AD group search |
-| Audit | `audit.ts` | Intune audit event queries |
-| Execute | `execute.ts` | Three-phase bulk assignment orchestration |
-| Merge | `merge.ts` | Assignment merge logic and conflict detection |
-| Filters | `filters.ts` | Assignment filter queries |
-| Status | `status.ts` | Reports API for install/deployment status |
+| Groups         | `groups.ts`         | Azure AD group search                                 |
+| Audit          | `audit.ts`          | Intune audit event queries                            |
+| Execute        | `execute.ts`        | Three-phase bulk assignment orchestration             |
+| Merge          | `merge.ts`          | Assignment merge logic and conflict detection         |
+| Filters        | `filters.ts`        | Assignment filter queries                             |
+| Status         | `status.ts`         | Reports API for install/deployment status             |
 
 ## Known API Limitations
 
 !!! warning "Broken endpoints"
-    Several traditional Graph API endpoints for app install status are **broken or removed** in both `beta` and `v1.0`:
+Several traditional Graph API endpoints for app install status are **broken or removed** in both `beta` and `v1.0`:
 
     - `/mobileApps/{id}/installSummary` — returns 400 "Resource not found"
     - `/mobileApps/{id}/deviceStatuses` — returns 400 "Resource not found"
@@ -313,27 +309,27 @@ Domain-specific Graph operations are organized into separate modules in `src/lib
 
 Use the Intune Reports API (`POST /deviceManagement/reports/{reportName}`) instead:
 
-| Endpoint | Use |
-|---|---|
-| `getAppsInstallSummaryReport` | All apps install counts (FailedDeviceCount, InstalledDeviceCount, etc.) |
-| `getAppStatusOverviewReport` | Single app summary (requires `filter: "(ApplicationId eq 'xxx')"`) |
-| `getFailedMobileAppsReport` | All apps with failure counts |
-| `getFailedMobileAppsSummaryReport` | Count of failed apps (returns single `Count` value) |
+| Endpoint                           | Use                                                                     |
+| ---------------------------------- | ----------------------------------------------------------------------- |
+| `getAppsInstallSummaryReport`      | All apps install counts (FailedDeviceCount, InstalledDeviceCount, etc.) |
+| `getAppStatusOverviewReport`       | Single app summary (requires `filter: "(ApplicationId eq 'xxx')"`)      |
+| `getFailedMobileAppsReport`        | All apps with failure counts                                            |
+| `getFailedMobileAppsSummaryReport` | Count of failed apps (returns single `Count` value)                     |
 
 The Reports API returns data in a tabular format:
 
 ```json
 {
-    "TotalRowCount": 408,
-    "Schema": [
-        { "Column": "ApplicationId", "PropertyType": "String" },
-        { "Column": "DisplayName", "PropertyType": "String" },
-        { "Column": "FailedDeviceCount", "PropertyType": "String" }
-    ],
-    "Values": [
-        ["app-id-1", "My App", "0"],
-        ["app-id-2", "Other App", "3"]
-    ]
+	"TotalRowCount": 408,
+	"Schema": [
+		{ "Column": "ApplicationId", "PropertyType": "String" },
+		{ "Column": "DisplayName", "PropertyType": "String" },
+		{ "Column": "FailedDeviceCount", "PropertyType": "String" }
+	],
+	"Values": [
+		["app-id-1", "My App", "0"],
+		["app-id-2", "Other App", "3"]
+	]
 }
 ```
 

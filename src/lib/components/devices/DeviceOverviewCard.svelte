@@ -71,9 +71,7 @@
 			<div class="grid gap-3 sm:grid-cols-2">
 				<!-- OS -->
 				<div class="flex items-center gap-2.5">
-					<div
-						class="bg-accent-light flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-					>
+					<div class="bg-accent-light flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
 						<TypeIcon size={16} class="text-accent" />
 					</div>
 					<div>
@@ -91,9 +89,7 @@
 
 				<!-- Serial number -->
 				<div class="flex items-center gap-2.5">
-					<div
-						class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-					>
+					<div class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
 						<Hash size={16} class="text-muted" />
 					</div>
 					<div>
@@ -108,16 +104,17 @@
 
 				<!-- Azure AD Device ID -->
 				<div class="flex items-center gap-2.5">
-					<div
-						class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-					>
+					<div class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
 						<Fingerprint size={16} class="text-muted" />
 					</div>
 					<div>
 						<p class="text-muted text-[10px] font-semibold tracking-wider uppercase">
 							Azure AD Device ID
 						</p>
-						<p class="text-ink truncate text-sm font-medium font-mono max-w-[200px]" title={device.azureADDeviceId ?? undefined}>
+						<p
+							class="text-ink truncate text-sm font-medium font-mono max-w-[200px]"
+							title={device.azureADDeviceId ?? undefined}
+						>
 							{device.azureADDeviceId ?? 'N/A'}
 						</p>
 					</div>
@@ -125,16 +122,17 @@
 
 				<!-- Email -->
 				<div class="flex items-center gap-2.5">
-					<div
-						class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-					>
+					<div class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
 						<Mail size={16} class="text-muted" />
 					</div>
 					<div>
 						<p class="text-muted text-[10px] font-semibold tracking-wider uppercase">
 							Email Address
 						</p>
-						<p class="text-ink truncate text-sm font-medium max-w-[200px]" title={device.emailAddress ?? undefined}>
+						<p
+							class="text-ink truncate text-sm font-medium max-w-[200px]"
+							title={device.emailAddress ?? undefined}
+						>
 							{device.emailAddress ?? 'N/A'}
 						</p>
 					</div>
@@ -142,9 +140,7 @@
 
 				<!-- Management agent -->
 				<div class="flex items-center gap-2.5">
-					<div
-						class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-					>
+					<div class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
 						<Cpu size={16} class="text-muted" />
 					</div>
 					<div>
@@ -157,30 +153,22 @@
 
 				<!-- Enrolled date -->
 				<div class="flex items-center gap-2.5">
-					<div
-						class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-					>
+					<div class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
 						<Calendar size={16} class="text-muted" />
 					</div>
 					<div>
-						<p class="text-muted text-[10px] font-semibold tracking-wider uppercase">
-							Enrolled
-						</p>
+						<p class="text-muted text-[10px] font-semibold tracking-wider uppercase">Enrolled</p>
 						<p class="text-ink text-sm font-medium">{enrolledDate}</p>
 					</div>
 				</div>
 
 				<!-- Last sync -->
 				<div class="flex items-center gap-2.5">
-					<div
-						class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-					>
+					<div class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
 						<RefreshCw size={16} class="text-muted" />
 					</div>
 					<div>
-						<p class="text-muted text-[10px] font-semibold tracking-wider uppercase">
-							Last Sync
-						</p>
+						<p class="text-muted text-[10px] font-semibold tracking-wider uppercase">Last Sync</p>
 						<p class="text-ink text-sm font-medium" title={device.lastSyncDateTime ?? undefined}>
 							{lastSync}
 						</p>
@@ -189,15 +177,11 @@
 
 				<!-- Ownership -->
 				<div class="flex items-center gap-2.5">
-					<div
-						class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-					>
+					<div class="bg-canvas-deep flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
 						<Shield size={16} class="text-muted" />
 					</div>
 					<div>
-						<p class="text-muted text-[10px] font-semibold tracking-wider uppercase">
-							Ownership
-						</p>
+						<p class="text-muted text-[10px] font-semibold tracking-wider uppercase">Ownership</p>
 						<p class="text-ink text-sm font-medium">{ownership}</p>
 					</div>
 				</div>
@@ -208,9 +192,7 @@
 		<div class="space-y-4">
 			<!-- Compliance -->
 			<div class="panel-inset text-center">
-				<p class="text-muted mb-2 text-[10px] font-semibold tracking-wider uppercase">
-					Compliance
-				</p>
+				<p class="text-muted mb-2 text-[10px] font-semibold tracking-wider uppercase">Compliance</p>
 				<Badge variant={complianceInfo.variant} dot>
 					{complianceInfo.label}
 				</Badge>

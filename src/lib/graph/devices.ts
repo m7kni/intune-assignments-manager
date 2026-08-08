@@ -57,9 +57,7 @@ export async function listDevices(
 		{ params }
 	);
 
-	const devices = response.value.map(
-		(item) => managedDeviceSchema.parse(item) as ManagedDevice
-	);
+	const devices = response.value.map((item) => managedDeviceSchema.parse(item) as ManagedDevice);
 
 	return {
 		devices,
@@ -73,9 +71,7 @@ export async function loadMoreDevices(
 ): Promise<DevicesResult> {
 	const response = await client.request<GraphPagedResponse<ManagedDevice>>(nextLink);
 
-	const devices = response.value.map(
-		(item) => managedDeviceSchema.parse(item) as ManagedDevice
-	);
+	const devices = response.value.map((item) => managedDeviceSchema.parse(item) as ManagedDevice);
 
 	return {
 		devices,
@@ -83,10 +79,7 @@ export async function loadMoreDevices(
 	};
 }
 
-export async function getDevice(
-	client: GraphClient,
-	deviceId: string
-): Promise<ManagedDevice> {
+export async function getDevice(client: GraphClient, deviceId: string): Promise<ManagedDevice> {
 	const response = await client.request<ManagedDevice>(
 		`/deviceManagement/managedDevices/${deviceId}`
 	);
@@ -136,9 +129,7 @@ export async function getDeviceDetail(
 
 	// Device response is required
 	if (!deviceResp || deviceResp.status >= 400) {
-		throw new Error(
-			`Failed to fetch device: ${deviceResp?.status ?? 'no response'}`
-		);
+		throw new Error(`Failed to fetch device: ${deviceResp?.status ?? 'no response'}`);
 	}
 
 	const device = managedDeviceSchema.parse(deviceResp.body) as ManagedDevice;
@@ -148,8 +139,7 @@ export async function getDeviceDetail(
 	if (complianceResp && complianceResp.status < 400) {
 		const body = complianceResp.body as BatchBody;
 		compliancePolicyStates = (body.value ?? []).map(
-			(item) =>
-				deviceCompliancePolicyStateSchema.parse(item) as DeviceCompliancePolicyState
+			(item) => deviceCompliancePolicyStateSchema.parse(item) as DeviceCompliancePolicyState
 		);
 	}
 
@@ -157,17 +147,14 @@ export async function getDeviceDetail(
 	if (configResp && configResp.status < 400) {
 		const body = configResp.body as BatchBody;
 		configurationStates = (body.value ?? []).map(
-			(item) =>
-				deviceConfigurationStateSchema.parse(item) as DeviceConfigurationState
+			(item) => deviceConfigurationStateSchema.parse(item) as DeviceConfigurationState
 		);
 	}
 
 	let detectedApps: DetectedApp[] = [];
 	if (appsResp && appsResp.status < 400) {
 		const body = appsResp.body as BatchBody;
-		detectedApps = (body.value ?? []).map(
-			(item) => detectedAppSchema.parse(item) as DetectedApp
-		);
+		detectedApps = (body.value ?? []).map((item) => detectedAppSchema.parse(item) as DetectedApp);
 	}
 
 	return { device, compliancePolicyStates, configurationStates, detectedApps };
@@ -183,8 +170,7 @@ export async function getDeviceCompliancePolicyStates(
 		`/deviceManagement/managedDevices/${deviceId}/deviceCompliancePolicyStates`
 	);
 	return response.value.map(
-		(item) =>
-			deviceCompliancePolicyStateSchema.parse(item) as DeviceCompliancePolicyState
+		(item) => deviceCompliancePolicyStateSchema.parse(item) as DeviceCompliancePolicyState
 	);
 }
 
@@ -196,8 +182,7 @@ export async function getDeviceConfigurationStates(
 		`/deviceManagement/managedDevices/${deviceId}/deviceConfigurationStates`
 	);
 	return response.value.map(
-		(item) =>
-			deviceConfigurationStateSchema.parse(item) as DeviceConfigurationState
+		(item) => deviceConfigurationStateSchema.parse(item) as DeviceConfigurationState
 	);
 }
 
@@ -208,9 +193,7 @@ export async function getDeviceDetectedApps(
 	const response = await client.request<GraphPagedResponse<DetectedApp>>(
 		`/deviceManagement/managedDevices/${deviceId}/detectedApps`
 	);
-	return response.value.map(
-		(item) => detectedAppSchema.parse(item) as DetectedApp
-	);
+	return response.value.map((item) => detectedAppSchema.parse(item) as DetectedApp);
 }
 
 // ─── Remote Device Actions ─────────────────────────────────────────

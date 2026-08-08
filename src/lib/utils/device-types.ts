@@ -30,17 +30,12 @@ export function getDeviceTypeInfo(os: string): DeviceTypeInfo {
 
 // Badge variant type matching what Badge.svelte accepts
 type BadgeVariant =
-	| 'required'
-	| 'available'
-	| 'uninstall'
-	| 'exclude'
-	| 'neutral'
-	| 'info'
-	| 'outline';
+	'required' | 'available' | 'uninstall' | 'exclude' | 'neutral' | 'info' | 'outline';
 
-export function getComplianceInfo(
-	state: ComplianceState
-): { label: string; variant: BadgeVariant } {
+export function getComplianceInfo(state: ComplianceState): {
+	label: string;
+	variant: BadgeVariant;
+} {
 	switch (state) {
 		case 'compliant':
 			return { label: 'Compliant', variant: 'required' };
@@ -101,9 +96,10 @@ export function formatRelativeTime(dateString: string | null): string {
 
 // ─── Policy State Utilities ────────────────────────────────────────
 
-export function getPolicyStateInfo(
-	state: DevicePolicyComplianceState
-): { label: string; variant: BadgeVariant } {
+export function getPolicyStateInfo(state: DevicePolicyComplianceState): {
+	label: string;
+	variant: BadgeVariant;
+} {
 	switch (state) {
 		case 'compliant':
 			return { label: 'Compliant', variant: 'required' };

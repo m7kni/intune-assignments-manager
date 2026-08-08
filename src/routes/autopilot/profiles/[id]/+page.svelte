@@ -285,9 +285,7 @@
 
 					<!-- Metadata pills -->
 					<div class="mt-4 flex flex-wrap gap-2">
-						<Badge
-							variant={profile.preprovisioningAllowed ? 'info' : 'neutral'}
-						>
+						<Badge variant={profile.preprovisioningAllowed ? 'info' : 'neutral'}>
 							{#if profile.preprovisioningAllowed}
 								<Check size={12} class="mr-0.5 inline" />
 							{:else}
@@ -325,9 +323,7 @@
 						<h2 class="text-ink mb-4 text-lg font-semibold">Profile Configuration</h2>
 						<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 							<div>
-								<p class="text-muted text-xs font-medium uppercase">
-									Device Name Template
-								</p>
+								<p class="text-muted text-xs font-medium uppercase">Device Name Template</p>
 								<p class="text-ink text-sm">
 									{profile.deviceNameTemplate ?? 'Not configured'}
 								</p>
@@ -337,14 +333,9 @@
 								<p class="text-ink text-sm">{profile.language ?? 'OS default'}</p>
 							</div>
 							<div>
-								<p class="text-muted text-xs font-medium uppercase">
-									Pre-provisioning
-								</p>
+								<p class="text-muted text-xs font-medium uppercase">Pre-provisioning</p>
 								<div class="mt-0.5">
-									<Badge
-										variant={profile.preprovisioningAllowed ? 'required' : 'neutral'}
-										dot
-									>
+									<Badge variant={profile.preprovisioningAllowed ? 'required' : 'neutral'} dot>
 										{profile.preprovisioningAllowed ? 'Allowed' : 'Not Allowed'}
 									</Badge>
 								</div>
@@ -356,9 +347,7 @@
 								</p>
 							</div>
 							<div>
-								<p class="text-muted text-xs font-medium uppercase">
-									Last Modified
-								</p>
+								<p class="text-muted text-xs font-medium uppercase">Last Modified</p>
 								<p class="text-ink text-sm">
 									{formatDateTime(profile.lastModifiedDateTime)}
 								</p>
@@ -368,9 +357,7 @@
 
 					{#if profile.outOfBoxExperienceSettings}
 						<div class="panel mt-4">
-							<h2 class="text-ink mb-4 text-lg font-semibold">
-								Out-of-Box Experience (OOBE)
-							</h2>
+							<h2 class="text-ink mb-4 text-lg font-semibold">Out-of-Box Experience (OOBE)</h2>
 							<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 								<div>
 									<p class="text-muted text-xs font-medium uppercase">User Type</p>
@@ -379,17 +366,13 @@
 									</p>
 								</div>
 								<div>
-									<p class="text-muted text-xs font-medium uppercase">
-										Device Usage Type
-									</p>
+									<p class="text-muted text-xs font-medium uppercase">Device Usage Type</p>
 									<p class="text-ink text-sm capitalize">
 										{profile.outOfBoxExperienceSettings.deviceUsageType || 'Not set'}
 									</p>
 								</div>
 								<div>
-									<p class="text-muted text-xs font-medium uppercase">
-										Hide Privacy Settings
-									</p>
+									<p class="text-muted text-xs font-medium uppercase">Hide Privacy Settings</p>
 									<div class="mt-0.5">
 										<Badge
 											variant={profile.outOfBoxExperienceSettings.hidePrivacySettings
@@ -397,9 +380,7 @@
 												: 'neutral'}
 											dot
 										>
-											{profile.outOfBoxExperienceSettings.hidePrivacySettings
-												? 'Hidden'
-												: 'Shown'}
+											{profile.outOfBoxExperienceSettings.hidePrivacySettings ? 'Hidden' : 'Shown'}
 										</Badge>
 									</div>
 								</div>
@@ -412,16 +393,12 @@
 												: 'neutral'}
 											dot
 										>
-											{profile.outOfBoxExperienceSettings.hideEULA
-												? 'Hidden'
-												: 'Shown'}
+											{profile.outOfBoxExperienceSettings.hideEULA ? 'Hidden' : 'Shown'}
 										</Badge>
 									</div>
 								</div>
 								<div>
-									<p class="text-muted text-xs font-medium uppercase">
-										Hide Escape Link
-									</p>
+									<p class="text-muted text-xs font-medium uppercase">Hide Escape Link</p>
 									<div class="mt-0.5">
 										<Badge
 											variant={profile.outOfBoxExperienceSettings.hideEscapeLink
@@ -429,16 +406,12 @@
 												: 'neutral'}
 											dot
 										>
-											{profile.outOfBoxExperienceSettings.hideEscapeLink
-												? 'Hidden'
-												: 'Shown'}
+											{profile.outOfBoxExperienceSettings.hideEscapeLink ? 'Hidden' : 'Shown'}
 										</Badge>
 									</div>
 								</div>
 								<div>
-									<p class="text-muted text-xs font-medium uppercase">
-										Skip Keyboard Selection
-									</p>
+									<p class="text-muted text-xs font-medium uppercase">Skip Keyboard Selection</p>
 									<div class="mt-0.5">
 										<Badge
 											variant={profile.outOfBoxExperienceSettings.skipKeyboardSelectionPage
@@ -453,9 +426,7 @@
 									</div>
 								</div>
 								<div>
-									<p class="text-muted text-xs font-medium uppercase">
-										Hide Change Account
-									</p>
+									<p class="text-muted text-xs font-medium uppercase">Hide Change Account</p>
 									<div class="mt-0.5">
 										<Badge
 											variant={profile.outOfBoxExperienceSettings.hideChangeAccountOption

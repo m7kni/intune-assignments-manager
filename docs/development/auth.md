@@ -18,11 +18,11 @@ MSAL is **not** imported at module load time. Instead, it is dynamically importe
 ```typescript
 // src/lib/stores/auth.svelte.ts
 export async function login(): Promise<void> {
-    if (!browser) return;
+	if (!browser) return;
 
-    const { signIn } = await import('$lib/auth/msal');
-    const result = await signIn();
-    // ...
+	const { signIn } = await import('$lib/auth/msal');
+	const result = await signIn();
+	// ...
 }
 ```
 
@@ -36,16 +36,16 @@ let msalInstance: IPublicClientApplication | null = null;
 let initPromise: Promise<IPublicClientApplication> | null = null;
 
 export async function getOrCreateMsalInstance(): Promise<IPublicClientApplication> {
-    if (msalInstance) return msalInstance;
+	if (msalInstance) return msalInstance;
 
-    if (!initPromise) {
-        initPromise = createStandardPublicClientApplication(msalConfig).then((instance) => {
-            msalInstance = instance;
-            return instance;
-        });
-    }
+	if (!initPromise) {
+		initPromise = createStandardPublicClientApplication(msalConfig).then((instance) => {
+			msalInstance = instance;
+			return instance;
+		});
+	}
 
-    return initPromise;
+	return initPromise;
 }
 ```
 
@@ -57,19 +57,16 @@ Defined in `src/lib/auth/config.ts`:
 
 ```typescript
 export const msalConfig: Configuration = {
-    auth: {
-        clientId: PUBLIC_ENTRA_CLIENT_ID,
-        authority: 'https://login.microsoftonline.com/common',
-        redirectUri: typeof window !== 'undefined'
-            ? window.location.origin
-            : 'http://localhost:5173',
-        postLogoutRedirectUri: typeof window !== 'undefined'
-            ? window.location.origin
-            : 'http://localhost:5173'
-    },
-    cache: {
-        cacheLocation: 'localStorage'
-    }
+	auth: {
+		clientId: PUBLIC_ENTRA_CLIENT_ID,
+		authority: 'https://login.microsoftonline.com/common',
+		redirectUri: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173',
+		postLogoutRedirectUri:
+			typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173'
+	},
+	cache: {
+		cacheLocation: 'localStorage'
+	}
 };
 ```
 
@@ -106,8 +103,12 @@ The `loginRequest` specifies Tier 1 scopes only:
 
 ```typescript
 export const loginRequest = {
-    scopes: ['User.Read', 'DeviceManagementApps.ReadWrite.All',
-             'DeviceManagementConfiguration.ReadWrite.All', 'Group.Read.All']
+	scopes: [
+		'User.Read',
+		'DeviceManagementApps.ReadWrite.All',
+		'DeviceManagementConfiguration.ReadWrite.All',
+		'Group.Read.All'
+	]
 };
 ```
 
@@ -119,21 +120,21 @@ After initial sign-in, API calls need fresh tokens. The `acquireToken()` functio
 
 ```typescript
 export async function acquireToken(scopes: string[]): Promise<TokenResult> {
-    const instance = await getOrCreateMsalInstance();
-    const account = instance.getActiveAccount();
+	const instance = await getOrCreateMsalInstance();
+	const account = instance.getActiveAccount();
 
-    try {
-        // Try silent first (uses cached token or refresh token)
-        const result = await instance.acquireTokenSilent({ scopes, account });
-        return { accessToken: result.accessToken, scopes: result.scopes, account: result.account };
-    } catch (error) {
-        if (error instanceof InteractionRequiredAuthError) {
-            // Silent failed — show popup for re-consent
-            const result = await instance.acquireTokenPopup({ scopes, account });
-            return { accessToken: result.accessToken, scopes: result.scopes, account: result.account };
-        }
-        throw error;
-    }
+	try {
+		// Try silent first (uses cached token or refresh token)
+		const result = await instance.acquireTokenSilent({ scopes, account });
+		return { accessToken: result.accessToken, scopes: result.scopes, account: result.account };
+	} catch (error) {
+		if (error instanceof InteractionRequiredAuthError) {
+			// Silent failed — show popup for re-consent
+			const result = await instance.acquireTokenPopup({ scopes, account });
+			return { accessToken: result.accessToken, scopes: result.scopes, account: result.account };
+		}
+		throw error;
+	}
 }
 ```
 
@@ -146,8 +147,8 @@ The Graph client uses `getAccessToken()` which wraps `acquireToken()` with the d
 
 ```typescript
 export async function getAccessToken(): Promise<string> {
-    const result = await acquireToken([...graphScopes]);
-    return result.accessToken;
+	const result = await acquireToken([...graphScopes]);
+	return result.accessToken;
 }
 ```
 
@@ -158,17 +159,17 @@ The app supports **incremental consent** — requesting additional permissions b
 ```typescript
 // src/lib/auth/permission-check.ts
 export async function requestConsent(scopes: string[]): Promise<boolean> {
-    if (!browser) return false;
-    if (scopes.length === 0) return true;
-    if (hasAllScopes(scopes)) return true;
+	if (!browser) return false;
+	if (scopes.length === 0) return true;
+	if (hasAllScopes(scopes)) return true;
 
-    try {
-        await getTokenWithScopes(scopes);
-        return hasAllScopes(scopes);
-    } catch (err) {
-        console.error('Consent request failed:', err);
-        return false;
-    }
+	try {
+		await getTokenWithScopes(scopes);
+		return hasAllScopes(scopes);
+	} catch (err) {
+		console.error('Consent request failed:', err);
+		return false;
+	}
 }
 ```
 
@@ -180,18 +181,18 @@ The flow:
 4. Newly granted scopes are merged into the cumulative scope set
 
 !!! note "Scope accumulation"
-    MSAL returns only the scopes for the specific resource requested, not all previously granted scopes. The auth store maintains a cumulative union of all granted scopes across all `acquireToken` calls, persisted to `localStorage` under the key `intune-granted-scopes`.
+MSAL returns only the scopes for the specific resource requested, not all previously granted scopes. The auth store maintains a cumulative union of all granted scopes across all `acquireToken` calls, persisted to `localStorage` under the key `intune-granted-scopes`.
 
 ## Permission Tiers
 
 Scopes are organized into four tiers, defined in `src/lib/auth/config.ts` and described in `src/lib/auth/permissions.ts`:
 
-| Tier | Name | Scopes | Features |
-|---|---|---|---|
-| 1 | Core | `User.Read`, `DeviceManagementApps.ReadWrite.All`, `DeviceManagementConfiguration.ReadWrite.All`, `Group.Read.All` | Dashboard, Apps, Profiles, Assign, Audit |
-| 2 | Device Management | `DeviceManagementManagedDevices.Read.All` | Device inventory and compliance |
-| 3 | Device Actions | `DeviceManagementManagedDevices.ReadWrite.All` | Sync, restart, retire devices |
-| 4 | Autopilot | `DeviceManagementServiceConfig.Read.All` | Autopilot enrollment data |
+| Tier | Name              | Scopes                                                                                                             | Features                                 |
+| ---- | ----------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
+| 1    | Core              | `User.Read`, `DeviceManagementApps.ReadWrite.All`, `DeviceManagementConfiguration.ReadWrite.All`, `Group.Read.All` | Dashboard, Apps, Profiles, Assign, Audit |
+| 2    | Device Management | `DeviceManagementManagedDevices.Read.All`                                                                          | Device inventory and compliance          |
+| 3    | Device Actions    | `DeviceManagementManagedDevices.ReadWrite.All`                                                                     | Sync, restart, retire devices            |
+| 4    | Autopilot         | `DeviceManagementServiceConfig.Read.All`                                                                           | Autopilot enrollment data                |
 
 Tier 1 scopes are requested at sign-in. Higher tiers are requested via incremental consent when the user navigates to a feature that requires them.
 
@@ -201,9 +202,9 @@ The `getRequiredScopes(feature)` function maps route prefixes to the additional 
 
 ```typescript
 const FEATURE_PERMISSIONS: Record<string, readonly string[]> = {
-    '/devices/actions': [...TIER_3_SCOPES],
-    '/devices': [...TIER_2_SCOPES],
-    '/autopilot': [...TIER_4_SCOPES]
+	'/devices/actions': [...TIER_3_SCOPES],
+	'/devices': [...TIER_2_SCOPES],
+	'/autopilot': [...TIER_4_SCOPES]
 };
 ```
 
@@ -213,11 +214,11 @@ Routes not listed only need Tier 1 scopes (already granted at sign-in). Entries 
 
 ```typescript
 interface PermissionTier {
-    id: number;
-    name: string;
-    description: string;
-    scopes: readonly string[];
-    features: string[];
+	id: number;
+	name: string;
+	description: string;
+	scopes: readonly string[];
+	features: string[];
 }
 ```
 
@@ -233,22 +234,22 @@ The auth store (`src/lib/stores/auth.svelte.ts`) is the central reactive state f
 import { auth } from '$lib/stores/auth.svelte';
 
 // Read-only reactive properties
-auth.account        // AccountInfo | null
-auth.isAuthenticated // boolean (derived)
-auth.isInitializing  // boolean
-auth.error           // string | null
-auth.grantedScopes   // string[]
+auth.account; // AccountInfo | null
+auth.isAuthenticated; // boolean (derived)
+auth.isInitializing; // boolean
+auth.error; // string | null
+auth.grantedScopes; // string[]
 ```
 
 ### Actions
 
-| Function | Description |
-|---|---|
-| `initAuth()` | Initialize MSAL, restore session from cache. Called once in root layout. |
-| `login()` | Open login popup, store account and scopes on success. |
-| `logout()` | Open logout popup, clear account and scopes. |
-| `getToken()` | Get access token for Tier 1 scopes (used by Graph client). |
-| `getTokenWithScopes(scopes)` | Get access token with specific scopes, handling incremental consent. |
+| Function                     | Description                                                              |
+| ---------------------------- | ------------------------------------------------------------------------ |
+| `initAuth()`                 | Initialize MSAL, restore session from cache. Called once in root layout. |
+| `login()`                    | Open login popup, store account and scopes on success.                   |
+| `logout()`                   | Open logout popup, clear account and scopes.                             |
+| `getToken()`                 | Get access token for Tier 1 scopes (used by Graph client).               |
+| `getTokenWithScopes(scopes)` | Get access token with specific scopes, handling incremental consent.     |
 
 ### Initialization
 
@@ -256,12 +257,12 @@ The root layout calls `initAuth()` on mount:
 
 ```svelte
 <script>
-    import { initAuth } from '$lib/stores/auth.svelte';
-    import { browser } from '$app/environment';
+	import { initAuth } from '$lib/stores/auth.svelte';
+	import { browser } from '$app/environment';
 
-    if (browser) {
-        initAuth();
-    }
+	if (browser) {
+		initAuth();
+	}
 </script>
 ```
 
@@ -274,9 +275,9 @@ Human-readable descriptions for all scopes are available for building consent UI
 ```typescript
 import { SCOPE_DESCRIPTIONS } from '$lib/auth/permissions';
 
-SCOPE_DESCRIPTIONS['User.Read']
+SCOPE_DESCRIPTIONS['User.Read'];
 // "Sign in and read your profile"
 
-SCOPE_DESCRIPTIONS['DeviceManagementApps.ReadWrite.All']
+SCOPE_DESCRIPTIONS['DeviceManagementApps.ReadWrite.All'];
 // "Read and write Intune app configurations"
 ```

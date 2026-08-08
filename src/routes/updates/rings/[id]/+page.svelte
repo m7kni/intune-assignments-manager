@@ -240,9 +240,7 @@
 
 	// ─── Status tab ───────────────────────────────────────────────────
 
-	function getStatusVariant(
-		status: string
-	): 'required' | 'available' | 'uninstall' | 'neutral' {
+	function getStatusVariant(status: string): 'required' | 'available' | 'uninstall' | 'neutral' {
 		switch (status) {
 			case 'compliant':
 			case 'succeeded':
@@ -373,9 +371,7 @@
 							filename="{ring?.displayName ?? 'update-ring'}-assignments.csv"
 							disabled={assignments.length === 0}
 						/>
-						<Button variant="primary" icon={Layers} href="/assign">
-							Edit in Bulk Assign
-						</Button>
+						<Button variant="primary" icon={Layers} href="/assign">Edit in Bulk Assign</Button>
 					</div>
 				</div>
 
@@ -420,9 +416,7 @@
 					</div>
 					{#if ring.deadlineForQualityUpdatesInDays !== null}
 						<div>
-							<p class="text-muted text-xs font-medium uppercase">
-								Quality Deadline
-							</p>
+							<p class="text-muted text-xs font-medium uppercase">Quality Deadline</p>
 							<p class="text-ink text-sm">
 								{formatDeferralPeriod(ring.deadlineForQualityUpdatesInDays)}
 							</p>
@@ -430,18 +424,14 @@
 					{/if}
 					{#if ring.deadlineForFeatureUpdatesInDays !== null}
 						<div>
-							<p class="text-muted text-xs font-medium uppercase">
-								Feature Deadline
-							</p>
+							<p class="text-muted text-xs font-medium uppercase">Feature Deadline</p>
 							<p class="text-ink text-sm">
 								{formatDeferralPeriod(ring.deadlineForFeatureUpdatesInDays)}
 							</p>
 						</div>
 					{/if}
 					<div>
-						<p class="text-muted text-xs font-medium uppercase">
-							Windows 11 Upgrade
-						</p>
+						<p class="text-muted text-xs font-medium uppercase">Windows 11 Upgrade</p>
 						<p class="text-ink text-sm">
 							{ring.allowWindows11Upgrade ? 'Allowed' : 'Not allowed'}
 						</p>
@@ -518,17 +508,10 @@
 						{/each}
 					</div>
 				{:else if statusError}
-					<EmptyState
-						icon={RefreshCw}
-						title="Status unavailable"
-						description={statusError}
-					/>
+					<EmptyState icon={RefreshCw} title="Status unavailable" description={statusError} />
 				{:else if deviceStatuses.length > 0}
 					<div class="mb-3">
-						<SearchInput
-							placeholder="Filter by device or user..."
-							bind:value={statusSearch}
-						/>
+						<SearchInput placeholder="Filter by device or user..." bind:value={statusSearch} />
 					</div>
 					<div class="panel overflow-clip p-0">
 						<div
@@ -572,9 +555,7 @@
 		itemKind="profile"
 		existingTarget={editingAssignment?.target}
 		existingIntent={null}
-		existingTargetName={editingAssignment
-			? resolveTargetName(editingAssignment.target)
-			: undefined}
+		existingTargetName={editingAssignment ? resolveTargetName(editingAssignment.target) : undefined}
 		onSave={handleEditorSave}
 		onCancel={() => (editorOpen = false)}
 	/>

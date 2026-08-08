@@ -66,20 +66,20 @@ Click your avatar or name in the top navigation bar and select **Sign out**. Thi
 3. Returns you to the unauthenticated landing page
 
 !!! note "Sign-out is local only"
-    Signing out of the app does not sign you out of Microsoft 365 or any other Microsoft service. It only clears the app's local session.
+Signing out of the app does not sign you out of Microsoft 365 or any other Microsoft service. It only clears the app's local session.
 
 ## Security Model
 
 The Intune Assignments Manager is designed with a security-first approach:
 
-| Aspect | Detail |
-|---|---|
-| **Client-side only** | The app has no server backend. Your credentials and tokens are never sent to any third-party server. |
-| **PKCE flow** | The authorization code is protected by a cryptographic code verifier, preventing interception attacks. No client secret is used. |
-| **Token storage** | MSAL.js stores tokens in `localStorage` for session persistence. Tokens are scoped to your tenant and the specific permissions you consented to. |
-| **Direct API calls** | All Microsoft Graph API calls go directly from your browser to `graph.microsoft.com`. No proxy, no middleware. |
-| **No telemetry** | The app does not collect analytics, telemetry, or usage data. |
-| **Minimal scopes** | Only the permissions needed for the current operation are requested. |
+| Aspect               | Detail                                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Client-side only** | The app has no server backend. Your credentials and tokens are never sent to any third-party server.                                             |
+| **PKCE flow**        | The authorization code is protected by a cryptographic code verifier, preventing interception attacks. No client secret is used.                 |
+| **Token storage**    | MSAL.js stores tokens in `localStorage` for session persistence. Tokens are scoped to your tenant and the specific permissions you consented to. |
+| **Direct API calls** | All Microsoft Graph API calls go directly from your browser to `graph.microsoft.com`. No proxy, no middleware.                                   |
+| **No telemetry**     | The app does not collect analytics, telemetry, or usage data.                                                                                    |
+| **Minimal scopes**   | Only the permissions needed for the current operation are requested.                                                                             |
 
 !!! warning "Browser security"
-    Because tokens are stored in the browser, anyone with access to your browser session can access your Intune data. Always sign out when using shared or public computers.
+Because tokens are stored in the browser, anyone with access to your browser session can access your Intune data. Always sign out when using shared or public computers.

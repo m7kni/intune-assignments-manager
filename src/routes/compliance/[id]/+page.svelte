@@ -67,9 +67,7 @@
 	let deleteDialogOpen = $state(false);
 	let deletingAssignment = $state<DeviceCompliancePolicyAssignment | null>(null);
 
-	const platformInfo = $derived(
-		policy ? getCompliancePlatformInfo(policy['@odata.type']) : null
-	);
+	const platformInfo = $derived(policy ? getCompliancePlatformInfo(policy['@odata.type']) : null);
 	const hasAssignments = $derived(assignments.length > 0);
 
 	function resolveTargetName(target: AssignmentTarget): string {
@@ -311,8 +309,7 @@
 			deviceStatuses = statuses;
 			statusLoaded = true;
 		} catch {
-			statusError =
-				'Device status data is not available for this compliance policy.';
+			statusError = 'Device status data is not available for this compliance policy.';
 		} finally {
 			statusLoading = false;
 		}
@@ -390,11 +387,7 @@
 							filename="{policy?.displayName ?? 'compliance-policy'}-assignments.csv"
 							disabled={assignments.length === 0}
 						/>
-						<Button
-							variant="primary"
-							icon={Layers}
-							href="/assign?compliancePolicyId={policy?.id}"
-						>
+						<Button variant="primary" icon={Layers} href="/assign?compliancePolicyId={policy?.id}">
 							Edit in Bulk Assign
 						</Button>
 					</div>
@@ -485,11 +478,7 @@
 						{/each}
 					</div>
 				{:else if statusError}
-					<EmptyState
-						icon={ShieldAlert}
-						title="Status unavailable"
-						description={statusError}
-					/>
+					<EmptyState icon={ShieldAlert} title="Status unavailable" description={statusError} />
 				{:else if statusOverview}
 					<div class="mb-4">
 						<StatusSummaryCard
@@ -527,10 +516,7 @@
 
 					{#if deviceStatuses.length > 0}
 						<div class="mb-3">
-							<SearchInput
-								placeholder="Filter by device or user..."
-								bind:value={statusSearch}
-							/>
+							<SearchInput placeholder="Filter by device or user..." bind:value={statusSearch} />
 						</div>
 						<div class="panel overflow-clip p-0">
 							<div
@@ -575,9 +561,7 @@
 		itemKind="compliance"
 		existingTarget={editingAssignment?.target}
 		existingIntent={null}
-		existingTargetName={editingAssignment
-			? resolveTargetName(editingAssignment.target)
-			: undefined}
+		existingTargetName={editingAssignment ? resolveTargetName(editingAssignment.target) : undefined}
 		onSave={handleEditorSave}
 		onCancel={() => (editorOpen = false)}
 	/>

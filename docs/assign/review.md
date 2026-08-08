@@ -1,5 +1,5 @@
 ---
-title: "Step 4: Review"
+title: 'Step 4: Review'
 description: Review the assignment changes, resolve conflicts, and confirm before applying
 tags:
   - assignments
@@ -31,20 +31,20 @@ Two tabs let you view the changes differently:
 
 A table showing every assignment that will be processed:
 
-| Column | Description |
-|--------|-------------|
-| Item | App or profile name with its type |
-| Target | Group name (or "All Devices" / "All Users") |
+| Column | Description                                       |
+| ------ | ------------------------------------------------- |
+| Item   | App or profile name with its type                 |
+| Target | Group name (or "All Devices" / "All Users")       |
 | Intent | The assignment intent (Required, Available, etc.) |
-| Filter | Assignment filter name and mode, or "None" |
+| Filter | Assignment filter name and mode, or "None"        |
 
 Summary counters at the top show:
 
-| Counter | Meaning |
-|---|---|
-| **New** | Assignments that do not exist today (shown with a blue dot) |
+| Counter     | Meaning                                                             |
+| ----------- | ------------------------------------------------------------------- |
+| **New**     | Assignments that do not exist today (shown with a blue dot)         |
 | **Updates** | Existing assignments that will be changed (shown with a yellow dot) |
-| **Skipped** | Conflicts you chose to skip (shown with a gray dot) |
+| **Skipped** | Conflicts you chose to skip (shown with a gray dot)                 |
 
 ### Change Preview
 
@@ -55,12 +55,12 @@ A diff-style view showing per-item changes: what will be added, what will be mod
 A **conflict** occurs when an existing assignment targets the same group as one of your new assignments but has different settings (different intent or different filter).
 
 !!! warning "Conflict resolution is required"
-    Conflicts are highlighted with a yellow border and warning icon. For each conflict, you must choose one of two resolutions:
+Conflicts are highlighted with a yellow border and warning icon. For each conflict, you must choose one of two resolutions:
 
-| Resolution | Effect |
-|------------|--------|
-| **Update** | Replace the existing assignment's intent and filter with your new settings |
-| **Skip** | Keep the existing assignment unchanged; do not apply your new settings for this item/group pair |
+| Resolution | Effect                                                                                          |
+| ---------- | ----------------------------------------------------------------------------------------------- |
+| **Update** | Replace the existing assignment's intent and filter with your new settings                      |
+| **Skip**   | Keep the existing assignment unchanged; do not apply your new settings for this item/group pair |
 
 The default resolution is **Update** for all conflicts.
 
@@ -87,6 +87,6 @@ You can go back to any previous step to change your selections. When you return 
 
 Click **Apply Assignments** to proceed. A confirmation dialog appears:
 
-> *This will apply the configured assignments to all selected items and groups. This action cannot be easily undone.*
+> _This will apply the configured assignments to all selected items and groups. This action cannot be easily undone._
 
 Confirm to begin execution and advance to the Results step.

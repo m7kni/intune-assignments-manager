@@ -14,8 +14,8 @@ keywords: microsoft intune, bulk assignment, configuration profiles, microsoft g
 
 image: assets/social-card.png
 twitter:
-  creator: "@rknightion"
-  site: "@rknightion"
+  creator: '@rknightion'
+  site: '@rknightion'
 
 robots: index,follow
 language: en

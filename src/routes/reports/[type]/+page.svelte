@@ -12,13 +12,7 @@
 	import EmptyState from '$lib/components/ui/EmptyState.svelte';
 	import ReportTable from '$lib/components/reports/ReportTable.svelte';
 	import ReportSummaryBar from '$lib/components/reports/ReportSummaryBar.svelte';
-	import {
-		FileBarChart,
-		Download,
-		ArrowLeft,
-		Play,
-		FileSpreadsheet
-	} from 'lucide-svelte';
+	import { FileBarChart, Download, ArrowLeft, Play, FileSpreadsheet } from 'lucide-svelte';
 	import { getGraphClient } from '$lib/stores/graph';
 	import { toFriendlyMessage } from '$lib/graph/errors';
 	import { serializeCsv } from '$lib/utils/csv';
@@ -120,10 +114,7 @@
 					(sum, r) => sum + (Number(r.installedDeviceCount) || 0),
 					0
 				);
-				const totalFailed = data.reduce(
-					(sum, r) => sum + (Number(r.failedDeviceCount) || 0),
-					0
-				);
+				const totalFailed = data.reduce((sum, r) => sum + (Number(r.failedDeviceCount) || 0), 0);
 				const totalPending = data.reduce(
 					(sum, r) => sum + (Number(r.pendingInstallDeviceCount) || 0),
 					0
@@ -136,10 +127,7 @@
 				];
 			}
 			case 'failedDeployments': {
-				const totalFailed = data.reduce(
-					(sum, r) => sum + (Number(r.failedDeviceCount) || 0),
-					0
-				);
+				const totalFailed = data.reduce((sum, r) => sum + (Number(r.failedDeviceCount) || 0), 0);
 				return [
 					{
 						label: 'Apps with Failures',
@@ -332,15 +320,10 @@
 </script>
 
 <AuthGuard>
-	<PermissionGuard
-		requiredScopes={['DeviceManagementApps.Read.All']}
-		featureName="Reports"
-	>
+	<PermissionGuard requiredScopes={['DeviceManagementApps.Read.All']} featureName="Reports">
 		<div class="animate-fade-in-up">
 			{#snippet actions()}
-				<Button variant="ghost" size="sm" href="/reports" icon={ArrowLeft}>
-					All Reports
-				</Button>
+				<Button variant="ghost" size="sm" href="/reports" icon={ArrowLeft}>All Reports</Button>
 				{#if generated && filteredRows.length > 0}
 					<Button variant="secondary" size="sm" onclick={exportCsv} icon={Download}>
 						Export CSV
@@ -358,9 +341,7 @@
 			{#if !generated && !loading && !error}
 				<!-- Initial state: prompt to generate -->
 				<div class="flex flex-col items-center justify-center py-16 text-center">
-					<div
-						class="bg-accent-light flex h-16 w-16 items-center justify-center rounded-2xl"
-					>
+					<div class="bg-accent-light flex h-16 w-16 items-center justify-center rounded-2xl">
 						<FileSpreadsheet size={28} class="text-accent" />
 					</div>
 					<h3 class="text-ink mt-4 text-base font-semibold">Ready to Generate</h3>
@@ -376,7 +357,9 @@
 			{#if loading}
 				<div class="flex flex-col items-center justify-center py-16">
 					<Spinner size="lg" label="Generating report..." />
-					<p class="text-muted mt-4 text-sm">This may take a moment depending on your tenant size.</p>
+					<p class="text-muted mt-4 text-sm">
+						This may take a moment depending on your tenant size.
+					</p>
 				</div>
 			{/if}
 
@@ -405,26 +388,19 @@
 							<SearchInput placeholder="Filter results..." bind:value={search} />
 						</div>
 						<span class="text-muted shrink-0 text-xs">
-							{filteredRows.length}{search.trim()
-								? ` of ${data.length}`
-								: ''} row{filteredRows.length !== 1 ? 's' : ''}
+							{filteredRows.length}{search.trim() ? ` of ${data.length}` : ''} row{filteredRows.length !==
+							1
+								? 's'
+								: ''}
 						</span>
 					</div>
 
 					<!-- Data table -->
-					<ReportTable
-						{columns}
-						rows={filteredRows}
-						{sortKey}
-						{sortDir}
-						onsort={handleSort}
-					/>
+					<ReportTable {columns} rows={filteredRows} {sortKey} {sortDir} onsort={handleSort} />
 
 					<!-- Re-generate button -->
 					<div class="mt-4 text-center">
-						<Button variant="secondary" size="sm" onclick={generate} icon={Play}>
-							Regenerate
-						</Button>
+						<Button variant="secondary" size="sm" onclick={generate} icon={Play}>Regenerate</Button>
 					</div>
 				{/if}
 			{/if}

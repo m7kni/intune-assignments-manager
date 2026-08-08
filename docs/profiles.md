@@ -13,7 +13,7 @@ tags:
 The Configuration Profiles section (`/profiles`) displays all **Settings Catalog** configuration policies in your Intune tenant. You can filter, search, and sort the list, and navigate to individual profile details.
 
 !!! note "Settings Catalog vs legacy profiles"
-    This section shows **Settings Catalog** policies (also known as `configurationPolicies` in the Graph API). These are the modern, recommended way to manage device configuration in Intune. Legacy **Device Configuration** profiles (the older `deviceConfigurations` resource) are not shown here.
+This section shows **Settings Catalog** policies (also known as `configurationPolicies` in the Graph API). These are the modern, recommended way to manage device configuration in Intune. Legacy **Device Configuration** profiles (the older `deviceConfigurations` resource) are not shown here.
 
     Settings Catalog policies are more flexible, support a wider range of settings, and are the direction Microsoft is moving for all new Intune features.
 
@@ -21,12 +21,12 @@ The Configuration Profiles section (`/profiles`) displays all **Settings Catalog
 
 The profile list shows every Settings Catalog policy returned by the Microsoft Graph API. Each row displays:
 
-| Field | Description |
-|---|---|
-| **Profile name** | The display name of the policy |
-| **Platform** | The target platform (Windows, macOS, iOS/iPadOS, Android, Linux) |
-| **Technologies** | The management technology (e.g. MDM, Config Manager) |
-| **Assignment badge** | Indicates whether the profile has at least one assignment |
+| Field                | Description                                                      |
+| -------------------- | ---------------------------------------------------------------- |
+| **Profile name**     | The display name of the policy                                   |
+| **Platform**         | The target platform (Windows, macOS, iOS/iPadOS, Android, Linux) |
+| **Technologies**     | The management technology (e.g. MDM, Config Manager)             |
+| **Assignment badge** | Indicates whether the profile has at least one assignment        |
 
 Profiles are sorted alphabetically by name (A--Z) by default.
 
@@ -58,11 +58,11 @@ Filter by the management technology used:
 
 Toggle between three states:
 
-| Status | Description |
-|---|---|
-| **All** | Show all profiles (default) |
-| **Assigned** | Only profiles with at least one group assignment |
-| **Unassigned** | Only profiles with no assignments |
+| Status         | Description                                      |
+| -------------- | ------------------------------------------------ |
+| **All**        | Show all profiles (default)                      |
+| **Assigned**   | Only profiles with at least one group assignment |
+| **Unassigned** | Only profiles with no assignments                |
 
 ## Search
 
@@ -74,11 +74,11 @@ The list header updates to show how many profiles match your current criteria (e
 
 Use the sort dropdown to change the list order:
 
-| Sort | Description |
-|---|---|
-| **Name A--Z** | Alphabetical, ascending (default) |
-| **Name Z--A** | Alphabetical, descending |
-| **By Platform** | Grouped by target platform |
+| Sort            | Description                       |
+| --------------- | --------------------------------- |
+| **Name A--Z**   | Alphabetical, ascending (default) |
+| **Name Z--A**   | Alphabetical, descending          |
+| **By Platform** | Grouped by target platform        |
 
 ## Profile Detail Page
 

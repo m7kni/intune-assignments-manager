@@ -1,9 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <script lang="ts">
-	import type {
-		DeviceCompliancePolicyState,
-		DeviceConfigurationState
-	} from '$lib/types/device';
+	import type { DeviceCompliancePolicyState, DeviceConfigurationState } from '$lib/types/device';
 	import { getPolicyStateInfo } from '$lib/utils/device-types';
 	import Badge from '$lib/components/ui/Badge.svelte';
 	import EmptyState from '$lib/components/ui/EmptyState.svelte';
@@ -80,9 +77,7 @@
 					{#if hasSettings}
 						<ChevronRight
 							size={14}
-							class="text-muted shrink-0 transition-transform {isExpanded
-								? 'rotate-90'
-								: ''}"
+							class="text-muted shrink-0 transition-transform {isExpanded ? 'rotate-90' : ''}"
 						/>
 					{:else}
 						<div class="w-3.5 shrink-0"></div>
@@ -116,12 +111,8 @@
 							<tr class="text-muted text-[10px] font-semibold tracking-wider uppercase">
 								<th class="pb-2 text-left font-semibold">Setting</th>
 								<th class="pb-2 text-center font-semibold">State</th>
-								<th class="hidden pb-2 text-left font-semibold sm:table-cell">
-									Value
-								</th>
-								<th class="hidden pb-2 text-left font-semibold md:table-cell">
-									Error
-								</th>
+								<th class="hidden pb-2 text-left font-semibold sm:table-cell"> Value </th>
+								<th class="hidden pb-2 text-left font-semibold md:table-cell"> Error </th>
 							</tr>
 						</thead>
 						<tbody>
@@ -136,9 +127,7 @@
 											{settingStateInfo.label}
 										</Badge>
 									</td>
-									<td
-										class="text-ink-faint hidden py-2 font-mono text-xs sm:table-cell"
-									>
+									<td class="text-ink-faint hidden py-2 font-mono text-xs sm:table-cell">
 										{setting.currentValue ?? '—'}
 									</td>
 									<td class="text-ember hidden py-2 text-xs md:table-cell">

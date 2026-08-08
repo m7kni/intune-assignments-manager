@@ -6,24 +6,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Intune Assignments Manager — a SvelteKit web app for bulk-managing Microsoft Intune app and configuration profile assignments via the Microsoft Graph API. Deployed to Cloudflare Pages (client-side only, no server backend). All auth and API calls happen in the browser.
 
-
 ## Quality Checks
+
 Always run the full build and type-check (`pnpm build`) after completing any code changes. Do not consider a task done until the build passes cleanly with zero errors.
 
 After editing files, check for duplicate imports and stale references from the previous code. Run `pnpm lint` to catch these before proceeding.
 
 ## Svelte 5 Conventions
+
 When working in Svelte 5 files (.svelte, .svelte.ts): use `SvelteMap` and `SvelteSet` instead of native `Map`/`Set`, use `const` (not `let`) for `$derived` runes, avoid deprecated `svelte:component` syntax, and ensure all `{#each}` blocks have unique keys.
 
 ## Debugging Guidelines
+
 Before changing code to fix a bug, first investigate the root cause thoroughly (check git history, trace data flow, examine API responses). Do not make speculative code fixes before understanding why the issue occurs.
 
 ## Architecture / API Notes
+
 This project uses TypeScript (primary), SvelteKit, and targets the Microsoft Graph API (use /beta prefix for Intune endpoints). When interacting with Graph API, be aware that many endpoints are deprecated or behave unexpectedly — verify endpoint availability before building features around them.
 
 ## Workflow Preferences
-When creating implementation plans from todos.txt, keep the planning phase brief and present the plan for approval before exploring the entire codebase. Do not spend excessive time on exploration before producing actionable output.
 
+When creating implementation plans from todos.txt, keep the planning phase brief and present the plan for approval before exploring the entire codebase. Do not spend excessive time on exploration before producing actionable output.
 
 ## Commands
 

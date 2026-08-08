@@ -5,12 +5,7 @@ import type { AssignmentTarget } from './graph';
 // ─── Autopilot Device Types ───────────────────────────────────────
 
 export type AutopilotEnrollmentState =
-	| 'unknown'
-	| 'enrolled'
-	| 'pendingReset'
-	| 'failed'
-	| 'notContacted'
-	| 'blocked';
+	'unknown' | 'enrolled' | 'pendingReset' | 'failed' | 'notContacted' | 'blocked';
 
 export type AutopilotProfileAssignmentStatus =
 	| 'unknown'

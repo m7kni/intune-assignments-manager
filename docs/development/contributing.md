@@ -20,12 +20,12 @@ pnpm format
 
 Configuration (from `.prettierrc`):
 
-| Setting | Value |
-|---|---|
-| Indentation | Tabs |
-| Quotes | Single quotes |
-| Trailing commas | None |
-| Print width | 100 characters |
+| Setting         | Value          |
+| --------------- | -------------- |
+| Indentation     | Tabs           |
+| Quotes          | Single quotes  |
+| Trailing commas | None           |
+| Print width     | 100 characters |
 
 ### TypeScript
 
@@ -51,19 +51,19 @@ pnpm lint
 ```
 
 !!! note "Pre-existing warnings"
-    There are approximately 31 pre-existing ESLint warnings in the codebase (unused `_` variables in `{#each}` blocks, some `any` types). These are known and should not block your changes. Avoid introducing new warnings.
+There are approximately 31 pre-existing ESLint warnings in the codebase (unused `_` variables in `{#each}` blocks, some `any` types). These are known and should not block your changes. Avoid introducing new warnings.
 
 ## Svelte 5 Runes
 
 This project uses **Svelte 5** exclusively. Do **not** use Svelte 4 patterns:
 
-| Use (Svelte 5) | Do NOT use (Svelte 4) |
-|---|---|
-| `$state(initialValue)` | `writable(initialValue)` |
-| `$derived(expression)` | `$:` reactive declarations |
+| Use (Svelte 5)           | Do NOT use (Svelte 4)                      |
+| ------------------------ | ------------------------------------------ |
+| `$state(initialValue)`   | `writable(initialValue)`                   |
+| `$derived(expression)`   | `$:` reactive declarations                 |
 | `$effect(() => { ... })` | `$:` reactive statements with side effects |
-| `$props()` | `export let prop` |
-| `{#snippet name()}` | `<slot name="...">` |
+| `$props()`               | `export let prop`                          |
+| `{#snippet name()}`      | `<slot name="...">`                        |
 
 ### Reactive state in `.svelte.ts` files
 
@@ -75,9 +75,15 @@ let count = $state(0);
 const doubled = $derived(count * 2);
 
 export const counter = {
-    get count() { return count; },
-    get doubled() { return doubled; },
-    increment() { count++; }
+	get count() {
+		return count;
+	},
+	get doubled() {
+		return doubled;
+	},
+	increment() {
+		count++;
+	}
 };
 ```
 
@@ -95,13 +101,13 @@ Always destructure props using `$props()`:
 
 ```svelte
 <script lang="ts">
-    interface Props {
-        label: string;
-        variant?: 'primary' | 'secondary';
-        onclick?: () => void;
-    }
+	interface Props {
+		label: string;
+		variant?: 'primary' | 'secondary';
+		onclick?: () => void;
+	}
 
-    let { label, variant = 'primary', onclick }: Props = $props();
+	let { label, variant = 'primary', onclick }: Props = $props();
 </script>
 ```
 
@@ -111,25 +117,25 @@ Use Svelte 5 snippets instead of slots for composable content areas:
 
 ```svelte
 <script lang="ts">
-    import type { Snippet } from 'svelte';
+	import type { Snippet } from 'svelte';
 
-    interface Props {
-        title: string;
-        actions?: Snippet;
-        children: Snippet;
-    }
+	interface Props {
+		title: string;
+		actions?: Snippet;
+		children: Snippet;
+	}
 
-    let { title, actions, children }: Props = $props();
+	let { title, actions, children }: Props = $props();
 </script>
 
 <div class="card">
-    <div class="card-header">
-        <h2>{title}</h2>
-        {#if actions}
-            {@render actions()}
-        {/if}
-    </div>
-    {@render children()}
+	<div class="card-header">
+		<h2>{title}</h2>
+		{#if actions}
+			{@render actions()}
+		{/if}
+	</div>
+	{@render children()}
 </div>
 ```
 
@@ -150,10 +156,10 @@ import { auth } from '../lib/stores/auth.svelte';
 
 The available aliases:
 
-| Alias | Resolves to |
-|---|---|
-| `$lib/` | `src/lib/` |
-| `$app/` | SvelteKit runtime modules (`environment`, `navigation`, `stores`) |
+| Alias   | Resolves to                                                                 |
+| ------- | --------------------------------------------------------------------------- |
+| `$lib/` | `src/lib/`                                                                  |
+| `$app/` | SvelteKit runtime modules (`environment`, `navigation`, `stores`)           |
 | `$env/` | Environment variables (`static/public`, `static/private`, `dynamic/public`) |
 
 ## Graph API Modules
@@ -174,12 +180,12 @@ import type { Widget } from '$lib/types/graph';
 import { widgetSchema } from '$lib/types/schemas';
 
 export async function listWidgets(client: GraphClient): Promise<Widget[]> {
-    return client.fetchAll<Widget>('/deviceManagement/widgets');
+	return client.fetchAll<Widget>('/deviceManagement/widgets');
 }
 
 export async function getWidget(client: GraphClient, id: string): Promise<Widget> {
-    const result = await client.request<Widget>(`/deviceManagement/widgets/${id}`);
-    return widgetSchema.parse(result);
+	const result = await client.request<Widget>(`/deviceManagement/widgets/${id}`);
+	return widgetSchema.parse(result);
 }
 ```
 
@@ -192,16 +198,16 @@ export async function getWidget(client: GraphClient, id: string): Promise<Widget
 ```svelte
 <!-- src/routes/devices/+page.svelte -->
 <script lang="ts">
-    import AuthGuard from '$lib/components/ui/AuthGuard.svelte';
-    import PermissionGuard from '$lib/components/ui/PermissionGuard.svelte';
-    import PageHeader from '$lib/components/ui/PageHeader.svelte';
+	import AuthGuard from '$lib/components/ui/AuthGuard.svelte';
+	import PermissionGuard from '$lib/components/ui/PermissionGuard.svelte';
+	import PageHeader from '$lib/components/ui/PageHeader.svelte';
 </script>
 
 <AuthGuard>
-    <PermissionGuard feature="/devices">
-        <PageHeader title="Devices" description="Managed device inventory" />
-        <!-- Page content -->
-    </PermissionGuard>
+	<PermissionGuard feature="/devices">
+		<PageHeader title="Devices" description="Managed device inventory" />
+		<!-- Page content -->
+	</PermissionGuard>
 </AuthGuard>
 ```
 
@@ -211,14 +217,14 @@ The `feature` prop on `PermissionGuard` maps to the route prefix in the permissi
 
 The app is deployed to Cloudflare Pages, which does **not** support Node.js built-in modules. All code must use Web APIs only:
 
-| Instead of... | Use... |
-|---|---|
-| `fs` | Not applicable (client-side only) |
-| `path` | String manipulation or `URL` |
-| `crypto` | `crypto.subtle` (Web Crypto API) |
-| `http` / `https` | `fetch` |
-| `url.parse()` | `new URL()` |
-| `Buffer` | `Uint8Array` / `TextEncoder` / `TextDecoder` |
+| Instead of...    | Use...                                       |
+| ---------------- | -------------------------------------------- |
+| `fs`             | Not applicable (client-side only)            |
+| `path`           | String manipulation or `URL`                 |
+| `crypto`         | `crypto.subtle` (Web Crypto API)             |
+| `http` / `https` | `fetch`                                      |
+| `url.parse()`    | `new URL()`                                  |
+| `Buffer`         | `Uint8Array` / `TextEncoder` / `TextDecoder` |
 
 ## Testing
 

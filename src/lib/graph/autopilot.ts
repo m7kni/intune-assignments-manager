@@ -15,16 +15,12 @@ import {
 
 // ─── Autopilot Device Functions ───────────────────────────────────
 
-export async function listAutopilotDevices(
-	client: GraphClient
-): Promise<AutopilotDevice[]> {
+export async function listAutopilotDevices(client: GraphClient): Promise<AutopilotDevice[]> {
 	const items = await client.fetchAll<AutopilotDevice>(
 		'/deviceManagement/windowsAutopilotDeviceIdentities'
 	);
 
-	return items.map(
-		(item) => autopilotDeviceSchema.parse(item) as AutopilotDevice
-	);
+	return items.map((item) => autopilotDeviceSchema.parse(item) as AutopilotDevice);
 }
 
 export async function getAutopilotDevice(
@@ -65,17 +61,13 @@ export async function getDeploymentProfileAssignments(
 	client: GraphClient,
 	profileId: string
 ): Promise<AutopilotDeploymentProfileAssignment[]> {
-	const response = await client.request<
-		GraphPagedResponse<AutopilotDeploymentProfileAssignment>
-	>(
+	const response = await client.request<GraphPagedResponse<AutopilotDeploymentProfileAssignment>>(
 		`/deviceManagement/windowsAutopilotDeploymentProfiles/${profileId}/assignments`
 	);
 
 	return response.value.map(
 		(item) =>
-			autopilotDeploymentProfileAssignmentSchema.parse(
-				item
-			) as AutopilotDeploymentProfileAssignment
+			autopilotDeploymentProfileAssignmentSchema.parse(item) as AutopilotDeploymentProfileAssignment
 	);
 }
 
@@ -84,13 +76,10 @@ export async function assignDeploymentProfile(
 	profileId: string,
 	assignments: AutopilotDeploymentProfileAssignment[]
 ): Promise<void> {
-	await client.request(
-		`/deviceManagement/windowsAutopilotDeploymentProfiles/${profileId}/assign`,
-		{
-			method: 'POST',
-			body: { assignments }
-		}
-	);
+	await client.request(`/deviceManagement/windowsAutopilotDeploymentProfiles/${profileId}/assign`, {
+		method: 'POST',
+		body: { assignments }
+	});
 }
 
 // ─── Device Property Update ───────────────────────────────────────

@@ -80,13 +80,7 @@ export interface ManagedDevice {
 // ─── Device Policy State Types ─────────────────────────────────────
 
 export type DevicePolicyComplianceState =
-	| 'unknown'
-	| 'notApplicable'
-	| 'compliant'
-	| 'remediated'
-	| 'nonCompliant'
-	| 'error'
-	| 'conflict';
+	'unknown' | 'notApplicable' | 'compliant' | 'remediated' | 'nonCompliant' | 'error' | 'conflict';
 
 export interface DeviceSettingState {
 	settingName: string | null;
@@ -122,13 +116,7 @@ export interface DetectedApp {
 // ─── Device Action Types ───────────────────────────────────────────
 
 export type DeviceAction =
-	| 'syncDevice'
-	| 'rebootNow'
-	| 'retire'
-	| 'wipe'
-	| 'remoteLock'
-	| 'shutDown'
-	| 'resetPasscode';
+	'syncDevice' | 'rebootNow' | 'retire' | 'wipe' | 'remoteLock' | 'shutDown' | 'resetPasscode';
 
 export interface DeviceActionInfo {
 	action: DeviceAction;

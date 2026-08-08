@@ -17,16 +17,10 @@ import {
 
 // ─── API Functions ──────────────────────────────────────────────────
 
-export async function listRemediationScripts(
-	client: GraphClient
-): Promise<DeviceHealthScript[]> {
-	const items = await client.fetchAll<DeviceHealthScript>(
-		'/deviceManagement/deviceHealthScripts'
-	);
+export async function listRemediationScripts(client: GraphClient): Promise<DeviceHealthScript[]> {
+	const items = await client.fetchAll<DeviceHealthScript>('/deviceManagement/deviceHealthScripts');
 
-	return items.map(
-		(item) => deviceHealthScriptSchema.parse(item) as DeviceHealthScript
-	);
+	return items.map((item) => deviceHealthScriptSchema.parse(item) as DeviceHealthScript);
 }
 
 export async function getRemediationScript(
@@ -43,13 +37,12 @@ export async function getRemediationAssignments(
 	client: GraphClient,
 	scriptId: string
 ): Promise<DeviceHealthScriptAssignment[]> {
-	const response = await client.request<
-		GraphPagedResponse<DeviceHealthScriptAssignment>
-	>(`/deviceManagement/deviceHealthScripts/${scriptId}/assignments`);
+	const response = await client.request<GraphPagedResponse<DeviceHealthScriptAssignment>>(
+		`/deviceManagement/deviceHealthScripts/${scriptId}/assignments`
+	);
 
 	return response.value.map(
-		(item) =>
-			deviceHealthScriptAssignmentSchema.parse(item) as DeviceHealthScriptAssignment
+		(item) => deviceHealthScriptAssignmentSchema.parse(item) as DeviceHealthScriptAssignment
 	);
 }
 
@@ -58,13 +51,10 @@ export async function assignRemediation(
 	scriptId: string,
 	assignments: DeviceHealthScriptAssignment[]
 ): Promise<void> {
-	await client.request(
-		`/deviceManagement/deviceHealthScripts/${scriptId}/assign`,
-		{
-			method: 'POST',
-			body: { deviceHealthScriptAssignments: assignments }
-		}
-	);
+	await client.request(`/deviceManagement/deviceHealthScripts/${scriptId}/assign`, {
+		method: 'POST',
+		body: { deviceHealthScriptAssignments: assignments }
+	});
 }
 
 export async function getRemediationDeviceStates(
@@ -81,8 +71,7 @@ export async function getRemediationDeviceStates(
 	);
 
 	return items.map(
-		(item) =>
-			deviceHealthScriptDeviceStateSchema.parse(item) as DeviceHealthScriptDeviceState
+		(item) => deviceHealthScriptDeviceStateSchema.parse(item) as DeviceHealthScriptDeviceState
 	);
 }
 

@@ -59,8 +59,7 @@
 		<table class="w-full text-left">
 			<thead>
 				<tr class="border-border border-b">
-					<th class="text-muted px-4 py-2.5 text-xs font-medium uppercase tracking-wider"
-						>Target</th
+					<th class="text-muted px-4 py-2.5 text-xs font-medium uppercase tracking-wider">Target</th
 					>
 					<th class="text-muted px-4 py-2.5 text-xs font-medium uppercase tracking-wider"
 						>Left Policy</th

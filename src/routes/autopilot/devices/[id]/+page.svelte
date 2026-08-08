@@ -10,10 +10,7 @@
 	import { Laptop, Save, ArrowLeft } from 'lucide-svelte';
 	import { TIER_4_SCOPES } from '$lib/auth/config';
 	import { getGraphClient } from '$lib/stores/graph';
-	import {
-		getAutopilotDevice,
-		updateAutopilotDeviceProperties
-	} from '$lib/graph/autopilot';
+	import { getAutopilotDevice, updateAutopilotDeviceProperties } from '$lib/graph/autopilot';
 	import { toFriendlyMessage } from '$lib/graph/errors';
 	import type { AutopilotDevice } from '$lib/types/autopilot';
 
@@ -171,9 +168,7 @@
 				</div>
 			{:else if device}
 				{@const enrollBadge = getEnrollmentBadge(device.enrollmentState)}
-				{@const profileBadge = getProfileAssignmentBadge(
-					device.deploymentProfileAssignmentStatus
-				)}
+				{@const profileBadge = getProfileAssignmentBadge(device.deploymentProfileAssignmentStatus)}
 
 				<!-- Back link -->
 				<div class="mb-4">
@@ -200,7 +195,8 @@
 									{device.serialNumber}
 								</h1>
 								<p class="text-ink-faint text-sm">
-									{device.manufacturer ?? 'Unknown'} {device.model ?? ''}
+									{device.manufacturer ?? 'Unknown'}
+									{device.model ?? ''}
 								</p>
 							</div>
 						</div>
@@ -245,9 +241,7 @@
 							</div>
 						</div>
 						<div>
-							<p class="text-muted text-xs font-medium uppercase">
-								Profile Assignment Status
-							</p>
+							<p class="text-muted text-xs font-medium uppercase">Profile Assignment Status</p>
 							<div class="mt-0.5">
 								<Badge variant={profileBadge.variant} dot>
 									{profileBadge.label}
@@ -274,9 +268,7 @@
 						</div>
 						{#if device.deploymentProfileAssignmentDetailedStatus}
 							<div>
-								<p class="text-muted text-xs font-medium uppercase">
-									Assignment Detail
-								</p>
+								<p class="text-muted text-xs font-medium uppercase">Assignment Detail</p>
 								<p class="text-ink text-sm">
 									{device.deploymentProfileAssignmentDetailedStatus}
 								</p>
@@ -302,10 +294,7 @@
 							/>
 						</div>
 						<div>
-							<label
-								for="displayName"
-								class="text-muted mb-1 block text-xs font-medium uppercase"
-							>
+							<label for="displayName" class="text-muted mb-1 block text-xs font-medium uppercase">
 								Display Name
 							</label>
 							<input
@@ -318,12 +307,7 @@
 						</div>
 					</div>
 					<div class="mt-4 flex items-center gap-3">
-						<Button
-							variant="primary"
-							icon={Save}
-							onclick={handleSave}
-							loading={saving}
-						>
+						<Button variant="primary" icon={Save} onclick={handleSave} loading={saving}>
 							{saving ? 'Saving...' : 'Save Changes'}
 						</Button>
 						{#if saveSuccess}

@@ -16,12 +16,12 @@ The Apps section (`/apps`) displays all mobile applications configured in your I
 
 The app list shows every mobile app returned by the Microsoft Graph API. Each row displays:
 
-| Field | Description |
-|---|---|
-| **App icon** | Fetched from the Graph API and cached |
-| **App name** | The display name of the app |
-| **App type** | Derived from the Graph `@odata.type` property (e.g. Store App, LOB App, Win32 App, Web App) |
-| **Assignment badge** | Indicates whether the app has at least one assignment |
+| Field                | Description                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------- |
+| **App icon**         | Fetched from the Graph API and cached                                                       |
+| **App name**         | The display name of the app                                                                 |
+| **App type**         | Derived from the Graph `@odata.type` property (e.g. Store App, LOB App, Win32 App, Web App) |
+| **Assignment badge** | Indicates whether the app has at least one assignment                                       |
 
 Apps are sorted alphabetically by name (A--Z) by default.
 
@@ -56,11 +56,11 @@ Filter by the type of application. The available types are derived dynamically f
 
 Toggle between three states:
 
-| Status | Description |
-|---|---|
-| **All** | Show all apps (default) |
-| **Assigned** | Only apps with at least one group assignment |
-| **Unassigned** | Only apps with no assignments |
+| Status         | Description                                  |
+| -------------- | -------------------------------------------- |
+| **All**        | Show all apps (default)                      |
+| **Assigned**   | Only apps with at least one group assignment |
+| **Unassigned** | Only apps with no assignments                |
 
 ## Search
 
@@ -72,11 +72,11 @@ The list header updates to show how many apps match your current filters (e.g. "
 
 Use the sort dropdown to change the list order:
 
-| Sort | Description |
-|---|---|
+| Sort          | Description                       |
+| ------------- | --------------------------------- |
 | **Name A--Z** | Alphabetical, ascending (default) |
-| **Name Z--A** | Alphabetical, descending |
-| **By Type** | Grouped by app type |
+| **Name Z--A** | Alphabetical, descending          |
+| **By Type**   | Grouped by app type               |
 
 ## App Detail Page
 
@@ -95,4 +95,4 @@ A **Bulk Assign** button is available that navigates to the [Bulk Assignment](bu
 If your Intune tenant has no mobile apps configured, the app list shows an empty state message. If your filters or search return no results, a separate message suggests adjusting your criteria.
 
 !!! note "App icons"
-    App icons are fetched from the Graph API. Some apps (particularly LOB apps and Win32 apps) may not have icons, in which case a placeholder is shown.
+App icons are fetched from the Graph API. Some apps (particularly LOB apps and Win32 apps) may not have icons, in which case a placeholder is shown.

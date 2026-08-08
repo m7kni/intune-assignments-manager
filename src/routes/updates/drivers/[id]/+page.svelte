@@ -25,10 +25,7 @@
 	import { toFriendlyMessage } from '$lib/graph/errors';
 	import { formatDeferralPeriod } from '$lib/utils/update-types';
 	import { exportAssignmentsCsv, type ExportableAssignment } from '$lib/utils/csv-assignments';
-	import type {
-		WindowsDriverUpdateProfile,
-		UpdateAssignment
-	} from '$lib/types/updates';
+	import type { WindowsDriverUpdateProfile, UpdateAssignment } from '$lib/types/updates';
 	import type { AssignmentTarget, AssignmentIntent } from '$lib/types/graph';
 
 	let profile = $state<WindowsDriverUpdateProfile | null>(null);
@@ -288,18 +285,14 @@
 							filename="{profile?.displayName ?? 'driver-update'}-assignments.csv"
 							disabled={assignments.length === 0}
 						/>
-						<Button variant="primary" icon={Layers} href="/assign">
-							Edit in Bulk Assign
-						</Button>
+						<Button variant="primary" icon={Layers} href="/assign">Edit in Bulk Assign</Button>
 					</div>
 				</div>
 
 				<!-- Metadata pills -->
 				<div class="mt-4 flex flex-wrap gap-2">
 					<Badge variant="info">Driver Update</Badge>
-					<Badge
-						variant={profile.approvalType === 'automatic' ? 'required' : 'neutral'}
-					>
+					<Badge variant={profile.approvalType === 'automatic' ? 'required' : 'neutral'}>
 						{profile.approvalType === 'automatic' ? 'Auto Approval' : 'Manual Approval'}
 					</Badge>
 					<Badge variant={hasAssignments ? 'required' : 'neutral'} dot>
@@ -405,9 +398,7 @@
 		itemKind="profile"
 		existingTarget={editingAssignment?.target}
 		existingIntent={null}
-		existingTargetName={editingAssignment
-			? resolveTargetName(editingAssignment.target)
-			: undefined}
+		existingTargetName={editingAssignment ? resolveTargetName(editingAssignment.target) : undefined}
 		onSave={handleEditorSave}
 		onCancel={() => (editorOpen = false)}
 	/>

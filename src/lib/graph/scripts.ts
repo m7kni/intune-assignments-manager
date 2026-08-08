@@ -17,16 +17,12 @@ import {
 
 // ─── API Functions ──────────────────────────────────────────────────
 
-export async function listScripts(
-	client: GraphClient
-): Promise<DeviceManagementScript[]> {
+export async function listScripts(client: GraphClient): Promise<DeviceManagementScript[]> {
 	const items = await client.fetchAll<DeviceManagementScript>(
 		'/deviceManagement/deviceManagementScripts'
 	);
 
-	return items.map(
-		(item) => deviceManagementScriptSchema.parse(item) as DeviceManagementScript
-	);
+	return items.map((item) => deviceManagementScriptSchema.parse(item) as DeviceManagementScript);
 }
 
 export async function getScript(
@@ -43,15 +39,12 @@ export async function getScriptAssignments(
 	client: GraphClient,
 	scriptId: string
 ): Promise<DeviceManagementScriptAssignment[]> {
-	const response = await client.request<
-		GraphPagedResponse<DeviceManagementScriptAssignment>
-	>(`/deviceManagement/deviceManagementScripts/${scriptId}/assignments`);
+	const response = await client.request<GraphPagedResponse<DeviceManagementScriptAssignment>>(
+		`/deviceManagement/deviceManagementScripts/${scriptId}/assignments`
+	);
 
 	return response.value.map(
-		(item) =>
-			deviceManagementScriptAssignmentSchema.parse(
-				item
-			) as DeviceManagementScriptAssignment
+		(item) => deviceManagementScriptAssignmentSchema.parse(item) as DeviceManagementScriptAssignment
 	);
 }
 
@@ -60,13 +53,10 @@ export async function assignScript(
 	scriptId: string,
 	assignments: DeviceManagementScriptAssignment[]
 ): Promise<void> {
-	await client.request(
-		`/deviceManagement/deviceManagementScripts/${scriptId}/assign`,
-		{
-			method: 'POST',
-			body: { deviceManagementScriptAssignments: assignments }
-		}
-	);
+	await client.request(`/deviceManagement/deviceManagementScripts/${scriptId}/assign`, {
+		method: 'POST',
+		body: { deviceManagementScriptAssignments: assignments }
+	});
 }
 
 export async function getScriptDeviceStates(
@@ -79,9 +69,7 @@ export async function getScriptDeviceStates(
 
 	return items.map(
 		(item) =>
-			deviceManagementScriptDeviceStateSchema.parse(
-				item
-			) as DeviceManagementScriptDeviceState
+			deviceManagementScriptDeviceStateSchema.parse(item) as DeviceManagementScriptDeviceState
 	);
 }
 
@@ -92,7 +80,5 @@ export async function getScriptRunSummary(
 	const response = await client.request<DeviceManagementScriptRunSummary>(
 		`/deviceManagement/deviceManagementScripts/${scriptId}/runSummary`
 	);
-	return deviceManagementScriptRunSummarySchema.parse(
-		response
-	) as DeviceManagementScriptRunSummary;
+	return deviceManagementScriptRunSummarySchema.parse(response) as DeviceManagementScriptRunSummary;
 }

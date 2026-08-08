@@ -78,17 +78,17 @@ MSAL is lazy-imported on first auth action to maintain SSR-safety (guarded by Sv
 
 SvelteKit file-based routing provides the following pages:
 
-| Route | Page | Description |
-|---|---|---|
-| `/` | Dashboard | Overview cards with app/profile counts, recent audit activity |
-| `/apps` | App List | Browse all Intune mobile apps with search and filtering |
-| `/apps/[id]` | App Detail | View a single app's properties and current assignments |
-| `/profiles` | Profile List | Browse all configuration policies with search and filtering |
-| `/profiles/[id]` | Profile Detail | View a single profile's properties and current assignments |
-| `/assign` | Assignment Wizard | 5-step bulk assignment workflow |
-| `/audit` | Audit Log | Browse Intune audit events |
-| `/status` | Deployment Status | App install status via Reports API |
-| `/settings` | Settings | Permission management and consent controls |
+| Route            | Page              | Description                                                   |
+| ---------------- | ----------------- | ------------------------------------------------------------- |
+| `/`              | Dashboard         | Overview cards with app/profile counts, recent audit activity |
+| `/apps`          | App List          | Browse all Intune mobile apps with search and filtering       |
+| `/apps/[id]`     | App Detail        | View a single app's properties and current assignments        |
+| `/profiles`      | Profile List      | Browse all configuration policies with search and filtering   |
+| `/profiles/[id]` | Profile Detail    | View a single profile's properties and current assignments    |
+| `/assign`        | Assignment Wizard | 5-step bulk assignment workflow                               |
+| `/audit`         | Audit Log         | Browse Intune audit events                                    |
+| `/status`        | Deployment Status | App install status via Reports API                            |
+| `/settings`      | Settings          | Permission management and consent controls                    |
 
 The root layout (`src/routes/+layout.svelte`) wraps all pages with authentication guards, navigation, and theme support.
 
@@ -98,18 +98,18 @@ The app uses **pure Svelte 5 runes** for all state management — no external st
 
 Stores live in `src/lib/stores/` and export reactive state via `$state` and `$derived`:
 
-| Store | File | Purpose |
-|---|---|---|
-| Auth | `auth.svelte.ts` | Current account, authentication state, granted scopes |
-| Notifications | `notifications.svelte.ts` | Toast notification queue (success, error, info) |
-| Theme | `theme.svelte.ts` | Dark/light mode preference |
-| Permissions | `permissions.svelte.ts` | Granted scopes, consent error tracking |
-| Shortcuts | `shortcuts.svelte.ts` | Keyboard shortcut registry |
-| Command Palette | `command-palette.svelte.ts` | Command palette open/close state |
-| Dashboard Cache | `dashboard-cache.svelte.ts` | Cached app/profile counts and recent activity |
-| Filter Cache | `filter-cache.ts` | Cached assignment filter definitions |
-| Group Cache | `group-cache.ts` | Cached group name resolutions |
-| Graph Client | `graph.ts` | Singleton graph client instance |
+| Store           | File                        | Purpose                                               |
+| --------------- | --------------------------- | ----------------------------------------------------- |
+| Auth            | `auth.svelte.ts`            | Current account, authentication state, granted scopes |
+| Notifications   | `notifications.svelte.ts`   | Toast notification queue (success, error, info)       |
+| Theme           | `theme.svelte.ts`           | Dark/light mode preference                            |
+| Permissions     | `permissions.svelte.ts`     | Granted scopes, consent error tracking                |
+| Shortcuts       | `shortcuts.svelte.ts`       | Keyboard shortcut registry                            |
+| Command Palette | `command-palette.svelte.ts` | Command palette open/close state                      |
+| Dashboard Cache | `dashboard-cache.svelte.ts` | Cached app/profile counts and recent activity         |
+| Filter Cache    | `filter-cache.ts`           | Cached assignment filter definitions                  |
+| Group Cache     | `group-cache.ts`            | Cached group name resolutions                         |
+| Graph Client    | `graph.ts`                  | Singleton graph client instance                       |
 
 ## Three-Tier Type System
 
@@ -135,11 +135,11 @@ flowchart TD
 
 Additional type files:
 
-| File | Purpose |
-|---|---|
-| `src/lib/types/diff.ts` | Assignment diff types for comparing before/after states |
-| `src/lib/types/status.ts` | Status and reports types |
-| `src/lib/types/status-schemas.ts` | Zod schemas for Reports API responses |
+| File                              | Purpose                                                 |
+| --------------------------------- | ------------------------------------------------------- |
+| `src/lib/types/diff.ts`           | Assignment diff types for comparing before/after states |
+| `src/lib/types/status.ts`         | Status and reports types                                |
+| `src/lib/types/status-schemas.ts` | Zod schemas for Reports API responses                   |
 
 ## Graph API Client Architecture
 
@@ -203,7 +203,7 @@ flowchart LR
 ```
 
 !!! warning "Replace semantics"
-    The Graph API `assign` endpoint **replaces all assignments** for an item. Existing assignments must always be fetched and merged first to avoid accidentally removing assignments that were not part of the current operation.
+The Graph API `assign` endpoint **replaces all assignments** for an item. Existing assignments must always be fetched and merged first to avoid accidentally removing assignments that were not part of the current operation.
 
 ### Merge Logic
 
@@ -216,11 +216,11 @@ The merge module (`src/lib/graph/merge.ts`) uses a target-key approach:
 
 ## Caching Strategy
 
-| Data | Storage | TTL | Invalidation |
-|---|---|---|---|
-| Dashboard counts (apps, profiles, assigned) | `localStorage` | 15 minutes | Manual refresh, list page loads |
-| Recent audit activity | `localStorage` | 15 minutes | Bundled with dashboard cache |
-| Assignment filter definitions | In-memory (module scope) | Session lifetime | `clearFilterCache()` |
-| Group name resolutions | In-memory (`Map`) | Session lifetime | `clearGroupCache()` |
-| MSAL tokens | `localStorage` (MSAL-managed) | Token lifetime | MSAL handles refresh automatically |
-| Granted scopes | `localStorage` | Until sign-out | Cleared on logout |
+| Data                                        | Storage                       | TTL              | Invalidation                       |
+| ------------------------------------------- | ----------------------------- | ---------------- | ---------------------------------- |
+| Dashboard counts (apps, profiles, assigned) | `localStorage`                | 15 minutes       | Manual refresh, list page loads    |
+| Recent audit activity                       | `localStorage`                | 15 minutes       | Bundled with dashboard cache       |
+| Assignment filter definitions               | In-memory (module scope)      | Session lifetime | `clearFilterCache()`               |
+| Group name resolutions                      | In-memory (`Map`)             | Session lifetime | `clearGroupCache()`                |
+| MSAL tokens                                 | `localStorage` (MSAL-managed) | Token lifetime   | MSAL handles refresh automatically |
+| Granted scopes                              | `localStorage`                | Until sign-out   | Cleared on logout                  |

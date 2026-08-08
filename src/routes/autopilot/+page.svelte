@@ -10,14 +10,7 @@
 	import ErrorState from '$lib/components/ui/ErrorState.svelte';
 	import Badge from '$lib/components/ui/Badge.svelte';
 	import Tabs from '$lib/components/ui/Tabs.svelte';
-	import {
-		Search,
-		Laptop,
-		ChevronRight,
-		FileStack,
-		Check,
-		X as XIcon
-	} from 'lucide-svelte';
+	import { Search, Laptop, ChevronRight, FileStack, Check, X as XIcon } from 'lucide-svelte';
 	import { TIER_4_SCOPES } from '$lib/auth/config';
 	import { getGraphClient } from '$lib/stores/graph';
 	import { listAutopilotDevices, listDeploymentProfiles } from '$lib/graph/autopilot';
@@ -234,9 +227,10 @@
 							class="border-border bg-surface/95 sticky top-12 z-10 border-b px-4 py-2.5 backdrop-blur-sm"
 						>
 							<p class="text-muted text-xs font-medium tracking-wide uppercase">
-								{filteredDevices.length}{deviceSearch.trim() !== ''
-									? ` of ${devices.length}`
-									: ''} device{filteredDevices.length !== 1 ? 's' : ''}
+								{filteredDevices.length}{deviceSearch.trim() !== '' ? ` of ${devices.length}` : ''} device{filteredDevices.length !==
+								1
+									? 's'
+									: ''}
 								{#if deviceSearch.trim() !== ''}
 									matching "{deviceSearch.trim()}"
 								{/if}
@@ -280,7 +274,8 @@
 										{device.serialNumber}
 									</p>
 									<p class="text-ink-faint truncate text-xs md:hidden">
-										{device.manufacturer ?? ''} {device.model ?? ''}
+										{device.manufacturer ?? ''}
+										{device.model ?? ''}
 									</p>
 								</div>
 
@@ -330,10 +325,7 @@
 			{:else if activeTab === 'profiles'}
 				<!-- Profiles tab -->
 				<div class="mb-4">
-					<SearchInput
-						placeholder="Search profiles by name..."
-						bind:value={profileSearch}
-					/>
+					<SearchInput placeholder="Search profiles by name..." bind:value={profileSearch} />
 				</div>
 
 				{#if profilesError}

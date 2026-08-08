@@ -1,5 +1,5 @@
 ---
-title: "Step 5: Results"
+title: 'Step 5: Results'
 description: Track execution progress and handle successes and failures after applying assignments
 tags:
   - assignments
@@ -39,25 +39,25 @@ Posts the merged assignment lists back to Intune using batch POST requests to th
 
 After execution completes, a summary banner shows the outcome:
 
-| Outcome | Banner |
-|---------|--------|
-| All succeeded | Green banner: "All N assignments applied successfully" |
-| Partial failure | Yellow banner: "X succeeded, Y failed" |
-| All failed | Red banner: "All assignments failed" |
+| Outcome         | Banner                                                 |
+| --------------- | ------------------------------------------------------ |
+| All succeeded   | Green banner: "All N assignments applied successfully" |
+| Partial failure | Yellow banner: "X succeeded, Y failed"                 |
+| All failed      | Red banner: "All assignments failed"                   |
 
 ## Per-Item Results
 
 Below the summary, each item is listed with its status:
 
-| Status | Shown as |
-|---|---|
-| **Success** | Green check icon, item name and type |
-| **Error** | Red X icon, item name, type, and the error message from the Graph API |
+| Status      | Shown as                                                              |
+| ----------- | --------------------------------------------------------------------- |
+| **Success** | Green check icon, item name and type                                  |
+| **Error**   | Red X icon, item name, type, and the error message from the Graph API |
 
 ## Handling Failures
 
 !!! note "Failures are isolated"
-    Each item is processed independently. If one app's assignment fails, other items are unaffected.
+Each item is processed independently. If one app's assignment fails, other items are unaffected.
 
 When failures occur:
 
@@ -72,4 +72,4 @@ On full success, you can:
 - Navigate to the [Audit Log](../audit.md) to verify the changes were recorded
 
 !!! tip "Verify in the Audit Log"
-    Assignment changes may take a few minutes to appear in the Intune audit log. Navigate to **Audit Log** and filter for assignment events to confirm your changes.
+Assignment changes may take a few minutes to appear in the Intune audit log. Navigate to **Audit Log** and filter for assignment events to confirm your changes.

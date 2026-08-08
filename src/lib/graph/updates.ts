@@ -27,8 +27,7 @@ export async function listUpdateRings(
 		'/deviceManagement/deviceConfigurations',
 		{
 			params: {
-				$filter:
-					"isof('microsoft.graph.windowsUpdateForBusinessConfiguration')"
+				$filter: "isof('microsoft.graph.windowsUpdateForBusinessConfiguration')"
 			}
 		}
 	);
@@ -60,9 +59,7 @@ export async function getUpdateRingAssignments(
 	const response = await client.request<GraphPagedResponse<UpdateAssignment>>(
 		`/deviceManagement/deviceConfigurations/${id}/assignments`
 	);
-	return response.value.map(
-		(item) => updateAssignmentSchema.parse(item) as UpdateAssignment
-	);
+	return response.value.map((item) => updateAssignmentSchema.parse(item) as UpdateAssignment);
 }
 
 export async function assignUpdateRing(
@@ -96,8 +93,7 @@ export async function listFeatureUpdateProfiles(
 	);
 
 	return items.map(
-		(item) =>
-			windowsFeatureUpdateProfileSchema.parse(item) as WindowsFeatureUpdateProfile
+		(item) => windowsFeatureUpdateProfileSchema.parse(item) as WindowsFeatureUpdateProfile
 	);
 }
 
@@ -118,9 +114,7 @@ export async function getFeatureUpdateAssignments(
 	const response = await client.request<GraphPagedResponse<UpdateAssignment>>(
 		`/deviceManagement/windowsFeatureUpdateProfiles/${id}/assignments`
 	);
-	return response.value.map(
-		(item) => updateAssignmentSchema.parse(item) as UpdateAssignment
-	);
+	return response.value.map((item) => updateAssignmentSchema.parse(item) as UpdateAssignment);
 }
 
 export async function assignFeatureUpdate(
@@ -128,13 +122,10 @@ export async function assignFeatureUpdate(
 	id: string,
 	assignments: UpdateAssignment[]
 ): Promise<void> {
-	await client.request(
-		`/deviceManagement/windowsFeatureUpdateProfiles/${id}/assignments`,
-		{
-			method: 'POST',
-			body: { assignments }
-		}
-	);
+	await client.request(`/deviceManagement/windowsFeatureUpdateProfiles/${id}/assignments`, {
+		method: 'POST',
+		body: { assignments }
+	});
 }
 
 // ─── Quality Update Profiles ───────────────────────────────────────
@@ -147,8 +138,7 @@ export async function listQualityUpdateProfiles(
 	);
 
 	return items.map(
-		(item) =>
-			windowsQualityUpdateProfileSchema.parse(item) as WindowsQualityUpdateProfile
+		(item) => windowsQualityUpdateProfileSchema.parse(item) as WindowsQualityUpdateProfile
 	);
 }
 
@@ -159,9 +149,7 @@ export async function getQualityUpdateProfile(
 	const response = await client.request<WindowsQualityUpdateProfile>(
 		`/deviceManagement/windowsQualityUpdateProfiles/${id}`
 	);
-	return windowsQualityUpdateProfileSchema.parse(
-		response
-	) as WindowsQualityUpdateProfile;
+	return windowsQualityUpdateProfileSchema.parse(response) as WindowsQualityUpdateProfile;
 }
 
 export async function getQualityUpdateAssignments(
@@ -171,9 +159,7 @@ export async function getQualityUpdateAssignments(
 	const response = await client.request<GraphPagedResponse<UpdateAssignment>>(
 		`/deviceManagement/windowsQualityUpdateProfiles/${id}/assignments`
 	);
-	return response.value.map(
-		(item) => updateAssignmentSchema.parse(item) as UpdateAssignment
-	);
+	return response.value.map((item) => updateAssignmentSchema.parse(item) as UpdateAssignment);
 }
 
 export async function assignQualityUpdate(
@@ -181,13 +167,10 @@ export async function assignQualityUpdate(
 	id: string,
 	assignments: UpdateAssignment[]
 ): Promise<void> {
-	await client.request(
-		`/deviceManagement/windowsQualityUpdateProfiles/${id}/assignments`,
-		{
-			method: 'POST',
-			body: { assignments }
-		}
-	);
+	await client.request(`/deviceManagement/windowsQualityUpdateProfiles/${id}/assignments`, {
+		method: 'POST',
+		body: { assignments }
+	});
 }
 
 // ─── Driver Update Profiles ────────────────────────────────────────
@@ -200,8 +183,7 @@ export async function listDriverUpdateProfiles(
 	);
 
 	return items.map(
-		(item) =>
-			windowsDriverUpdateProfileSchema.parse(item) as WindowsDriverUpdateProfile
+		(item) => windowsDriverUpdateProfileSchema.parse(item) as WindowsDriverUpdateProfile
 	);
 }
 
@@ -212,9 +194,7 @@ export async function getDriverUpdateProfile(
 	const response = await client.request<WindowsDriverUpdateProfile>(
 		`/deviceManagement/windowsDriverUpdateProfiles/${id}`
 	);
-	return windowsDriverUpdateProfileSchema.parse(
-		response
-	) as WindowsDriverUpdateProfile;
+	return windowsDriverUpdateProfileSchema.parse(response) as WindowsDriverUpdateProfile;
 }
 
 export async function getDriverUpdateAssignments(
@@ -224,9 +204,7 @@ export async function getDriverUpdateAssignments(
 	const response = await client.request<GraphPagedResponse<UpdateAssignment>>(
 		`/deviceManagement/windowsDriverUpdateProfiles/${id}/assignments`
 	);
-	return response.value.map(
-		(item) => updateAssignmentSchema.parse(item) as UpdateAssignment
-	);
+	return response.value.map((item) => updateAssignmentSchema.parse(item) as UpdateAssignment);
 }
 
 export async function assignDriverUpdate(
@@ -234,11 +212,8 @@ export async function assignDriverUpdate(
 	id: string,
 	assignments: UpdateAssignment[]
 ): Promise<void> {
-	await client.request(
-		`/deviceManagement/windowsDriverUpdateProfiles/${id}/assignments`,
-		{
-			method: 'POST',
-			body: { assignments }
-		}
-	);
+	await client.request(`/deviceManagement/windowsDriverUpdateProfiles/${id}/assignments`, {
+		method: 'POST',
+		body: { assignments }
+	});
 }

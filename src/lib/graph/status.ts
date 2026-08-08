@@ -26,10 +26,7 @@ const V1 = { version: 'v1.0' as const };
 
 // ─── Report Helpers ─────────────────────────────────────────────────
 
-function parseReportRows<T>(
-	response: IntuneReportResponse,
-	mapper: Record<string, keyof T>
-): T[] {
+function parseReportRows<T>(response: IntuneReportResponse, mapper: Record<string, keyof T>): T[] {
 	const columns = response.Schema.map((s) => s.Column);
 	return response.Values.map((row) => {
 		const obj: Record<string, unknown> = {};
@@ -72,9 +69,7 @@ async function fetchAllReportRows(
 
 // ─── App Install Status (Reports API) ──────────────────────────────
 
-export async function getAppInstallSummaries(
-	client: GraphClient
-): Promise<AppInstallSummaryRow[]> {
+export async function getAppInstallSummaries(client: GraphClient): Promise<AppInstallSummaryRow[]> {
 	const response = await fetchAllReportRows(
 		client,
 		'/deviceManagement/reports/getAppsInstallSummaryReport',

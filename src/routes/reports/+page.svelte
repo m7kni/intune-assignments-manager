@@ -9,10 +9,7 @@
 </script>
 
 <AuthGuard>
-	<PermissionGuard
-		requiredScopes={['DeviceManagementApps.Read.All']}
-		featureName="Reports"
-	>
+	<PermissionGuard requiredScopes={['DeviceManagementApps.Read.All']} featureName="Reports">
 		<div class="animate-fade-in-up">
 			<PageHeader
 				title="Reports"

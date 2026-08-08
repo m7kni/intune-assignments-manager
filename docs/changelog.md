@@ -18,11 +18,11 @@ All notable changes to Intune Assignments Manager are documented here.
 - **App Browser** -- Browse and filter all mobile apps with platform, type, and assignment status filters
 - **Config Profile Browser** -- Browse and filter Settings Catalog configuration policies
 - **Bulk Assignment Wizard** -- 5-step wizard for bulk-assigning apps and profiles to AAD groups
-    - Step 1: Select multiple apps and/or profiles
-    - Step 2: Select target groups, All Devices, All Users, and exclusion groups
-    - Step 3: Configure assignment intent and optional assignment filters
-    - Step 4: Review merged assignments with conflict detection and resolution
-    - Step 5: Track execution progress with per-item retry on failure
+  - Step 1: Select multiple apps and/or profiles
+  - Step 2: Select target groups, All Devices, All Users, and exclusion groups
+  - Step 3: Configure assignment intent and optional assignment filters
+  - Step 4: Review merged assignments with conflict detection and resolution
+  - Step 5: Track execution progress with per-item retry on failure
 - **CSV Import/Export** -- Import assignment configurations from CSV; export current assignments
 - **Audit Log** -- Browse Intune audit events with filtering and expandable row details
 - **Deployment Status** -- App install failure summary and profile deployment error overview

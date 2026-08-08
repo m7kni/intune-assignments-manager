@@ -38,12 +38,12 @@ The app authenticates via OAuth2 PKCE (Authorization Code flow with Proof Key fo
 1. In your new app registration, go to **Authentication**
 2. Click **Add a platform** and select **Single-page application (SPA)**
 3. Add the following **Redirect URIs**:
-    - `http://localhost:5173` (for local development)
-    - Your Cloudflare Pages URL (e.g. `https://intune-assignments.pages.dev`) for production
+   - `http://localhost:5173` (for local development)
+   - Your Cloudflare Pages URL (e.g. `https://intune-assignments.pages.dev`) for production
 4. Click **Configure**
 
 !!! note "No client secret required"
-    The PKCE flow does not use a client secret. Do not generate one -- it is not needed and would not be secure in a client-side application.
+The PKCE flow does not use a client secret. Do not generate one -- it is not needed and would not be secure in a client-side application.
 
 ### Step 3: Copy the Client ID
 
@@ -51,7 +51,7 @@ The app authenticates via OAuth2 PKCE (Authorization Code flow with Proof Key fo
 2. Copy the **Application (client) ID** -- this is the only value you need
 
 !!! tip "API permissions are handled automatically"
-    You do **not** need to pre-configure API permissions on the app registration. The app requests permissions incrementally via consent popups when you first use each feature. An admin can also pre-consent for the entire organisation from the **API permissions** blade if preferred.
+You do **not** need to pre-configure API permissions on the app registration. The app requests permissions incrementally via consent popups when you first use each feature. An admin can also pre-consent for the entire organisation from the **API permissions** blade if preferred.
 
 ## Deployment
 
@@ -61,11 +61,11 @@ The app authenticates via OAuth2 PKCE (Authorization Code flow with Proof Key fo
 2. In the [Cloudflare Dashboard](https://dash.cloudflare.com), go to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**
 3. Select your forked repository
 4. Configure the build:
-    - **Build command**: `pnpm install && pnpm build`
-    - **Build output directory**: `.svelte-kit/cloudflare`
+   - **Build command**: `pnpm install && pnpm build`
+   - **Build output directory**: `.svelte-kit/cloudflare`
 5. Add the environment variable:
-    - **Variable name**: `PUBLIC_ENTRA_CLIENT_ID`
-    - **Value**: Your Application (client) ID from Step 3 above
+   - **Variable name**: `PUBLIC_ENTRA_CLIENT_ID`
+   - **Value**: Your Application (client) ID from Step 3 above
 6. Deploy
 
 After deployment, add your Cloudflare Pages URL as a redirect URI in your Azure app registration (Step 2 above).
@@ -109,7 +109,7 @@ The app will be available at `http://localhost:5173`.
 After signing in, the dashboard loads with your tenant's app and profile counts, assigned item totals, and recent audit activity.
 
 !!! warning "Pop-up blockers"
-    The sign-in flow uses a popup window. If your browser blocks popups, you will need to allow popups for the app's domain.
+The sign-in flow uses a popup window. If your browser blocks popups, you will need to allow popups for the app's domain.
 
 ## Next Steps
 

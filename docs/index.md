@@ -19,85 +19,85 @@ The app runs entirely client-side. Your credentials and data never leave your br
 
 <div class="grid cards" markdown>
 
--   :material-microsoft-azure:{ .lg .middle } **Getting Started**
+- :material-microsoft-azure:{ .lg .middle } **Getting Started**
 
-    ---
+  ***
 
-    Prerequisites, Azure app registration, and first login walkthrough.
+  Prerequisites, Azure app registration, and first login walkthrough.
 
-    [:octicons-arrow-right-24: Get started](getting-started.md)
+  [:octicons-arrow-right-24: Get started](getting-started.md)
 
--   :material-shield-lock-outline:{ .lg .middle } **Authentication**
+- :material-shield-lock-outline:{ .lg .middle } **Authentication**
 
-    ---
+  ***
 
-    How sign-in works, token management, and security model.
+  How sign-in works, token management, and security model.
 
-    [:octicons-arrow-right-24: Authentication](authentication.md)
+  [:octicons-arrow-right-24: Authentication](authentication.md)
 
--   :material-key-variant:{ .lg .middle } **Permissions**
+- :material-key-variant:{ .lg .middle } **Permissions**
 
-    ---
+  ***
 
-    Four permission tiers, what each scope enables, and how to grant them.
+  Four permission tiers, what each scope enables, and how to grant them.
 
-    [:octicons-arrow-right-24: Permissions](permissions.md)
+  [:octicons-arrow-right-24: Permissions](permissions.md)
 
--   :material-view-dashboard-outline:{ .lg .middle } **Dashboard**
+- :material-view-dashboard-outline:{ .lg .middle } **Dashboard**
 
-    ---
+  ***
 
-    Tenant overview with stats, recent activity, and quick actions.
+  Tenant overview with stats, recent activity, and quick actions.
 
-    [:octicons-arrow-right-24: Dashboard](dashboard.md)
+  [:octicons-arrow-right-24: Dashboard](dashboard.md)
 
--   :material-apps:{ .lg .middle } **Apps**
+- :material-apps:{ .lg .middle } **Apps**
 
-    ---
+  ***
 
-    Browse, filter, and search your Intune mobile applications.
+  Browse, filter, and search your Intune mobile applications.
 
-    [:octicons-arrow-right-24: Apps](apps.md)
+  [:octicons-arrow-right-24: Apps](apps.md)
 
--   :material-cog-outline:{ .lg .middle } **Configuration Profiles**
+- :material-cog-outline:{ .lg .middle } **Configuration Profiles**
 
-    ---
+  ***
 
-    Browse, filter, and search Settings Catalog configuration policies.
+  Browse, filter, and search Settings Catalog configuration policies.
 
-    [:octicons-arrow-right-24: Profiles](profiles.md)
+  [:octicons-arrow-right-24: Profiles](profiles.md)
 
--   :material-layers-triple:{ .lg .middle } **Bulk Assignment**
+- :material-layers-triple:{ .lg .middle } **Bulk Assignment**
 
-    ---
+  ***
 
-    Five-step wizard for assigning apps and profiles to groups at scale.
+  Five-step wizard for assigning apps and profiles to groups at scale.
 
-    [:octicons-arrow-right-24: Bulk Assignment](bulk-assignment.md)
+  [:octicons-arrow-right-24: Bulk Assignment](bulk-assignment.md)
 
--   :material-file-delimited-outline:{ .lg .middle } **CSV Import / Export**
+- :material-file-delimited-outline:{ .lg .middle } **CSV Import / Export**
 
-    ---
+  ***
 
-    Export assignments to CSV and import them back for repeatable workflows.
+  Export assignments to CSV and import them back for repeatable workflows.
 
-    [:octicons-arrow-right-24: CSV](csv.md)
+  [:octicons-arrow-right-24: CSV](csv.md)
 
--   :material-clipboard-text-clock-outline:{ .lg .middle } **Audit Log**
+- :material-clipboard-text-clock-outline:{ .lg .middle } **Audit Log**
 
-    ---
+  ***
 
-    Review Intune assignment changes with date range and activity filters.
+  Review Intune assignment changes with date range and activity filters.
 
-    [:octicons-arrow-right-24: Audit Log](audit.md)
+  [:octicons-arrow-right-24: Audit Log](audit.md)
 
--   :material-chart-bar:{ .lg .middle } **Deployment Status**
+- :material-chart-bar:{ .lg .middle } **Deployment Status**
 
-    ---
+  ***
 
-    Monitor app install failures and profile deployment errors.
+  Monitor app install failures and profile deployment errors.
 
-    [:octicons-arrow-right-24: Status](status.md)
+  [:octicons-arrow-right-24: Status](status.md)
 
 </div>
 

@@ -24,10 +24,7 @@
 	import { ensureFiltersLoaded, getFilterById } from '$lib/stores/filter-cache';
 	import { toFriendlyMessage } from '$lib/graph/errors';
 	import { exportAssignmentsCsv, type ExportableAssignment } from '$lib/utils/csv-assignments';
-	import type {
-		WindowsFeatureUpdateProfile,
-		UpdateAssignment
-	} from '$lib/types/updates';
+	import type { WindowsFeatureUpdateProfile, UpdateAssignment } from '$lib/types/updates';
 	import type { AssignmentTarget, AssignmentIntent } from '$lib/types/graph';
 
 	let profile = $state<WindowsFeatureUpdateProfile | null>(null);
@@ -296,9 +293,7 @@
 							filename="{profile?.displayName ?? 'feature-update'}-assignments.csv"
 							disabled={assignments.length === 0}
 						/>
-						<Button variant="primary" icon={Layers} href="/assign">
-							Edit in Bulk Assign
-						</Button>
+						<Button variant="primary" icon={Layers} href="/assign">Edit in Bulk Assign</Button>
 					</div>
 				</div>
 
@@ -423,9 +418,7 @@
 		itemKind="profile"
 		existingTarget={editingAssignment?.target}
 		existingIntent={null}
-		existingTargetName={editingAssignment
-			? resolveTargetName(editingAssignment.target)
-			: undefined}
+		existingTargetName={editingAssignment ? resolveTargetName(editingAssignment.target) : undefined}
 		onSave={handleEditorSave}
 		onCancel={() => (editorOpen = false)}
 	/>

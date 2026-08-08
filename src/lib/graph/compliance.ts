@@ -46,9 +46,7 @@ export async function listCompliancePolicies(
 		{ params }
 	);
 
-	return items.map(
-		(item) => deviceCompliancePolicySchema.parse(item) as DeviceCompliancePolicy
-	);
+	return items.map((item) => deviceCompliancePolicySchema.parse(item) as DeviceCompliancePolicy);
 }
 
 export async function getCompliancePolicy(
@@ -65,15 +63,12 @@ export async function getCompliancePolicyAssignments(
 	client: GraphClient,
 	policyId: string
 ): Promise<DeviceCompliancePolicyAssignment[]> {
-	const response = await client.request<
-		GraphPagedResponse<DeviceCompliancePolicyAssignment>
-	>(`/deviceManagement/deviceCompliancePolicies/${policyId}/assignments`);
+	const response = await client.request<GraphPagedResponse<DeviceCompliancePolicyAssignment>>(
+		`/deviceManagement/deviceCompliancePolicies/${policyId}/assignments`
+	);
 
 	return response.value.map(
-		(item) =>
-			deviceCompliancePolicyAssignmentSchema.parse(
-				item
-			) as DeviceCompliancePolicyAssignment
+		(item) => deviceCompliancePolicyAssignmentSchema.parse(item) as DeviceCompliancePolicyAssignment
 	);
 }
 
@@ -82,11 +77,8 @@ export async function assignCompliancePolicy(
 	policyId: string,
 	assignments: DeviceCompliancePolicyAssignment[]
 ): Promise<void> {
-	await client.request(
-		`/deviceManagement/deviceCompliancePolicies/${policyId}/assign`,
-		{
-			method: 'POST',
-			body: { assignments }
-		}
-	);
+	await client.request(`/deviceManagement/deviceCompliancePolicies/${policyId}/assign`, {
+		method: 'POST',
+		body: { assignments }
+	});
 }

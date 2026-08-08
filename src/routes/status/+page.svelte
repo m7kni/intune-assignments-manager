@@ -20,14 +20,9 @@
 	import { listConfigPolicies } from '$lib/graph/configurations';
 	import { getAppInstallSummaries } from '$lib/graph/status';
 	import { toFriendlyMessage } from '$lib/graph/errors';
-	import {
-		deviceConfigurationDeviceOverviewSchema
-	} from '$lib/types/status-schemas';
+	import { deviceConfigurationDeviceOverviewSchema } from '$lib/types/status-schemas';
 	import type { MobileApp, ConfigurationPolicy, BatchRequestItem } from '$lib/types/graph';
-	import type {
-		AppInstallSummaryRow,
-		DeviceConfigurationDeviceOverview
-	} from '$lib/types/status';
+	import type { AppInstallSummaryRow, DeviceConfigurationDeviceOverview } from '$lib/types/status';
 
 	interface AppWithFailures {
 		app: MobileApp;
@@ -77,9 +72,7 @@
 					appsWithFailures.push({ app, failedDeviceCount: row.failedDeviceCount });
 				}
 			}
-			failedApps = appsWithFailures.sort(
-				(a, b) => b.failedDeviceCount - a.failedDeviceCount
-			);
+			failedApps = appsWithFailures.sort((a, b) => b.failedDeviceCount - a.failedDeviceCount);
 
 			// Batch-fetch device status overviews for profiles
 			// Uses deviceConfigurations endpoint (legacy) - 404s expected for Settings Catalog profiles

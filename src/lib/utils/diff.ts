@@ -135,7 +135,10 @@ export function computeItemDiff(params: DiffItemParams): ItemDiff {
 			let status: DiffStatus = 'unchanged';
 
 			if (params.replaceMode) {
-				if (params.itemType === 'app' && params.replaceIntents?.includes(current.intent as AssignmentIntent)) {
+				if (
+					params.itemType === 'app' &&
+					params.replaceIntents?.includes(current.intent as AssignmentIntent)
+				) {
 					status = 'removed';
 				} else if (params.itemType !== 'app') {
 					if (params.replaceInclusions && !current.isExclusion) {

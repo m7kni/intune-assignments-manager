@@ -14,51 +14,51 @@ The Bulk Assignment wizard lets you apply the same group assignments to multiple
 Navigate to **Bulk Assign** in the sidebar or press ++ctrl+k++ and search for "assign".
 
 !!! danger "The Graph API replaces all assignments"
-    The Microsoft Graph `assign` endpoint **replaces the entire assignment list** for each item. This tool always fetches current assignments first and merges your changes with them, so existing assignments are preserved. However, you should always review carefully on the **Review** step before applying.
+The Microsoft Graph `assign` endpoint **replaces the entire assignment list** for each item. This tool always fetches current assignments first and merges your changes with them, so existing assignments are preserved. However, you should always review carefully on the **Review** step before applying.
 
 ## The 5-Step Process
 
 <div class="grid cards" markdown>
 
--   :material-checkbox-multiple-outline:{ .lg .middle } **Step 1 -- Select Items**
+- :material-checkbox-multiple-outline:{ .lg .middle } **Step 1 -- Select Items**
 
-    ---
+  ***
 
-    Choose which apps and/or configuration profiles to assign. Browse, search, and filter by platform or type. You can mix apps and profiles in a single run.
+  Choose which apps and/or configuration profiles to assign. Browse, search, and filter by platform or type. You can mix apps and profiles in a single run.
 
-    [:octicons-arrow-right-24: Select Items](select-items.md)
+  [:octicons-arrow-right-24: Select Items](select-items.md)
 
--   :material-account-group:{ .lg .middle } **Step 2 -- Select Groups**
+- :material-account-group:{ .lg .middle } **Step 2 -- Select Groups**
 
-    ---
+  ***
 
-    Pick the target AAD security groups, plus the built-in All Devices and All Users targets. Optionally add exclusion groups.
+  Pick the target AAD security groups, plus the built-in All Devices and All Users targets. Optionally add exclusion groups.
 
-    [:octicons-arrow-right-24: Select Groups](select-groups.md)
+  [:octicons-arrow-right-24: Select Groups](select-groups.md)
 
--   :material-cog:{ .lg .middle } **Step 3 -- Configure**
+- :material-cog:{ .lg .middle } **Step 3 -- Configure**
 
-    ---
+  ***
 
-    Set the assignment intent (required, available, uninstall) and optionally scope with an assignment filter.
+  Set the assignment intent (required, available, uninstall) and optionally scope with an assignment filter.
 
-    [:octicons-arrow-right-24: Configure](configure.md)
+  [:octicons-arrow-right-24: Configure](configure.md)
 
--   :material-file-compare:{ .lg .middle } **Step 4 -- Review**
+- :material-file-compare:{ .lg .middle } **Step 4 -- Review**
 
-    ---
+  ***
 
-    See a full diff of what will change. Resolve any conflicts where an existing assignment targets the same group with different settings.
+  See a full diff of what will change. Resolve any conflicts where an existing assignment targets the same group with different settings.
 
-    [:octicons-arrow-right-24: Review](review.md)
+  [:octicons-arrow-right-24: Review](review.md)
 
--   :material-check-circle:{ .lg .middle } **Step 5 -- Results**
+- :material-check-circle:{ .lg .middle } **Step 5 -- Results**
 
-    ---
+  ***
 
-    Track execution progress across fetch, merge, and apply phases. Retry individual failures or start a new assignment.
+  Track execution progress across fetch, merge, and apply phases. Retry individual failures or start a new assignment.
 
-    [:octicons-arrow-right-24: Results](results.md)
+  [:octicons-arrow-right-24: Results](results.md)
 
 </div>
 

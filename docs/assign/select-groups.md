@@ -1,5 +1,5 @@
 ---
-title: "Step 2: Select Groups"
+title: 'Step 2: Select Groups'
 description: Pick target AAD groups, All Devices, All Users, and exclusion groups for the assignment
 tags:
   - assignments
@@ -15,10 +15,10 @@ The second step is selecting which groups the assignments will target. You choos
 
 Two special targets are pinned at the top of the page:
 
-| Target | Description |
-|--------|-------------|
+| Target          | Description                                                         |
+| --------------- | ------------------------------------------------------------------- |
 | **All Devices** | Targets every managed device in your tenant. No AAD group required. |
-| **All Users** | Targets every licensed user in your tenant. No AAD group required. |
+| **All Users**   | Targets every licensed user in your tenant. No AAD group required.  |
 
 Click either checkbox to toggle it. These can be combined with specific group selections.
 
@@ -35,7 +35,7 @@ Search results show:
 Click a group row or its checkbox to add it to your selection. Selected groups appear as chips above the search field.
 
 !!! tip "Group cache"
-    Recently searched groups are cached locally in your browser. This makes repeat searches faster and reduces API calls.
+Recently searched groups are cached locally in your browser. This makes repeat searches faster and reduces API calls.
 
 ## Exclusion Groups
 

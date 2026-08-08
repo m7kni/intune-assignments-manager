@@ -283,8 +283,7 @@
 			deviceStates = states;
 			statusLoaded = true;
 		} catch {
-			statusError =
-				'Device status data is not available for this remediation script.';
+			statusError = 'Device status data is not available for this remediation script.';
 		} finally {
 			statusLoading = false;
 		}
@@ -358,11 +357,7 @@
 							</div>
 						</div>
 						<div class="flex gap-2">
-							<Button
-								variant="primary"
-								icon={Layers}
-								href="/assign?remediationId={script?.id}"
-							>
+							<Button variant="primary" icon={Layers} href="/assign?remediationId={script?.id}">
 								Edit in Bulk Assign
 							</Button>
 						</div>
@@ -411,7 +406,9 @@
 							<h2 class="text-ink mb-2 text-lg font-semibold">Detection Script</h2>
 							{#if script.detectionScriptContent}
 								<div class="panel overflow-x-auto p-0">
-									<pre class="text-ink-light p-4 text-xs leading-relaxed"><code>{decodeBase64(script.detectionScriptContent)}</code></pre>
+									<pre class="text-ink-light p-4 text-xs leading-relaxed"><code
+											>{decodeBase64(script.detectionScriptContent)}</code
+										></pre>
 								</div>
 							{:else}
 								<p class="text-ink-faint text-sm">No detection script content available.</p>
@@ -423,7 +420,9 @@
 							<h2 class="text-ink mb-2 text-lg font-semibold">Remediation Script</h2>
 							{#if script.remediationScriptContent}
 								<div class="panel overflow-x-auto p-0">
-									<pre class="text-ink-light p-4 text-xs leading-relaxed"><code>{decodeBase64(script.remediationScriptContent)}</code></pre>
+									<pre class="text-ink-light p-4 text-xs leading-relaxed"><code
+											>{decodeBase64(script.remediationScriptContent)}</code
+										></pre>
 								</div>
 							{:else}
 								<p class="text-ink-faint text-sm">No remediation script content available.</p>
@@ -441,7 +440,9 @@
 									</div>
 									<div>
 										<p class="text-muted text-xs font-medium uppercase">Enforce Signature Check</p>
-										<p class="text-ink mt-1 text-sm">{script.enforceSignatureCheck ? 'Yes' : 'No'}</p>
+										<p class="text-ink mt-1 text-sm">
+											{script.enforceSignatureCheck ? 'Yes' : 'No'}
+										</p>
 									</div>
 									<div>
 										<p class="text-muted text-xs font-medium uppercase">Run as 32-bit</p>
@@ -449,11 +450,15 @@
 									</div>
 									<div>
 										<p class="text-muted text-xs font-medium uppercase">Created</p>
-										<p class="text-ink mt-1 text-sm">{new Date(script.createdDateTime).toLocaleDateString()}</p>
+										<p class="text-ink mt-1 text-sm">
+											{new Date(script.createdDateTime).toLocaleDateString()}
+										</p>
 									</div>
 									<div>
 										<p class="text-muted text-xs font-medium uppercase">Last Modified</p>
-										<p class="text-ink mt-1 text-sm">{new Date(script.lastModifiedDateTime).toLocaleDateString()}</p>
+										<p class="text-ink mt-1 text-sm">
+											{new Date(script.lastModifiedDateTime).toLocaleDateString()}
+										</p>
 									</div>
 									<div>
 										<p class="text-muted text-xs font-medium uppercase">Global Script</p>
@@ -522,11 +527,7 @@
 							{/each}
 						</div>
 					{:else if statusError}
-						<EmptyState
-							icon={Stethoscope}
-							title="Status unavailable"
-							description={statusError}
-						/>
+						<EmptyState icon={Stethoscope} title="Status unavailable" description={statusError} />
 					{:else if runSummary}
 						<div class="mb-4">
 							<StatusSummaryCard
@@ -563,10 +564,7 @@
 
 						{#if deviceStates.length > 0}
 							<div class="mb-3">
-								<SearchInput
-									placeholder="Filter by device name..."
-									bind:value={statusSearch}
-								/>
+								<SearchInput placeholder="Filter by device name..." bind:value={statusSearch} />
 							</div>
 							<div class="panel overflow-clip p-0">
 								<div
@@ -583,7 +581,9 @@
 										deviceName={state.managedDevice?.deviceName ?? 'Unknown device'}
 										userName=""
 										statusVariant={getStateVariant(state.detectionState)}
-										statusLabel="{getStateLabel(state.detectionState)} / {getStateLabel(state.remediationState)}"
+										statusLabel="{getStateLabel(state.detectionState)} / {getStateLabel(
+											state.remediationState
+										)}"
 										lastReported={state.lastStateUpdateDateTime}
 										errorDetail={state.remediationScriptError}
 									/>

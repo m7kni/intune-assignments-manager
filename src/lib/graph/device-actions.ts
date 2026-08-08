@@ -95,8 +95,7 @@ export async function executeBulkDeviceActions(
 					} else {
 						// Client error or final retry failure
 						const body = resp.body as BatchResponseBody | undefined;
-						const errorMessage =
-							body?.error?.message ?? `HTTP ${resp.status}`;
+						const errorMessage = body?.error?.message ?? `HTTP ${resp.status}`;
 						const result: ActionResult = {
 							deviceId: resp.id,
 							deviceName,

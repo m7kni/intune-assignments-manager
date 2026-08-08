@@ -22,7 +22,8 @@ export const REPORT_CONFIGS: ReportConfig[] = [
 	{
 		type: 'appDeployment',
 		title: 'App Deployment Status',
-		description: 'View install counts across all deployed apps including installed, failed, and pending devices.',
+		description:
+			'View install counts across all deployed apps including installed, failed, and pending devices.',
 		icon: 'BarChart3'
 	},
 	{
@@ -34,35 +35,36 @@ export const REPORT_CONFIGS: ReportConfig[] = [
 	{
 		type: 'unassignedItems',
 		title: 'Unassigned Items',
-		description: 'Find apps, profiles, and policies that have no assignments and may need attention.',
+		description:
+			'Find apps, profiles, and policies that have no assignments and may need attention.',
 		icon: 'PackageX'
 	},
 	{
 		type: 'staleDevices',
 		title: 'Stale Devices',
-		description: 'Discover devices that have not synced recently and may need remediation or cleanup.',
+		description:
+			'Discover devices that have not synced recently and may need remediation or cleanup.',
 		icon: 'Clock'
 	},
 	{
 		type: 'assignmentCoverage',
 		title: 'Assignment Coverage',
-		description: 'Analyze assignment breadth across apps, profiles, and policies to identify coverage gaps.',
+		description:
+			'Analyze assignment breadth across apps, profiles, and policies to identify coverage gaps.',
 		icon: 'Target'
 	},
 	{
 		type: 'complianceSummary',
 		title: 'Compliance Summary',
-		description: 'Overview of compliance policy assignments and their coverage across your environment.',
+		description:
+			'Overview of compliance policy assignments and their coverage across your environment.',
 		icon: 'ShieldCheck'
 	}
 ];
 
 // ─── Report Helpers ─────────────────────────────────────────────────
 
-function parseReportRows<T>(
-	response: IntuneReportResponse,
-	mapper: Record<string, keyof T>
-): T[] {
+function parseReportRows<T>(response: IntuneReportResponse, mapper: Record<string, keyof T>): T[] {
 	const columns = response.Schema.map((s) => s.Column);
 	return response.Values.map((row) => {
 		const obj: Record<string, unknown> = {};
@@ -263,8 +265,7 @@ export async function generateAssignmentCoverageReport(
 		listCompliancePolicies(client)
 	]);
 
-	const items: { id: string; displayName: string; itemType: string; assignmentUrl: string }[] =
-		[];
+	const items: { id: string; displayName: string; itemType: string; assignmentUrl: string }[] = [];
 
 	for (const app of apps) {
 		items.push({

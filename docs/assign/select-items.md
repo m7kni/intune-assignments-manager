@@ -1,5 +1,5 @@
 ---
-title: "Step 1: Select Items"
+title: 'Step 1: Select Items'
 description: Choose which apps and configuration profiles to include in the bulk assignment
 tags:
   - assignments
@@ -25,12 +25,12 @@ Lists all mobile apps from your Intune tenant. Each row shows:
 
 **Filters available:**
 
-| Filter | Options |
-|--------|---------|
-| Search | Free-text search by app name |
-| Platform | Windows, iOS/iPadOS, Android, macOS |
-| App Type | Win32, MSI, Store app, LOB, Web link, etc. (derived from your tenant's apps) |
-| Assignment Status | All, Assigned, Unassigned |
+| Filter            | Options                                                                      |
+| ----------------- | ---------------------------------------------------------------------------- |
+| Search            | Free-text search by app name                                                 |
+| Platform          | Windows, iOS/iPadOS, Android, macOS                                          |
+| App Type          | Win32, MSI, Store app, LOB, Web link, etc. (derived from your tenant's apps) |
+| Assignment Status | All, Assigned, Unassigned                                                    |
 
 ### Config Profiles Tab
 
@@ -42,12 +42,12 @@ Lists all Settings Catalog configuration policies. Each row shows:
 
 **Filters available:**
 
-| Filter | Options |
-|--------|---------|
-| Search | Free-text search by profile name |
-| Platform | Windows, iOS/iPadOS, Android, macOS |
-| Technology | MDM, Group Policy, etc. |
-| Assignment Status | All, Assigned, Unassigned |
+| Filter            | Options                             |
+| ----------------- | ----------------------------------- |
+| Search            | Free-text search by profile name    |
+| Platform          | Windows, iOS/iPadOS, Android, macOS |
+| Technology        | MDM, Group Policy, etc.             |
+| Assignment Status | All, Assigned, Unassigned           |
 
 ## Selecting Items
 
@@ -61,15 +61,15 @@ The **Next** button is disabled until at least one item is selected.
 
 If you navigate to the wizard from an app or profile detail page, that item is automatically pre-selected. The URL parameters used are:
 
-| Parameter | Effect |
-|-----------|--------|
-| `?appId=<guid>` | Pre-selects the app with the given ID |
+| Parameter           | Effect                                    |
+| ------------------- | ----------------------------------------- |
+| `?appId=<guid>`     | Pre-selects the app with the given ID     |
 | `?profileId=<guid>` | Pre-selects the profile with the given ID |
 
 You can combine both parameters to pre-select one app and one profile simultaneously.
 
 !!! tip "Quick assign from detail pages"
-    On any app or profile detail page, look for the **Assign** button. It links directly to the wizard with that item pre-selected.
+On any app or profile detail page, look for the **Assign** button. It links directly to the wizard with that item pre-selected.
 
 ## Data Loading
 

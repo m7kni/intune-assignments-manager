@@ -34,12 +34,7 @@ export interface DeviceHealthScriptRunSchedule {
 }
 
 export type DeviceHealthScriptDetectionState =
-	| 'unknown'
-	| 'success'
-	| 'fail'
-	| 'scriptError'
-	| 'pending'
-	| 'notApplicable';
+	'unknown' | 'success' | 'fail' | 'scriptError' | 'pending' | 'notApplicable';
 
 export interface DeviceHealthScriptDeviceState {
 	id: string;

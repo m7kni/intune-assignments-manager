@@ -58,9 +58,7 @@
 	let deletingAssignment = $state<ConfigurationPolicyAssignment | null>(null);
 
 	const categoryInfo = $derived(
-		policy
-			? getSecurityCategoryInfo(policy.templateReference?.templateFamily ?? '')
-			: undefined
+		policy ? getSecurityCategoryInfo(policy.templateReference?.templateFamily ?? '') : undefined
 	);
 	const hasAssignments = $derived(assignments.length > 0);
 
@@ -256,8 +254,7 @@
 
 		if (type.includes('choiceSettingInstance')) {
 			const choice = instance['choiceSettingValue'] as
-				| { value?: string; children?: unknown[] }
-				| undefined;
+				{ value?: string; children?: unknown[] } | undefined;
 			if (choice?.value) {
 				const lastPart = choice.value.split('_').pop() ?? choice.value;
 				return lastPart.replace(/([a-z])([A-Z])/g, '$1 $2');
@@ -266,8 +263,7 @@
 
 		if (type.includes('simpleSettingInstance')) {
 			const simple = instance['simpleSettingValue'] as
-				| { value?: string | number | boolean }
-				| undefined;
+				{ value?: string | number | boolean } | undefined;
 			if (simple?.value !== undefined) {
 				return String(simple.value);
 			}
@@ -376,11 +372,7 @@
 							filename="{policy?.name ?? 'security-policy'}-assignments.csv"
 							disabled={assignments.length === 0}
 						/>
-						<Button
-							variant="primary"
-							icon={Layers}
-							href="/assign?securityPolicyId={policy?.id}"
-						>
+						<Button variant="primary" icon={Layers} href="/assign?securityPolicyId={policy?.id}">
 							Edit in Bulk Assign
 						</Button>
 					</div>
@@ -523,9 +515,7 @@
 		itemKind="profile"
 		existingTarget={editingAssignment?.target}
 		existingIntent={null}
-		existingTargetName={editingAssignment
-			? resolveTargetName(editingAssignment.target)
-			: undefined}
+		existingTargetName={editingAssignment ? resolveTargetName(editingAssignment.target) : undefined}
 		onSave={handleEditorSave}
 		onCancel={() => (editorOpen = false)}
 	/>

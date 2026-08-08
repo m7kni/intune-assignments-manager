@@ -20,18 +20,18 @@ The CSV uses the following columns:
 ItemType,ItemName,ItemId,TargetType,GroupName,GroupId,Intent,FilterName,FilterId,FilterMode
 ```
 
-| Column | Description | Valid Values |
-|--------|-------------|--------------|
-| `ItemType` | Type of Intune item | `app`, `profile` |
-| `ItemName` | Display name (informational, used for name-based resolution if `ItemId` is empty) | Any string |
-| `ItemId` | Intune object GUID | UUID string |
-| `TargetType` | Assignment target type | `group`, `allDevices`, `allUsers`, `exclusion` |
-| `GroupName` | AAD group display name (informational, used for resolution if `GroupId` is empty) | Any string, empty for `allDevices`/`allUsers` |
-| `GroupId` | AAD group GUID | UUID string, empty for `allDevices`/`allUsers` |
-| `Intent` | Assignment intent | `required`, `available`, `uninstall`, `availableWithoutEnrollment` |
-| `FilterName` | Assignment filter display name (informational) | Any string, or empty |
-| `FilterId` | Assignment filter GUID | UUID string, or empty |
-| `FilterMode` | How the filter is applied | `include`, `exclude`, or empty |
+| Column       | Description                                                                       | Valid Values                                                       |
+| ------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `ItemType`   | Type of Intune item                                                               | `app`, `profile`                                                   |
+| `ItemName`   | Display name (informational, used for name-based resolution if `ItemId` is empty) | Any string                                                         |
+| `ItemId`     | Intune object GUID                                                                | UUID string                                                        |
+| `TargetType` | Assignment target type                                                            | `group`, `allDevices`, `allUsers`, `exclusion`                     |
+| `GroupName`  | AAD group display name (informational, used for resolution if `GroupId` is empty) | Any string, empty for `allDevices`/`allUsers`                      |
+| `GroupId`    | AAD group GUID                                                                    | UUID string, empty for `allDevices`/`allUsers`                     |
+| `Intent`     | Assignment intent                                                                 | `required`, `available`, `uninstall`, `availableWithoutEnrollment` |
+| `FilterName` | Assignment filter display name (informational)                                    | Any string, or empty                                               |
+| `FilterId`   | Assignment filter GUID                                                            | UUID string, or empty                                              |
+| `FilterMode` | How the filter is applied                                                         | `include`, `exclude`, or empty                                     |
 
 ### Example
 
@@ -56,7 +56,7 @@ CSV export is available in two places:
 The export includes one row per assignment: each combination of item + target group + intent + filter. The `ItemName`, `GroupName`, and `FilterName` columns are populated with display names for readability.
 
 !!! tip "Backup before bulk changes"
-    Export your current assignments before running a bulk assignment. This gives you a CSV backup you can re-import if you need to revert.
+Export your current assignments before running a bulk assignment. This gives you a CSV backup you can re-import if you need to revert.
 
 ## Import
 
@@ -71,16 +71,16 @@ The export includes one row per assignment: each combination of item + target gr
 
 Each row is validated against your tenant:
 
-| Check | What Happens on Failure |
-|-------|------------------------|
-| Required headers present (`ItemType`, `ItemName`, `TargetType`) | Import aborted with header error |
-| `ItemType` is `app` or `profile` | Row skipped with error |
-| `TargetType` is valid (`group`, `exclusion`, `allDevices`, `allUsers`) | Row skipped with error |
-| Group target has `GroupId` or `GroupName` | Row skipped with error |
-| `ItemId` resolves to an existing app/profile (or `ItemName` matches by exact name) | Row skipped with error |
-| `GroupId` resolves to an existing group (or `GroupName` matches by exact search) | Row skipped with error |
-| `FilterId` exists in tenant (if provided) | Row skipped with error |
-| `FilterName` matches an existing filter (if `FilterId` is empty) | Row skipped with error |
+| Check                                                                              | What Happens on Failure          |
+| ---------------------------------------------------------------------------------- | -------------------------------- |
+| Required headers present (`ItemType`, `ItemName`, `TargetType`)                    | Import aborted with header error |
+| `ItemType` is `app` or `profile`                                                   | Row skipped with error           |
+| `TargetType` is valid (`group`, `exclusion`, `allDevices`, `allUsers`)             | Row skipped with error           |
+| Group target has `GroupId` or `GroupName`                                          | Row skipped with error           |
+| `ItemId` resolves to an existing app/profile (or `ItemName` matches by exact name) | Row skipped with error           |
+| `GroupId` resolves to an existing group (or `GroupName` matches by exact search)   | Row skipped with error           |
+| `FilterId` exists in tenant (if provided)                                          | Row skipped with error           |
+| `FilterName` matches an existing filter (if `FilterId` is empty)                   | Row skipped with error           |
 
 Rows with validation errors are displayed with their error messages. Valid rows proceed normally.
 
@@ -88,11 +88,11 @@ Rows with validation errors are displayed with their error messages. Valid rows 
 
 On successful validation, the wizard is pre-populated and jumps directly to the **Review step (Step 4)**:
 
-| Field | Value |
-|---|---|
-| **Items** | All apps and profiles from the CSV are selected |
-| **Groups** | All target and exclusion groups from the CSV are selected |
-| **Intent** | Set to the most common intent value across all rows |
+| Field      | Value                                                                                |
+| ---------- | ------------------------------------------------------------------------------------ |
+| **Items**  | All apps and profiles from the CSV are selected                                      |
+| **Groups** | All target and exclusion groups from the CSV are selected                            |
+| **Intent** | Set to the most common intent value across all rows                                  |
 | **Filter** | Set to the filter from the CSV if all rows use the same filter; otherwise left empty |
 
 You can review the merged assignments and resolve any conflicts before applying.
@@ -107,7 +107,7 @@ If a row has an `ItemName` but no `ItemId`, the app attempts to resolve the name
 The same applies to `GroupName` without `GroupId` -- the app searches AAD groups and uses the first exact match.
 
 !!! warning "Prefer IDs over names"
-    Name-based resolution depends on exact matches and can fail if names are duplicated or slightly different. Always include GUIDs in your CSV when possible.
+Name-based resolution depends on exact matches and can fail if names are duplicated or slightly different. Always include GUIDs in your CSV when possible.
 
 ## Common Workflows
 
@@ -133,4 +133,4 @@ The same applies to `GroupName` without `GroupId` -- the app searches AAD groups
 4. Review and apply
 
 !!! note "IDs differ between tenants"
-    App, group, and filter GUIDs are unique per tenant. You must update all ID columns when moving between tenants. Name-based resolution can help if display names match.
+App, group, and filter GUIDs are unique per tenant. You must update all ID columns when moving between tenants. Name-based resolution can help if display names match.

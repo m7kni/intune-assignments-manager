@@ -34,10 +34,7 @@ export type AssignmentTarget =
 // ─── Mobile App Types ───────────────────────────────────────────────
 
 export type AssignmentIntent =
-	| 'required'
-	| 'available'
-	| 'uninstall'
-	| 'availableWithoutEnrollment';
+	'required' | 'available' | 'uninstall' | 'availableWithoutEnrollment';
 
 export interface MobileApp {
 	id: string;

@@ -256,15 +256,14 @@
 		'99': 'Unknown'
 	};
 
-	const installStateVariants: Record<string, 'required' | 'available' | 'uninstall' | 'neutral'> =
-		{
-			'1': 'required',
-			'2': 'uninstall',
-			'3': 'neutral',
-			'4': 'available',
-			'5': 'neutral',
-			'99': 'neutral'
-		};
+	const installStateVariants: Record<string, 'required' | 'available' | 'uninstall' | 'neutral'> = {
+		'1': 'required',
+		'2': 'uninstall',
+		'3': 'neutral',
+		'4': 'available',
+		'5': 'neutral',
+		'99': 'neutral'
+	};
 
 	function getInstallStatusVariant(
 		row: AppDeviceInstallStatusRow
@@ -562,10 +561,7 @@
 					{:else if deviceStatuses.length > 0}
 						<div class="mb-3 flex items-center gap-3">
 							<div class="flex-1">
-								<SearchInput
-									placeholder="Filter by device or user..."
-									bind:value={statusSearch}
-								/>
+								<SearchInput placeholder="Filter by device or user..." bind:value={statusSearch} />
 							</div>
 							<div class="border-border flex overflow-hidden rounded-lg border text-sm">
 								<button

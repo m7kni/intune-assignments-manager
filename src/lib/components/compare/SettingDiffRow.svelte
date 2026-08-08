@@ -62,14 +62,20 @@
 	</td>
 	<td class="px-4 py-3 text-sm">
 		{#if diff.leftValue !== null && diff.leftValue !== undefined}
-			<pre class="text-ink-light max-w-xs overflow-auto whitespace-pre-wrap break-all font-mono text-xs">{formatValue(diff.leftValue)}</pre>
+			<pre
+				class="text-ink-light max-w-xs overflow-auto whitespace-pre-wrap break-all font-mono text-xs">{formatValue(
+					diff.leftValue
+				)}</pre>
 		{:else}
 			<span class="text-muted italic">\u2014</span>
 		{/if}
 	</td>
 	<td class="px-4 py-3 text-sm">
 		{#if diff.rightValue !== null && diff.rightValue !== undefined}
-			<pre class="text-ink-light max-w-xs overflow-auto whitespace-pre-wrap break-all font-mono text-xs">{formatValue(diff.rightValue)}</pre>
+			<pre
+				class="text-ink-light max-w-xs overflow-auto whitespace-pre-wrap break-all font-mono text-xs">{formatValue(
+					diff.rightValue
+				)}</pre>
 		{:else}
 			<span class="text-muted italic">\u2014</span>
 		{/if}

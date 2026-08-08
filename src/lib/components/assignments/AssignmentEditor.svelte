@@ -279,7 +279,13 @@
 		}
 
 		const resolvedIntent =
-			itemKind === 'profile' || itemKind === 'compliance' || itemKind === 'security' || itemKind === 'script' || isExclusion ? null : intent;
+			itemKind === 'profile' ||
+			itemKind === 'compliance' ||
+			itemKind === 'security' ||
+			itemKind === 'script' ||
+			isExclusion
+				? null
+				: intent;
 		onSave(target, resolvedIntent);
 	}
 

@@ -13,9 +13,17 @@
 	import { GitCompareArrows, ArrowRightLeft, Download } from 'lucide-svelte';
 	import { getGraphClient } from '$lib/stores/graph';
 	import { toFriendlyMessage } from '$lib/graph/errors';
-	import { listConfigPolicies, getConfigPolicySettings, getConfigAssignments } from '$lib/graph/configurations';
+	import {
+		listConfigPolicies,
+		getConfigPolicySettings,
+		getConfigAssignments
+	} from '$lib/graph/configurations';
 	import { listCompliancePolicies, getCompliancePolicyAssignments } from '$lib/graph/compliance';
-	import { listSecurityPolicies, getSecurityPolicySettings, getConfigAssignments as getSecurityAssignments } from '$lib/graph/security';
+	import {
+		listSecurityPolicies,
+		getSecurityPolicySettings,
+		getConfigAssignments as getSecurityAssignments
+	} from '$lib/graph/security';
 	import {
 		comparePolicySettings,
 		comparePolicyAssignments,
@@ -226,9 +234,7 @@
 	// ─── Helpers ──────────────────────────────────────────────────
 
 	/** Convert compliance policy properties to a settings-like array for comparison. */
-	function policyPropsToSettings(
-		policy: Record<string, unknown>
-	): Record<string, unknown>[] {
+	function policyPropsToSettings(policy: Record<string, unknown>): Record<string, unknown>[] {
 		const skipKeys = new Set([
 			'id',
 			'@odata.type',
@@ -354,9 +360,7 @@
 				</div>
 
 				{#if leftPolicyId && rightPolicyId && leftPolicyId === rightPolicyId}
-					<p class="text-warn mt-3 text-sm">
-						Please select two different policies to compare.
-					</p>
+					<p class="text-warn mt-3 text-sm">Please select two different policies to compare.</p>
 				{/if}
 
 				<!-- Compare Button -->

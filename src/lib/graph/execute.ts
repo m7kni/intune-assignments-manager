@@ -58,9 +58,7 @@ export interface BulkAssignmentResult {
 interface FetchedItem {
 	item: AssignableItem;
 	assignments:
-		| MobileAppAssignment[]
-		| ConfigurationPolicyAssignment[]
-		| DeviceCompliancePolicyAssignment[];
+		MobileAppAssignment[] | ConfigurationPolicyAssignment[] | DeviceCompliancePolicyAssignment[];
 }
 
 interface ErrorBody {
@@ -341,7 +339,12 @@ function mergeAssignments(fetched: FetchedItem[], params: BulkAssignmentParams):
 			});
 			merged.push({
 				item,
-				body: { deviceHealthScriptAssignments: mergedList.map((a) => ({ ...a, runRemediationScript: true })) }
+				body: {
+					deviceHealthScriptAssignments: mergedList.map((a) => ({
+						...a,
+						runRemediationScript: true
+					}))
+				}
 			});
 		} else if (item.kind === 'script') {
 			const mergedList = mergeProfileAssignments({

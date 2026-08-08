@@ -50,17 +50,17 @@ You need a Microsoft Entra ID (Azure AD) app registration to authenticate:
 2. Create or select your app registration
 3. Copy the **Application (client) ID** into your `.env` file
 4. Under **Authentication**, add a **Single-page application** platform with the redirect URI:
-    ```text
-    http://localhost:5173
-    ```
+   ```text
+   http://localhost:5173
+   ```
 5. Ensure the following **delegated** API permissions are granted (Tier 1 scopes):
-    - `User.Read`
-    - `DeviceManagementApps.ReadWrite.All`
-    - `DeviceManagementConfiguration.ReadWrite.All`
-    - `Group.Read.All`
+   - `User.Read`
+   - `DeviceManagementApps.ReadWrite.All`
+   - `DeviceManagementConfiguration.ReadWrite.All`
+   - `Group.Read.All`
 
 !!! note
-    The redirect URI must match your dev server URL exactly. SvelteKit defaults to `http://localhost:5173`.
+The redirect URI must match your dev server URL exactly. SvelteKit defaults to `http://localhost:5173`.
 
 ## Dev Server
 
@@ -87,7 +87,7 @@ pnpm lint
 Runs ESLint with a flat config and strict TypeScript rules.
 
 !!! note
-    There are approximately 31 pre-existing lint warnings in the codebase (unused `_` variables in `{#each}` blocks, some `any` types). These are known and should not be treated as blockers.
+There are approximately 31 pre-existing lint warnings in the codebase (unused `_` variables in `{#each}` blocks, some `any` types). These are known and should not be treated as blockers.
 
 ## Formatting
 
@@ -106,7 +106,7 @@ pnpm build
 Builds the app using the Cloudflare Pages adapter. Output goes to `.svelte-kit/cloudflare/`.
 
 !!! warning "Cloudflare Pages Constraint"
-    The production build runs on Cloudflare's edge runtime, which does **not** support Node.js built-in modules. You must use only Web APIs:
+The production build runs on Cloudflare's edge runtime, which does **not** support Node.js built-in modules. You must use only Web APIs:
 
     - `fetch` instead of `http`/`https`
     - `URL` instead of `url.parse`
@@ -117,11 +117,11 @@ Builds the app using the Cloudflare Pages adapter. Output goes to `.svelte-kit/c
 
 ## Commands Reference
 
-| Command | Description |
-|---|---|
-| `pnpm install` | Install dependencies |
-| `pnpm dev` | Start Vite dev server with HMR |
-| `pnpm build` | Production build for Cloudflare Pages |
-| `pnpm check` | TypeScript type-checking via svelte-check |
-| `pnpm lint` | Run ESLint |
-| `pnpm format` | Auto-format with Prettier |
+| Command        | Description                               |
+| -------------- | ----------------------------------------- |
+| `pnpm install` | Install dependencies                      |
+| `pnpm dev`     | Start Vite dev server with HMR            |
+| `pnpm build`   | Production build for Cloudflare Pages     |
+| `pnpm check`   | TypeScript type-checking via svelte-check |
+| `pnpm lint`    | Run ESLint                                |
+| `pnpm format`  | Auto-format with Prettier                 |

@@ -11,11 +11,16 @@
 
 	const { summary, activeFilter, onfilter }: Props = $props();
 
-	const total = $derived(
-		summary.identical + summary.changed + summary.added + summary.removed
-	);
+	const total = $derived(summary.identical + summary.changed + summary.added + summary.removed);
 
-	const filters: { id: ComparisonStatus | 'all'; label: string; count: number; icon: typeof Equal; colorClass: string; activeClass: string }[] = $derived([
+	const filters: {
+		id: ComparisonStatus | 'all';
+		label: string;
+		count: number;
+		icon: typeof Equal;
+		colorClass: string;
+		activeClass: string;
+	}[] = $derived([
 		{
 			id: 'all' as const,
 			label: 'All',

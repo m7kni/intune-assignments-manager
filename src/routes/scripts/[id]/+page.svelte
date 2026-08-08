@@ -267,9 +267,7 @@
 
 	// ─── Device status tab ────────────────────────────────────────────
 
-	function getRunStateVariant(
-		state: string
-	): 'required' | 'available' | 'uninstall' | 'neutral' {
+	function getRunStateVariant(state: string): 'required' | 'available' | 'uninstall' | 'neutral' {
 		switch (state) {
 			case 'success':
 				return 'required';
@@ -325,8 +323,7 @@
 			deviceStates = states;
 			statusLoaded = true;
 		} catch {
-			statusError =
-				'Device status data is not available for this script.';
+			statusError = 'Device status data is not available for this script.';
 		} finally {
 			statusLoading = false;
 		}
@@ -405,11 +402,7 @@
 								filename="{script?.displayName ?? 'script'}-assignments.csv"
 								disabled={assignments.length === 0}
 							/>
-							<Button
-								variant="primary"
-								icon={Layers}
-								href="/assign?scriptId={script?.id}"
-							>
+							<Button variant="primary" icon={Layers} href="/assign?scriptId={script?.id}">
 								Edit in Bulk Assign
 							</Button>
 						</div>
@@ -480,24 +473,15 @@
 					<!-- Script content -->
 					{#if decodedScriptContent}
 						<div class="panel overflow-clip p-0">
-							<div
-								class="border-border flex items-center justify-between border-b px-4 py-2.5"
-							>
-								<p class="text-muted text-xs font-medium tracking-wide uppercase">
-									Script Content
-								</p>
-								<Button
-									variant="ghost"
-									size="sm"
-									icon={copied ? Check : Copy}
-									onclick={copyScript}
-								>
+							<div class="border-border flex items-center justify-between border-b px-4 py-2.5">
+								<p class="text-muted text-xs font-medium tracking-wide uppercase">Script Content</p>
+								<Button variant="ghost" size="sm" icon={copied ? Check : Copy} onclick={copyScript}>
 									{copied ? 'Copied!' : 'Copy'}
 								</Button>
 							</div>
 							<div class="overflow-x-auto p-4">
-								<pre
-									class="text-ink text-xs leading-relaxed"><code>{decodedScriptContent}</code></pre>
+								<pre class="text-ink text-xs leading-relaxed"><code>{decodedScriptContent}</code
+									></pre>
 							</div>
 						</div>
 					{:else}
@@ -566,11 +550,7 @@
 							{/each}
 						</div>
 					{:else if statusError}
-						<EmptyState
-							icon={FileCode}
-							title="Status unavailable"
-							description={statusError}
-						/>
+						<EmptyState icon={FileCode} title="Status unavailable" description={statusError} />
 					{:else if runSummary}
 						<div class="mb-4">
 							<StatusSummaryCard
@@ -592,10 +572,7 @@
 
 						{#if deviceStates.length > 0}
 							<div class="mb-3">
-								<SearchInput
-									placeholder="Filter by device name..."
-									bind:value={statusSearch}
-								/>
+								<SearchInput placeholder="Filter by device name..." bind:value={statusSearch} />
 							</div>
 							<div class="panel overflow-clip p-0">
 								<div
@@ -614,9 +591,7 @@
 										statusLabel={getRunStateLabel(state.runState)}
 										lastReported={state.lastStateUpdateDateTime}
 										errorDetail={state.resultMessage ||
-											(state.errorCode !== 0
-												? `Error code: ${state.errorCode}`
-												: null)}
+											(state.errorCode !== 0 ? `Error code: ${state.errorCode}` : null)}
 									/>
 								{/each}
 								{#if filteredDeviceStates.length === 0}
