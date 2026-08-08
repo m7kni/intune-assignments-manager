@@ -1,0 +1,20 @@
+# pnpm 10+ reads project settings from here rather than package.json.
+
+# strictDepBuilds defaults to true in pnpm 11, so every dependency wanting to run
+# a postinstall script needs an explicit yes or no here or `pnpm install` fails.
+# All three are denied: they ship prebuilt per-platform binaries as optional deps,
+# and the production build is verified green without their scripts ever running.
+# Denying keeps the postinstall attack surface at zero. Flip one to `true` only if
+# a build actually breaks without it.
+allowBuilds:
+  esbuild: false
+  sharp: false
+  workerd: false
+
+# postcss arrives transitively via the Vite/Tailwind toolchain, which still
+# resolves <= 8.5.22. That range is GHSA-affected: an attacker-controlled
+# sourceMappingURL can read arbitrary .map files when `from` is unset (an
+# incomplete fix of GHSA-6g55-p6wh-862q). Dev-only and medium severity, but the
+# override is free. Drop it once the toolchain's own range moves past 8.5.23.
+overrides:
+  postcss: '>=8.5.23'
